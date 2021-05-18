@@ -10,8 +10,9 @@ public class MainSystem {
     public static void main(String[] args) throws FileNotFoundException {
         //New instance of mainMenu class
         MainMenu Menu = new MainMenu();
-        Members.Member.memberReader();
 
+        //Adding data to ArrayList containing Members
+        Members.Member.memberReader();
 
         //Printing welcome screen and main menu
         Menu.welcomeScreen();
@@ -23,6 +24,7 @@ public class MainSystem {
 
         while (!endProgram) {
             switch (userInput.nextLine()) {
+
                 case "1": // Manager
                     Menu.menuScreenManager();
                     switch (userInput.nextLine()){
@@ -38,8 +40,7 @@ public class MainSystem {
                         default:
                             Menu.errorMessage();
                             Menu.menuScreenManager();
-                    }
-                    break;
+                    } break;
 
                 case "2": // Cashier
                     Menu.menuScreenCashier();
@@ -60,8 +61,7 @@ public class MainSystem {
                         default:
                             Menu.errorMessage();
                             Menu.menuScreenCashier();
-                    }
-                    break;
+                    } break;
 
                 case "3": // Trainer
                     Menu.menuScreenTrainer();
@@ -78,8 +78,8 @@ public class MainSystem {
                         default:
                             Menu.errorMessage();
                             Menu.menuScreenTrainer();
-                    }
-                    break;
+                    } break;
+
                 case "4": // Admin
                     Menu.menuScreenAdmin();
                     switch (userInput.nextLine()){
@@ -91,6 +91,7 @@ public class MainSystem {
                             break;
                         case "3":
                             //Method for overview of yearly revenue
+                            Revenue.yearlyRevenue();
                             break;
                         case "4":
                             //Method for editing members payment status
@@ -104,11 +105,12 @@ public class MainSystem {
                         default:
                             Menu.errorMessage();
                             Menu.menuScreenAdmin();
-                    }
-                    break;
+                    } break;
+
                 case "9": // End Program
                     endProgram = true;
                     break;
+
                 default:
                     Menu.errorMessage();
                     Menu.loginScreen();

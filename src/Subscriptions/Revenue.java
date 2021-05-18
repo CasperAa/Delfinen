@@ -1,7 +1,7 @@
 package Subscriptions;
-
 import Members.Member;
 import java.util.Calendar;
+
 //@Casper
 public class Revenue {
 
@@ -37,14 +37,10 @@ public class Revenue {
         }
 
         System.out.println("Årlig indkomst: "+ yearlyIncome + " kr,-");
-        System.out.println("     Antal Juniorer         : " +juniorMembers);
-        System.out.println("     Antal Seniorer         : " +seniorMembers);
-        System.out.println("     Antal seniorer over 60 : " +seniorMembersOverSixty);
-        System.out.println("     Antal passive medlemmer: " +passiveMembers);
+        System.out.println("     Antal Juniorer            " +juniorMembers);
+        System.out.println("     Antal Seniorer            " +seniorMembers);
+        System.out.println("     Antal seniorer over 60    " +seniorMembersOverSixty);
+        System.out.println("     Antal passive medlemmer   " +passiveMembers);
 
-    }
-
-    public static void main(String[] args) {
-        yearlyRevenue();
     }
 }
