@@ -204,4 +204,23 @@ public class Member {
         AddingProcess();
     }
 
+    public String getBirthdate() {
+        return birthdate;
+    }
+
+    public String getMemberStatus() {
+        return memberStatus;
+    }
+
+    public String getMemberGroup() {
+        return memberGroup;
+    }
+
+    public String getMemberType() {
+        return memberType;
+    }
+
+    public static ArrayList<Member> getMemberList() {
+        return memberList;
+    }
 }
