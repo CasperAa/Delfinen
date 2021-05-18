@@ -74,8 +74,8 @@ public class Member {
                         telephoneNo, email, startDate, hasPayed);
                 memberList.add(newMember);
             } else if (memberGroup.equalsIgnoreCase("konkurrence")) {
-                CompetitionMember newMember = new CompetitionMember(name, ID, birthdate, memberStatus, memberGroup, memberType,
-                        telephoneNo, email, startDate, hasPayed);
+                CompetitionMember newMember = new CompetitionMember(name, ID, birthdate, memberStatus, memberGroup,
+                        memberType, telephoneNo, email, startDate, hasPayed);
                 memberList.add(newMember);
             } else {
                 System.out.println("Fejl i tilføjelse af medlem");
@@ -95,10 +95,13 @@ public class Member {
         String birthdate = null;
         birthdate = input.nextLine();
         while (end == false){
-            if(birthdate.length() != 8 || !isNumeric(birthdate) || parseInt(birthdate.substring(0,2))>31 || parseInt(birthdate.substring(2,4))>12
-                    || parseInt(birthdate.substring(0,2))==00 || parseInt(birthdate.substring(2,4))==00||parseInt(birthdate.substring(4,8))>2021||parseInt(birthdate.substring(4,8))<1900){
-                System.out.println("Ugyldig fødselsdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år før dags " +
-                        "dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal være mellem 1 og 12\n\nIndtast medlemmets fødseldsdag (ddMMyyyy):");
+            if(birthdate.length() != 8 || !isNumeric(birthdate) || parseInt(birthdate.substring(0,2))>31 ||
+                    parseInt(birthdate.substring(2,4))>12 || parseInt(birthdate.substring(0,2))==00 ||
+                    parseInt(birthdate.substring(2,4))==00||parseInt(birthdate.substring(4,8))>2021||
+                    parseInt(birthdate.substring(4,8))<1900){
+                System.out.println("Ugyldig fødselsdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år " +
+                        "før dags dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal " +
+                        "være mellem 1 og 12\n\nIndtast medlemmets fødseldsdag (ddMMyyyy):");
                 birthdate = input.nextLine();
             } else{
                 System.out.println("Fødselsdato er blevet tilføjet.");
@@ -144,7 +147,8 @@ public class Member {
                     end = true;
                     break;
                 default:
-                    System.out.println("Input ikke forstået. Prøve igen.\nHvad er medlemstypen? 1: Motionist 2: Konkurrencesvømmer");
+                    System.out.println("Input ikke forstået. Prøve igen.\nHvad er medlemstypen? 1: Motionist " +
+                            "2: Konkurrencesvømmer");
                     userInput = input.nextLine();
                     break;
             }
@@ -167,12 +171,13 @@ public class Member {
         String email = input.nextLine();
         end = false;
         while (end == false){
-            if(!email.contains("@")){
+            if(email.contains("@") && email.contains(".dk") || email.contains(".com") || email.contains(".net")
+                    || email.contains(".co.uk") || email.contains(".gov")){
+                System.out.println("E-mailen er blevet tilføjet.");
+                end = true;
+            } else{
                 System.out.println("Ugyldig e-mail. Prøv igen:");
                 email = input.nextLine();
-            } else{
-                System.out.println("Emailen er blevet tilføjet.");
-                end = true;
             }
         }
 
@@ -192,10 +197,14 @@ public class Member {
                     startDate = input.nextLine();
                     end = false;
                     while (end == false){
-                        if(startDate.length() != 8 || !isNumeric(startDate) || parseInt(startDate.substring(0,2))>31 || parseInt(startDate.substring(2,4))>12
-                                || parseInt(startDate.substring(0,2))==00 || parseInt(startDate.substring(2,4))==00||parseInt(startDate.substring(4,8))>2021||parseInt(startDate.substring(4,8))<1900){
-                            System.out.println("Ugyldig startdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år før dags " +
-                                    "dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal være mellem 1 og 12\n\nIndtast medlemmets startdato (ddMMyyyy):");
+                        if(startDate.length() != 8 || !isNumeric(startDate) || parseInt(startDate.substring(0,2))>31
+                                || parseInt(startDate.substring(2,4))>12
+                                || parseInt(startDate.substring(0,2))==00 || parseInt(startDate.substring(2,4))==00
+                                || parseInt(startDate.substring(4,8))>2021||parseInt(startDate.substring(4,8))<1900){
+                            System.out.println("Ugyldig startdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være " +
+                                    "140 år før dags " +
+                                    "dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal " +
+                                    "være mellem 1 og 12\n\nIndtast medlemmets startdato (ddMMyyyy):");
                             startDate = input.nextLine();
                         } else{
                             System.out.println("Startdatoen er blevet tilføjet.");
@@ -227,7 +236,8 @@ public class Member {
                     end = true;
                     break;
                 default:
-                    System.out.println("Input ikke forstået. Prøve igen.\nHar medlemmet betalt kontingent? 1: Ja 2: Nej");
+                    System.out.println("Input ikke forstået. Prøve igen.\nHar medlemmet betalt kontingent? 1: Ja " +
+                            "2: Nej");
                     userInput = input.nextLine();
                     break;
             }
@@ -263,6 +273,7 @@ public class Member {
 
                     IDListe.add(currentID);
                 }
+
                 String tempID = "000" + (Collections.max(IDListe) + 1);
                 ID = tempID.substring(tempID.length() - 4);
                 //ID-metoden er slut
@@ -287,7 +298,8 @@ public class Member {
                 BufferedWriter bw = new BufferedWriter(fw);
                 //PrintWriter pw = new PrintWriter(membersFile);
 
-                bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";" + memberType +
+                bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";"
+                        + memberType +
                         ";" + telephoneNo + ";" + email + ";" + startDate + ";" + hasPayed);   //Medlemmet skal tilføjes til filen
                 bw.close();     //Handlingen sker rent faktisk
                 System.out.println("Medlem blev tilføjet");
@@ -353,6 +365,7 @@ public class Member {
             }
         }
 
+        /* Jeg droppede denne
         public static boolean birthdateChecker(String birthdate){
             try{
                 Date birthdateTest=new SimpleDateFormat("ddMMyyyy").parse(birthdate);
@@ -360,10 +373,13 @@ public class Member {
                 return true;
             }
             catch (Exception e){
-                System.out.println("Ugyldig fødselsdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år før dags " +
-                        "dato samt minimum 6 år fra dags dato\nDatoskal være mellem 1 og 31\nMåned skal være mellem 1 og 12");
+                System.out.println("Ugyldig fødselsdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år " +
+                        "før dags dato samt minimum 6 år fra dags dato\nDatoskal være mellem 1 og 31\nMåned skal " +
+                        "være mellem 1 og 12");
                 return false;
             }
         }
+
+         */
 
     }
