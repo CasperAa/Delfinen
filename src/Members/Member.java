@@ -1,8 +1,6 @@
 package Members;
 
 import java.io.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -243,14 +241,14 @@ public class Member {
             }
         }
 
-            MemberAdder(name, birthdate, memberStatus, memberGroup, telephoneNo, email, startDate, hasPayed);
+            memberAdder(name, birthdate, memberStatus, memberGroup, telephoneNo, email, startDate, hasPayed);
     }
 
 
         private static ArrayList<Integer> IDListe;
 
-        public static void MemberAdder (String name, String birthdate, String memberStatus, String memberGroup,
-                String telephoneNo, String email, String startDate,boolean hasPayed) throws IOException {
+        public static void memberAdder(String name, String birthdate, String memberStatus, String memberGroup,
+                                       String telephoneNo, String email, String startDate, boolean hasPayed) throws IOException {
 
             try {
                 //Nedenstående bestemmer et ID-nummer, der er én højere end det hidtil højeste ID.
