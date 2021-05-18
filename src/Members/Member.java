@@ -152,9 +152,29 @@ public class Member {
 
         System.out.println("Indtast medlemmets telefonnummer:");
         String telephoneNo = input.nextLine();
+        end = false;
+        while (end == false){
+            if(telephoneNo.length() != 8 || !isNumeric(telephoneNo)){
+                System.out.println("Ugyldigt telefonnummer. Prøv igen:");
+                telephoneNo = input.nextLine();
+            } else{
+                System.out.println("Telefonnummeret er blevet tilføjet.");
+                end = true;
+            }
+        }
 
         System.out.println("Indtast medlemmets e-mail:");
         String email = input.nextLine();
+        end = false;
+        while (end == false){
+            if(!email.contains("@")){
+                System.out.println("Ugyldig e-mail. Prøv igen:");
+                email = input.nextLine();
+            } else{
+                System.out.println("Emailen er blevet tilføjet.");
+                end = true;
+            }
+        }
 
         System.out.println("Sæt startdato til i dag? 1: Ja 2: Nej");
         String startDate = null;
@@ -170,6 +190,19 @@ public class Member {
                 case "2":
                     System.out.println("Indtast startdato (ddMMyyyy)");
                     startDate = input.nextLine();
+                    end = false;
+                    while (end == false){
+                        if(startDate.length() != 8 || !isNumeric(startDate) || parseInt(startDate.substring(0,2))>31 || parseInt(startDate.substring(2,4))>12
+                                || parseInt(startDate.substring(0,2))==00 || parseInt(startDate.substring(2,4))==00||parseInt(startDate.substring(4,8))>2021||parseInt(startDate.substring(4,8))<1900){
+                            System.out.println("Ugyldig startdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år før dags " +
+                                    "dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal være mellem 1 og 12\n\nIndtast medlemmets startdato (ddMMyyyy):");
+                            startDate = input.nextLine();
+                        } else{
+                            System.out.println("Startdatoen er blevet tilføjet.");
+                            end = true;
+                        }
+
+                    }
                     end = true;
                     break;
                 default:
@@ -239,15 +272,10 @@ public class Member {
                 String memberType = null;
 
                 int year = parseInt(birthdate.substring(birthdate.length() - 4));
-                System.out.println("År: " + year);
                 int month = parseInt(birthdate.substring(2, 4));
-                System.out.println("Måned: " + month);
                 int date = parseInt(birthdate.substring(0, 2));
-                System.out.println("Dato: " + date);
                 Period period = Period.between(LocalDate.of(year, month, date), LocalDate.now());
                 int age = period.getYears();
-                System.out.println("Alder: " + age);
-                System.out.println("Er dato lovlig?" + !(parseInt(birthdate.substring(0, 2)) > 31));
                 if (age >= 18) {
                     memberType = "senior";
                 } else {
