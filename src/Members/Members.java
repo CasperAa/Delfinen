@@ -1,8 +1,6 @@
 package Members;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -12,7 +10,7 @@ import java.util.Scanner;
 //@Amanda
 public class Members {
 
-    public static void AddingProcess() {
+    public static void AddingProcess() throws IOException {
         Scanner input = new Scanner(System.in);
         System.out.println("Indtast medlemmets fulde navn:");
         String name = input.nextLine();
@@ -74,16 +72,19 @@ public class Members {
     }
 
 
-    private ArrayList<Integer> IDListe;
+    private static ArrayList<Integer> IDListe;
 
-    public void MemberAdder(String name, String birthdate, String memberStatus, String memberGroup,
-                            String telephoneNo, String email, String startDate, boolean hasPayed) {
+    public static void MemberAdder(String name, String birthdate, String memberStatus, String memberGroup,
+                                   String telephoneNo, String email, String startDate, boolean hasPayed) throws IOException {
+
         try {
+
+
 
             //Nedenstående bestemmer et ID-nummer, der er én højere end det hidtil højeste ID.
             int ID;
 
-            File membersFile = new File("Files/MembersList");
+            File membersFile = new File("src/Files/MembersList");
             Scanner sc = new Scanner(membersFile);
 
             IDListe = new ArrayList<Integer>();
@@ -110,23 +111,25 @@ public class Members {
             //Jeg laver den senere
             String memberType = "senior"; //Midlertidig værdi
 
-            FileWriter fw = new FileWriter("Files/MembersList", true);   //Filen bliver ikke overwritten.
-            PrintWriter pw = new PrintWriter(membersFile);
+            FileWriter fw = new FileWriter(membersFile, true);   //Filen bliver ikke overwritten.
+            BufferedWriter bw = new BufferedWriter(fw);
+            //PrintWriter pw = new PrintWriter(membersFile);
 
-            pw.println(name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";" + memberType +
+            bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";" + memberType +
                     ";" + telephoneNo + ";" + email + ";" + startDate + ";" + hasPayed);   //Medlemmet skal tilføjes til filen
-            pw.flush();     //Kan ikke forkare, hvad der sker her
-            pw.close();     //Handlongen sker rent faktisk
+            bw.close();     //Handlingen sker rent faktisk
             System.out.println("Medlem blev tilføjet");
         } catch (Exception e) {
             System.out.println("Der skete en fejl. Medlemmet blev ikke tilføjet.");
         }
 
 
+
+
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         AddingProcess();
     }
 
