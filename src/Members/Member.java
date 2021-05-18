@@ -1,8 +1,6 @@
 package Members;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.PrintWriter;
+import java.io.*;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
@@ -10,9 +8,72 @@ import java.util.Collections;
 import java.util.Scanner;
 
 //@Amanda
-public class Members {
+public class Member {
 
-    public static void AddingProcess() {
+    private final String name;
+    private final String ID;
+    private final String birthdate;
+    private final String memberStatus;
+    private final String memberGroup;
+    private final String memberType;
+    private final String telephoneNo;
+    private final String email;
+    private final String startDate;
+    private final boolean hasPayed;
+
+    //Constructor
+    public Member(String name, String ID, String birthdate, String memberStatus, String memberGroup, String memberType,
+                  String telephoneNo, String email, String startDate, boolean hasPayed) {
+        this.name = name;
+        this.ID = ID;
+        this.birthdate = birthdate;
+        this.memberStatus = memberStatus;
+        this.memberGroup = memberGroup;
+        this.memberType = memberType;
+        this.telephoneNo = telephoneNo;
+        this.email = email;
+        this.startDate = startDate;
+        this.hasPayed = hasPayed;
+
+    }
+
+    public static void memberReader() throws FileNotFoundException {
+        File membersFile = new File("src/Files/MembersList");
+        Scanner sc = new Scanner(membersFile);
+
+        ArrayList<Member> memberList = new ArrayList<>();
+        //Skipper metadatalinjen
+        sc.nextLine();
+
+        //While-loop, så alle linjer læses
+        while (sc.hasNext()) {
+            //En variabel, som indeholder den nuværende linje
+            String currentPizza = sc.nextLine();
+
+            String [] lineAsArray = currentPizza.split(";");
+
+            String name = lineAsArray[0].trim();
+            String ID = lineAsArray[1].trim();
+            String birthdate = lineAsArray[2].trim();
+            String memberStatus = lineAsArray[3].trim();
+            String memberGroup = lineAsArray[4].trim();
+            String memberType = lineAsArray[5].trim();
+            String telephoneNo = lineAsArray[6].trim();
+            String email = lineAsArray[7].trim();
+            String startDate = lineAsArray[8].trim();
+            boolean hasPayed = Boolean.parseBoolean(lineAsArray[9].trim());
+
+            //En Pizza oprettes på baggrund af dataen fra den nuværende linje
+            Member newMember = new Member(name, ID, birthdate, memberStatus, memberGroup, memberType,
+                    telephoneNo, email, startDate, hasPayed);
+            //Tilføjer pizzaen til menuen
+            memberList.add(newMember);
+        }
+
+    }
+
+
+    public static void AddingProcess() throws IOException {
         Scanner input = new Scanner(System.in);
         System.out.println("Indtast medlemmets fulde navn:");
         String name = input.nextLine();
@@ -74,16 +135,19 @@ public class Members {
     }
 
 
-    private ArrayList<Integer> IDListe;
+    private static ArrayList<Integer> IDListe;
 
-    public void MemberAdder(String name, String birthdate, String memberStatus, String memberGroup,
-                            String telephoneNo, String email, String startDate, boolean hasPayed) {
+    public static void MemberAdder(String name, String birthdate, String memberStatus, String memberGroup,
+                                   String telephoneNo, String email, String startDate, boolean hasPayed) throws IOException {
+
         try {
+
+
 
             //Nedenstående bestemmer et ID-nummer, der er én højere end det hidtil højeste ID.
             int ID;
 
-            File membersFile = new File("Files/MembersList");
+            File membersFile = new File("src/Files/MembersList");
             Scanner sc = new Scanner(membersFile);
 
             IDListe = new ArrayList<Integer>();
@@ -110,23 +174,25 @@ public class Members {
             //Jeg laver den senere
             String memberType = "senior"; //Midlertidig værdi
 
-            FileWriter fw = new FileWriter("Files/MembersList", true);   //Filen bliver ikke overwritten.
-            PrintWriter pw = new PrintWriter(membersFile);
+            FileWriter fw = new FileWriter(membersFile, true);   //Filen bliver ikke overwritten.
+            BufferedWriter bw = new BufferedWriter(fw);
+            //PrintWriter pw = new PrintWriter(membersFile);
 
-            pw.println(name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";" + memberType +
+            bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";" + memberType +
                     ";" + telephoneNo + ";" + email + ";" + startDate + ";" + hasPayed);   //Medlemmet skal tilføjes til filen
-            pw.flush();     //Kan ikke forkare, hvad der sker her
-            pw.close();     //Handlongen sker rent faktisk
+            bw.close();     //Handlingen sker rent faktisk
             System.out.println("Medlem blev tilføjet");
         } catch (Exception e) {
             System.out.println("Der skete en fejl. Medlemmet blev ikke tilføjet.");
         }
 
 
+
+
     }
 
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         AddingProcess();
     }
 
