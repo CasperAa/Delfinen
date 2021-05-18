@@ -19,10 +19,94 @@ public class MainSystem {
 
         while (!endProgram) {
             switch (userInput.nextLine()) {
+                case "1": // Manager
+                    Menu.menuScreenManager();
+                    switch (userInput.nextLine()){
+                        case "1":
+                            //Method for adding members
+                            break;
+                        case "2":
+                            //Method for editing existing members
+                            break;
+                        case "9":
+                            endProgram = true;
+                            break;
+                        default:
+                            Menu.errorMessage();
+                            Menu.menuScreenManager();
+                    }
+                    break;
 
-                case "1": // Add member
+                case "2": // Cashier
+                    Menu.menuScreenCashier();
+                    switch (userInput.nextLine()){
+                        case "1":
+                            //Method for overview of yearly revenue
+                            break;
+                        case "2":
+                            //Method for overview of members missing payment
+                            break;
+                        case "3":
+                            //Method for editing members payment status
+                            break;
+                        case "9":
+                            endProgram = true;
+                            break;
+                        default:
+                            Menu.errorMessage();
+                            Menu.menuScreenCashier();
+                    }
+                    break;
 
-                case "2":
+                case "3": // Trainer
+                    Menu.menuScreenTrainer();
+                    switch (userInput.nextLine()){
+                        case "1":
+                            //Method for adding new result
+                            break;
+                        case "2":
+                            //Method for top 5 overview
+                            break;
+                        case "9":
+                            endProgram = true;
+                            break;
+                        default:
+                            Menu.errorMessage();
+                            Menu.menuScreenTrainer();
+                    }
+                    break;
+                case "4": // Admin
+                    Menu.menuScreenAdmin();
+                    switch (userInput.nextLine()){
+                        case "1":
+                            //Method for adding members
+                            break;
+                        case "2":
+                            //Method for editing existing members
+                            break;
+                        case "3":
+                            //Method for overview of yearly revenue
+                            break;
+                        case "4":
+                            //Method for editing members payment status
+                            break;
+                        case "5":
+                            Menu.menuScreenTrainer();
+                            break;
+                        case "9":
+                            endProgram = true;
+                            break;
+                        default:
+                            Menu.errorMessage();
+                            Menu.menuScreenAdmin();
+                    }
+                    break;
+                case "9": // End Program
+                    endProgram = true;
+                    break;
+                default:
+                    Menu.errorMessage();
+                    Menu.loginScreen();
             }
 
         }
