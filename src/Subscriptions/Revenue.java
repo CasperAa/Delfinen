@@ -4,29 +4,30 @@ import Members.Member;
 import java.util.Calendar;
 //@Casper
 public class Revenue {
-    private final double junior = 1000.00;
-    private final double senior = 1600.00;
-    private final double seniorDiscount = 0.25;
-    private final double passive = 500.00;
-    private final int sixty = 60;
-    int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 
 
-    public void yearlyRevenue (){
+
+    public static void yearlyRevenue (){
+        final double junior = 1000.00;
+        final double senior = 1600.00;
+        final double seniorDiscount = 0.25;
+        final double passive = 500.00;
+        final int sixty = 60;
+        int currentYear = Calendar.getInstance().get(Calendar.YEAR);
         double yearlyIncome = 0.00;
         int juniorMembers = 0;
         int seniorMembers = 0;
         int seniorMembersOverSixty = 0;
         int passiveMembers = 0;
 
-        for (Member member : ){
-            if(member.getMemberStatus.equals("passive")){
+        for (Member member : Member.getMemberList()){
+            if(member.getMemberStatus().equals("passive")){
                 yearlyIncome += passive;
                 passiveMembers++;
-            } else if (member.getMembertype.equals("junior")){
+            } else if (member.getMemberType().equals("junior")){
                 yearlyIncome += junior;
                 juniorMembers++;
-            } else if (member.getMemberType.equals("senior") && currentYear - member.getBirthday.substring(member.getBirthday.length()-4) < sixty){
+            } else if (member.getMemberType().equals("senior") && currentYear - Integer.parseInt(member.getBirthdate().substring(member.getBirthdate().length()-4)) < sixty){
                 yearlyIncome += senior;
                 seniorMembers++;
             } else{
@@ -41,5 +42,9 @@ public class Revenue {
         System.out.println("     Antal seniorer over 60 : " +seniorMembersOverSixty);
         System.out.println("     Antal passive medlemmer: " +passiveMembers);
 
+    }
+
+    public static void main(String[] args) {
+        yearlyRevenue();
     }
 }
