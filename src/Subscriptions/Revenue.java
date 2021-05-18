@@ -1,7 +1,6 @@
-/*
 package Subscriptions;
 
-import Members.Members;
+import Members.Member;
 import java.util.Calendar;
 //@Casper
 public class Revenue {
@@ -20,7 +19,7 @@ public class Revenue {
         int seniorMembersOverSixty = 0;
         int passiveMembers = 0;
 
-        for (Members member : memberList){
+        for (Member member : ){
             if(member.getMemberStatus.equals("passive")){
                 yearlyIncome += passive;
                 passiveMembers++;
@@ -35,6 +34,7 @@ public class Revenue {
                 seniorMembersOverSixty++;
             }
         }
+
         System.out.println("Årlig indkomst: "+ yearlyIncome + " kr,-");
         System.out.println("     Antal Juniorer         : " +juniorMembers);
         System.out.println("     Antal Seniorer         : " +seniorMembers);
@@ -43,4 +43,3 @@ public class Revenue {
 
     }
 }
-*/
