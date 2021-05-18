@@ -2,7 +2,7 @@ name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDat
 Amanda Tolstrup Laursen;0001;10011994;active;motionist;senior;70121416;amanda@delfinen.dk;01012020;true
 Adam Karlsson;0002;14032000;active;konkurrence;senior;88888888;adam@delfinen.dk;01012020;true
 Karen Nielsen;0003;19122010;active;motionist;junior;92837419;karensmor@delfinen.dk;01012020;false
-Casper Steengaard;0004;01011940;active;motionist;senior;19283019;casper@delfinene.dk;01012020;true
+Casper Steengaard;0004;01011940;active;motionist;senior;19283019;casper@delfinen.dk;01012020;true
 Karl Johannes Rikardt Alber;0005;09011973;passive;motionist;senior;10592932;karl_johannes@delfinen.dk;01012020;true
 Andre Karl Ho Andersen;0006;25111998;active;konkurrence;senior;55091381;andrekarl@delfinen.dk;01012020;false
 Frode Karl Andersen;0007;22022006;active;konkurrence;junior;04192910;frodeandersen@svoemning.dk;01012020;false
@@ -15,3 +15,4 @@ Karl Egede Andersen;0013;24082003;passive;motionist;senior;99992232;kea@delfinen
 Maria Sofie Biehl;0014;14042010;active;motionist;junior;10301031;sf@delfinen.dk;01012020;true
 Berit Andersen;0015;02032010;active;motionist;junior;80291182;karlandersen@godmail.dk;01012020;true
 Ole Olesen;0016;03071999;active;motionist;senior;59102324;OleO@delfinen.dk;18052021;true
+Sandra Kimsen;0017;18012012;passive;motionist;junior;29301021;Kimsen@goodmail.com;18052021;true

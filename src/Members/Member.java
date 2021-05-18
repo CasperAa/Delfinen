@@ -124,7 +124,7 @@ public class Member {
                         end = true;
                         break;
                     default:
-                        System.out.println("Input ikke forstået. Prøve igen.\nEr medlemmet aktivt? 1: Ja 2: Nej");
+                        System.out.println("Input ikke forstået. Prøv igen.\nEr medlemmet aktivt? 1: Ja 2: Nej");
                         userInput = input.nextLine();
                         break;
                 }
@@ -251,7 +251,7 @@ public class Member {
                                        String telephoneNo, String email, String startDate, boolean hasPayed) throws IOException {
 
             try {
-                //Nedenstående bestemmer et ID-nummer, der er én højere end det hidtil højeste ID.
+                //Nedenstående tildeler et ID-nummer, der er én højere end det hidtil højeste ID.
                 String ID;
 
                 File membersFile = new File("src/Files/MembersList");
@@ -308,6 +308,41 @@ public class Member {
 
         }
 
+        //Nedenstående er ikke færdig
+        public static void memberEditor() throws FileNotFoundException {
+            memberReader();
+            Scanner input = new Scanner(System.in);
+            System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+            String userInput = input.nextLine();
+            boolean end = false;
+            while (end == false) {
+
+                switch (userInput) {
+                    case "1":
+                        System.out.println("Hvad er ID-nummeret på det medlem, du vil redigere?");
+                        String inputID = input.nextLine();
+                        for (Member currentMember : memberList){
+                            if (getID().equals(inputID)){
+                                System.out.println("Vil du ændre følgende medlem?\n" + currentMember);
+
+                            }
+                        }
+                        end = true;
+                        break;
+                    case "2":
+                        System.out.println("Hvad er navnet på det medlem, du vil redigere?");
+
+                        end = true;
+                        break;
+                    default:
+                        System.out.println("Input ikke forstået. Prøv igen.\nVil du søge efter ID eller navn? 1: ID 2: Navn");
+                        userInput = input.nextLine();
+                        break;
+                }
+            }
+            //allelements.remove(rowNumber) - denne skal bruges til at slette en række, efter en ændret version er blevet tilføjet
+        }
+
 
         public static void main (String[]args) throws IOException {
             AddingProcess();
@@ -338,7 +373,7 @@ public class Member {
             return name;
         }
 
-        public String getID () {
+        public static String getID() {
             return ID;
         }
 
