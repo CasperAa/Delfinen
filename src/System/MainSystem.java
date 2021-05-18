@@ -1,6 +1,7 @@
 package System;
 import Menu.MainMenu;
 import Subscriptions.Revenue;
+import Subscriptions.UnpaidSubscriptions;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -51,6 +52,7 @@ public class MainSystem {
                             break;
                         case "2":
                             //Method for overview of members missing payment
+                            UnpaidSubscriptions.paymentOverview();
                             break;
                         case "3":
                             //Method for editing members payment status

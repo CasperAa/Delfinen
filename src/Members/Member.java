@@ -216,8 +216,29 @@ public class Member {
         return memberGroup;
     }
 
+
     public String getMemberType() {
         return memberType;
+    }
+
+    public boolean isHasPayed() {
+        return hasPayed;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public String getTelephoneNo() {
+        return telephoneNo;
+    }
+
+    public String getEmail() {
+        return email;
     }
 
     public static ArrayList<Member> getMemberList() {
