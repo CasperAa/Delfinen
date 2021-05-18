@@ -93,23 +93,27 @@ public class Member {
         System.out.println("Indtast medlemmets fødseldsdag (ddMMyyyy):");
         boolean end = false;
         String birthdate = null;
-        while (end = false) {
-            birthdate = input.nextLine();
-            if (birthdate.length() != 8 || !isNumeric(birthdate) || parseInt(birthdate.substring(0, 2)) > 31 ||
-                    parseInt(birthdate.substring(2, 4)) > 12 || parseInt(birthdate.substring(0, 2)) == 00 ||
-                    parseInt(birthdate.substring(2, 4)) == 00) {
+        birthdate = input.nextLine();
+        while (end == false){
+            if(birthdate.length() != 8 || !isNumeric(birthdate) || parseInt(birthdate.substring(0,2))>31 || parseInt(birthdate.substring(2,4))>12
+                    || parseInt(birthdate.substring(0,2))==00 || parseInt(birthdate.substring(2,4))==00||parseInt(birthdate.substring(4,8))>2021||parseInt(birthdate.substring(4,8))<1900){
                 System.out.println("Ugyldig fødselsdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år før dags " +
-                        "dato samt minimum 6 år fra dags dato\nDatoskal være mellem 1 og 31\nMåned skal være mellem 1 og 12");
-            } else {
+                        "dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal være mellem 1 og 12\n\nIndtast medlemmets fødseldsdag (ddMMyyyy):");
+                birthdate = input.nextLine();
+            } else{
+                System.out.println("Fødselsdato er blevet tilføjet.");
                 end = true;
             }
+
         }
 
         System.out.println("Er medlemmet aktivt? 1: Ja 2: Nej");
         String memberStatus = null;
+        String userInput = input.nextLine();
         end = false;
-        while (end = false) {
-                switch (input.nextLine()) {
+        while (end == false) {
+
+                switch (userInput) {
                     case "1":
                         memberStatus = "active";
                         end = true;
@@ -120,53 +124,84 @@ public class Member {
                         break;
                     default:
                         System.out.println("Input ikke forstået. Prøve igen.\nEr medlemmet aktivt? 1: Ja 2: Nej");
+                        userInput = input.nextLine();
                         break;
                 }
         }
 
         System.out.println("Hvad er medlemstypen? 1: Motionist 2: Konkurrencesvømmer");
         String memberGroup = null;
-        switch (input.nextLine()) {
+        userInput= input.nextLine();
+        end = false;
+        while (end == false) {
+            switch (userInput) {
                 case "1":
                     memberGroup = "motionist";
+                    end = true;
                     break;
                 case "2":
                     memberGroup = "konkurrence";
+                    end = true;
+                    break;
                 default:
                     System.out.println("Input ikke forstået. Prøve igen.\nHvad er medlemstypen? 1: Motionist 2: Konkurrencesvømmer");
+                    userInput = input.nextLine();
+                    break;
             }
-            System.out.println("Indtast medlemmets telefonnummer:");
-            String telephoneNo = input.nextLine();
+        }
 
-            System.out.println("Indtast medlemmets e-mail:");
-            String email = input.nextLine();
+        System.out.println("Indtast medlemmets telefonnummer:");
+        String telephoneNo = input.nextLine();
 
-            System.out.println("Sæt startdato til i dag? 1: Ja 2: Nej");
-            String startDate = null;
-            switch (input.nextLine()) {
+        System.out.println("Indtast medlemmets e-mail:");
+        String email = input.nextLine();
+
+        System.out.println("Sæt startdato til i dag? 1: Ja 2: Nej");
+        String startDate = null;
+        userInput= input.nextLine();
+        end = false;
+        while(end == false){
+            switch (userInput) {
                 case "1":
                     DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("ddMMyyyy");
                     startDate = LocalDateTime.now().format(formatTime);
+                    end = true;
                     break;
                 case "2":
                     System.out.println("Indtast startdato (ddMMyyyy)");
                     startDate = input.nextLine();
+                    end = true;
+                    break;
                 default:
                     System.out.println("Input ikke forstået. Prøve igen.\nSæt startdato til i dag? 1: Ja 2: Nej");
+                    userInput = input.nextLine();
+                    break;
             }
-            System.out.println("Har medlemmet betalt kontingent? 1: Ja 2: Nej");
-            boolean hasPayed = false;
-            switch (input.nextLine()) {
+        }
+
+        System.out.println("Har medlemmet betalt kontingent? 1: Ja 2: Nej");
+        boolean hasPayed = false;
+        userInput= input.nextLine();
+        end = false;
+        while(end == false){
+            switch (userInput) {
                 case "1":
                     hasPayed = true;
+                    end = true;
                     break;
                 case "2":
                     hasPayed = false;
+                    end = true;
+                    break;
                 default:
                     System.out.println("Input ikke forstået. Prøve igen.\nHar medlemmet betalt kontingent? 1: Ja 2: Nej");
+                    userInput = input.nextLine();
+                    break;
             }
-            MemberAdder(name, birthdate, memberStatus, memberGroup, telephoneNo, email, startDate, hasPayed);
         }
+
+            MemberAdder(name, birthdate, memberStatus, memberGroup, telephoneNo, email, startDate, hasPayed);
+    }
 
 
         private static ArrayList<Integer> IDListe;
@@ -212,6 +247,7 @@ public class Member {
                 Period period = Period.between(LocalDate.of(year, month, date), LocalDate.now());
                 int age = period.getYears();
                 System.out.println("Alder: " + age);
+                System.out.println("Er dato lovlig?" + !(parseInt(birthdate.substring(0, 2)) > 31));
                 if (age >= 18) {
                     memberType = "senior";
                 } else {
@@ -233,7 +269,6 @@ public class Member {
 
 
         }
-
 
 
         public static void main (String[]args) throws IOException {
@@ -290,4 +325,17 @@ public class Member {
             }
         }
 
-}
+        public static boolean birthdateChecker(String birthdate){
+            try{
+                Date birthdateTest=new SimpleDateFormat("ddMMyyyy").parse(birthdate);
+                System.out.println("Fødselsdato er blevet tilføjet.");
+                return true;
+            }
+            catch (Exception e){
+                System.out.println("Ugyldig fødselsdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år før dags " +
+                        "dato samt minimum 6 år fra dags dato\nDatoskal være mellem 1 og 31\nMåned skal være mellem 1 og 12");
+                return false;
+            }
+        }
+
+    }
