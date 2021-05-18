@@ -64,7 +64,6 @@ public class Member {
             String startDate = lineAsArray[8].trim();
             boolean hasPayed = Boolean.parseBoolean(lineAsArray[9].trim());
 
-            //En Pizza oprettes på baggrund af dataen fra den nuværende linje
             if (memberGroup.equalsIgnoreCase("motionist")){
                 Member newMember = new Member(name, ID, birthdate, memberStatus, memberGroup, memberType,
                         telephoneNo, email, startDate, hasPayed);

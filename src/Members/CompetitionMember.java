@@ -1,4 +1,5 @@
 package Members;
+//@Amanda
 
 public class CompetitionMember extends Member {
 
