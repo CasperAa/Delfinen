@@ -8,7 +8,70 @@ import java.util.Collections;
 import java.util.Scanner;
 
 //@Amanda
-public class Members {
+public class Member {
+
+    private final String name;
+    private final String ID;
+    private final String birthdate;
+    private final String memberStatus;
+    private final String memberGroup;
+    private final String memberType;
+    private final String telephoneNo;
+    private final String email;
+    private final String startDate;
+    private final boolean hasPayed;
+
+    //Constructor
+    public Member(String name, String ID, String birthdate, String memberStatus, String memberGroup, String memberType,
+                  String telephoneNo, String email, String startDate, boolean hasPayed) {
+        this.name = name;
+        this.ID = ID;
+        this.birthdate = birthdate;
+        this.memberStatus = memberStatus;
+        this.memberGroup = memberGroup;
+        this.memberType = memberType;
+        this.telephoneNo = telephoneNo;
+        this.email = email;
+        this.startDate = startDate;
+        this.hasPayed = hasPayed;
+
+    }
+
+    public static void memberReader() throws FileNotFoundException {
+        File membersFile = new File("src/Files/MembersList");
+        Scanner sc = new Scanner(membersFile);
+
+        ArrayList<Member> memberList = new ArrayList<>();
+        //Skipper metadatalinjen
+        sc.nextLine();
+
+        //While-loop, så alle linjer læses
+        while (sc.hasNext()) {
+            //En variabel, som indeholder den nuværende linje
+            String currentPizza = sc.nextLine();
+
+            String [] lineAsArray = currentPizza.split(";");
+
+            String name = lineAsArray[0].trim();
+            String ID = lineAsArray[1].trim();
+            String birthdate = lineAsArray[2].trim();
+            String memberStatus = lineAsArray[3].trim();
+            String memberGroup = lineAsArray[4].trim();
+            String memberType = lineAsArray[5].trim();
+            String telephoneNo = lineAsArray[6].trim();
+            String email = lineAsArray[7].trim();
+            String startDate = lineAsArray[8].trim();
+            boolean hasPayed = Boolean.parseBoolean(lineAsArray[9].trim());
+
+            //En Pizza oprettes på baggrund af dataen fra den nuværende linje
+            Member newMember = new Member(name, ID, birthdate, memberStatus, memberGroup, memberType,
+                    telephoneNo, email, startDate, hasPayed);
+            //Tilføjer pizzaen til menuen
+            memberList.add(newMember);
+        }
+
+    }
+
 
     public static void AddingProcess() throws IOException {
         Scanner input = new Scanner(System.in);
