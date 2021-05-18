@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Scanner;
 
+
 //@Amanda
 public class Member {
 
@@ -20,6 +21,7 @@ public class Member {
     private final String email;
     private final String startDate;
     private final boolean hasPayed;
+    static ArrayList<Member> memberList = new ArrayList<>();
 
     //Constructor
     public Member(String name, String ID, String birthdate, String memberStatus, String memberGroup, String memberType,
@@ -41,7 +43,6 @@ public class Member {
         File membersFile = new File("src/Files/MembersList");
         Scanner sc = new Scanner(membersFile);
 
-        ArrayList<Member> memberList = new ArrayList<>();
         //Skipper metadatalinjen
         sc.nextLine();
 
@@ -64,10 +65,17 @@ public class Member {
             boolean hasPayed = Boolean.parseBoolean(lineAsArray[9].trim());
 
             //En Pizza oprettes på baggrund af dataen fra den nuværende linje
-            Member newMember = new Member(name, ID, birthdate, memberStatus, memberGroup, memberType,
-                    telephoneNo, email, startDate, hasPayed);
-            //Tilføjer pizzaen til menuen
-            memberList.add(newMember);
+            if (memberGroup.equalsIgnoreCase("motionist")){
+                Member newMember = new Member(name, ID, birthdate, memberStatus, memberGroup, memberType,
+                        telephoneNo, email, startDate, hasPayed);
+                memberList.add(newMember);
+            } else if (memberGroup.equalsIgnoreCase("konkurrence")){
+                CompetitionMember newMember = new CompetitionMember(name, ID, birthdate, memberStatus, memberGroup, memberType,
+                        telephoneNo, email, startDate, hasPayed);
+                memberList.add(newMember);
+            } else {
+                System.out.println("Fejl i tilføjelse af medlem");
+            }
         }
 
     }
