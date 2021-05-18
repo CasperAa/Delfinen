@@ -1,11 +1,16 @@
 package Members;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.Period;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
+
+import static java.lang.Integer.parseInt;
+import static java.lang.Long.parseLong;
 
 
 //@Amanda
@@ -51,7 +56,7 @@ public class Member {
             //En variabel, som indeholder den nuværende linje
             String currentPizza = sc.nextLine();
 
-            String [] lineAsArray = currentPizza.split(";");
+            String[] lineAsArray = currentPizza.split(";");
 
             String name = lineAsArray[0].trim();
             String ID = lineAsArray[1].trim();
@@ -64,11 +69,11 @@ public class Member {
             String startDate = lineAsArray[8].trim();
             boolean hasPayed = Boolean.parseBoolean(lineAsArray[9].trim());
 
-            if (memberGroup.equalsIgnoreCase("motionist")){
+            if (memberGroup.equalsIgnoreCase("motionist")) {
                 Member newMember = new Member(name, ID, birthdate, memberStatus, memberGroup, memberType,
                         telephoneNo, email, startDate, hasPayed);
                 memberList.add(newMember);
-            } else if (memberGroup.equalsIgnoreCase("konkurrence")){
+            } else if (memberGroup.equalsIgnoreCase("konkurrence")) {
                 CompetitionMember newMember = new CompetitionMember(name, ID, birthdate, memberStatus, memberGroup, memberType,
                         telephoneNo, email, startDate, hasPayed);
                 memberList.add(newMember);
@@ -84,163 +89,205 @@ public class Member {
         Scanner input = new Scanner(System.in);
         System.out.println("Indtast medlemmets fulde navn:");
         String name = input.nextLine();
-        System.out.println("Indtast medlemmets fødseldsdag (ddmmyyyy):");
-        String birthdate = input.nextLine();
+
+        System.out.println("Indtast medlemmets fødseldsdag (ddMMyyyy):");
+        boolean end = false;
+        String birthdate = null;
+        while (end = false) {
+            birthdate = input.nextLine();
+            if (birthdate.length() != 8 || !isNumeric(birthdate) || parseInt(birthdate.substring(0, 2)) > 31 ||
+                    parseInt(birthdate.substring(2, 4)) > 12 || parseInt(birthdate.substring(0, 2)) == 00 ||
+                    parseInt(birthdate.substring(2, 4)) == 00) {
+                System.out.println("Ugyldig fødselsdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år før dags " +
+                        "dato samt minimum 6 år fra dags dato\nDatoskal være mellem 1 og 31\nMåned skal være mellem 1 og 12");
+            } else {
+                end = true;
+            }
+        }
+
         System.out.println("Er medlemmet aktivt? 1: Ja 2: Nej");
         String memberStatus = null;
-        switch (input.nextLine()) {
-            case "1":
-                memberStatus = "active";
-                break;
-            case "2":
-                memberStatus = "passive";
-            default:
-                System.out.println("Input ikke forstået. Prøve igen.\nEr medlemmet aktivt? 1: Ja 2: Nej");
+        end = false;
+        while (end = false) {
+                switch (input.nextLine()) {
+                    case "1":
+                        memberStatus = "active";
+                        end = true;
+                        break;
+                    case "2":
+                        memberStatus = "passive";
+                        end = true;
+                        break;
+                    default:
+                        System.out.println("Input ikke forstået. Prøve igen.\nEr medlemmet aktivt? 1: Ja 2: Nej");
+                        break;
+                }
         }
+
         System.out.println("Hvad er medlemstypen? 1: Motionist 2: Konkurrencesvømmer");
         String memberGroup = null;
         switch (input.nextLine()) {
-            case "1":
-                memberGroup = "motonist";
-                break;
-            case "2":
-                memberGroup = "konkurrence";
-            default:
-                System.out.println("Input ikke forstået. Prøve igen.\nHvad er medlemstypen? 1: Motionist 2: Konkurrencesvømmer");
-        }
-        System.out.println("Indtast medlemmets telefonnummer:");
-        String telephoneNo = input.nextLine();
-
-        System.out.println("Indtast medlemmets e-mail:");
-        String email = input.nextLine();
-
-        System.out.println("Sæt startdato til i dag? 1: Ja 2: Nej");
-        String startDate = null;
-        switch (input.nextLine()) {
-            case "1":
-                DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("ddMMyyyy");
-                startDate = LocalDateTime.now().format(formatTime);
-                break;
-            case "2":
-                System.out.println("Indtast startdato (ddMMyyyy)");
-                startDate = input.nextLine();
-            default:
-                System.out.println("Input ikke forstået. Prøve igen.\nSæt startdato til i dag? 1: Ja 2: Nej");
-        }
-        System.out.println("Har medlemmet betalt kontingent? 1: Ja 2: Nej");
-        boolean hasPayed = false;
-        switch (input.nextLine()) {
-            case "1":
-                hasPayed = true;
-                break;
-            case "2":
-                hasPayed = false;
-            default:
-                System.out.println("Input ikke forstået. Prøve igen.\nHar medlemmet betalt kontingent? 1: Ja 2: Nej");
-        }
-        MemberAdder(name, birthdate, memberStatus, memberGroup, telephoneNo, email, startDate, hasPayed);
-    }
-
-
-    private static ArrayList<Integer> IDListe;
-
-    public static void MemberAdder(String name, String birthdate, String memberStatus, String memberGroup,
-                                   String telephoneNo, String email, String startDate, boolean hasPayed) throws IOException {
-
-        try {
-
-
-
-            //Nedenstående bestemmer et ID-nummer, der er én højere end det hidtil højeste ID.
-            int ID;
-
-            File membersFile = new File("src/Files/MembersList");
-            Scanner sc = new Scanner(membersFile);
-
-            IDListe = new ArrayList<Integer>();
-            //Skipper metadata linjen
-            sc.nextLine();
-
-            //while loop for alle linjer
-            while (sc.hasNext()) {
-
-                String currentMember = sc.nextLine();
-
-                String[] lineAsArray = currentMember.split(";");
-                int currentID = Integer.parseInt(lineAsArray[1].trim());
-
-                IDListe.add(currentID);
+                case "1":
+                    memberGroup = "motionist";
+                    break;
+                case "2":
+                    memberGroup = "konkurrence";
+                default:
+                    System.out.println("Input ikke forstået. Prøve igen.\nHvad er medlemstypen? 1: Motionist 2: Konkurrencesvømmer");
             }
-            String tempID = "000" + (Collections.max(IDListe) + 1);
-            ID = Integer.parseInt(tempID.substring(tempID.length() - 4));
-            //ID-metoden er slut
+            System.out.println("Indtast medlemmets telefonnummer:");
+            String telephoneNo = input.nextLine();
 
-            //Nedenstående bestemmer, om medlemmet er junior eller senior
-            DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("ddMMyyyy");
-            String currentDate = LocalDateTime.now().format(formatTime);
-            //Jeg laver den senere
-            String memberType = "senior"; //Midlertidig værdi
+            System.out.println("Indtast medlemmets e-mail:");
+            String email = input.nextLine();
 
-            FileWriter fw = new FileWriter(membersFile, true);   //Filen bliver ikke overwritten.
-            BufferedWriter bw = new BufferedWriter(fw);
-            //PrintWriter pw = new PrintWriter(membersFile);
+            System.out.println("Sæt startdato til i dag? 1: Ja 2: Nej");
+            String startDate = null;
+            switch (input.nextLine()) {
+                case "1":
+                    DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("ddMMyyyy");
+                    startDate = LocalDateTime.now().format(formatTime);
+                    break;
+                case "2":
+                    System.out.println("Indtast startdato (ddMMyyyy)");
+                    startDate = input.nextLine();
+                default:
+                    System.out.println("Input ikke forstået. Prøve igen.\nSæt startdato til i dag? 1: Ja 2: Nej");
+            }
+            System.out.println("Har medlemmet betalt kontingent? 1: Ja 2: Nej");
+            boolean hasPayed = false;
+            switch (input.nextLine()) {
+                case "1":
+                    hasPayed = true;
+                    break;
+                case "2":
+                    hasPayed = false;
+                default:
+                    System.out.println("Input ikke forstået. Prøve igen.\nHar medlemmet betalt kontingent? 1: Ja 2: Nej");
+            }
+            MemberAdder(name, birthdate, memberStatus, memberGroup, telephoneNo, email, startDate, hasPayed);
+        }
 
-            bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";" + memberType +
-                    ";" + telephoneNo + ";" + email + ";" + startDate + ";" + hasPayed);   //Medlemmet skal tilføjes til filen
-            bw.close();     //Handlingen sker rent faktisk
-            System.out.println("Medlem blev tilføjet");
-        } catch (Exception e) {
-            System.out.println("Der skete en fejl. Medlemmet blev ikke tilføjet.");
+
+        private static ArrayList<Integer> IDListe;
+
+        public static void MemberAdder (String name, String birthdate, String memberStatus, String memberGroup,
+                String telephoneNo, String email, String startDate,boolean hasPayed) throws IOException {
+
+            try {
+                //Nedenstående bestemmer et ID-nummer, der er én højere end det hidtil højeste ID.
+                String ID;
+
+                File membersFile = new File("src/Files/MembersList");
+                Scanner sc = new Scanner(membersFile);
+
+                IDListe = new ArrayList<Integer>();
+                //Skipper metadata linjen
+                sc.nextLine();
+
+                //while loop for alle linjer
+                while (sc.hasNext()) {
+
+                    String currentMember = sc.nextLine();
+
+                    String[] lineAsArray = currentMember.split(";");
+                    int currentID = parseInt(lineAsArray[1].trim());
+
+                    IDListe.add(currentID);
+                }
+                String tempID = "000" + (Collections.max(IDListe) + 1);
+                ID = tempID.substring(tempID.length() - 4);
+                //ID-metoden er slut
+
+                //Nedenstående afgør, om medlemmet er junior eller senior
+
+                String memberType = null;
+
+                int year = parseInt(birthdate.substring(birthdate.length() - 4));
+                System.out.println("År: " + year);
+                int month = parseInt(birthdate.substring(2, 4));
+                System.out.println("Måned: " + month);
+                int date = parseInt(birthdate.substring(0, 2));
+                System.out.println("Dato: " + date);
+                Period period = Period.between(LocalDate.of(year, month, date), LocalDate.now());
+                int age = period.getYears();
+                System.out.println("Alder: " + age);
+                if (age >= 18) {
+                    memberType = "senior";
+                } else {
+                    memberType = "junior";
+                }
+
+                //Filen redigeres
+                FileWriter fw = new FileWriter(membersFile, true);   //Filen bliver ikke overwritten.
+                BufferedWriter bw = new BufferedWriter(fw);
+                //PrintWriter pw = new PrintWriter(membersFile);
+
+                bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";" + memberType +
+                        ";" + telephoneNo + ";" + email + ";" + startDate + ";" + hasPayed);   //Medlemmet skal tilføjes til filen
+                bw.close();     //Handlingen sker rent faktisk
+                System.out.println("Medlem blev tilføjet");
+            } catch (Exception e) {
+                System.out.println("Der skete en fejl. Medlemmet blev ikke tilføjet.");
+            }
+
+
         }
 
 
 
+        public static void main (String[]args) throws IOException {
+            AddingProcess();
+        }
 
-    }
+        public String getBirthdate () {
+            return birthdate;
+        }
 
+        public String getMemberStatus () {
+            return memberStatus;
+        }
 
-    public static void main(String[] args) throws IOException {
-        AddingProcess();
-    }
-
-    public String getBirthdate() {
-        return birthdate;
-    }
-
-    public String getMemberStatus() {
-        return memberStatus;
-    }
-
-    public String getMemberGroup() {
-        return memberGroup;
-    }
+        public String getMemberGroup () {
+            return memberGroup;
+        }
 
 
-    public String getMemberType() {
-        return memberType;
-    }
+        public String getMemberType () {
+            return memberType;
+        }
 
-    public boolean isHasPayed() {
-        return hasPayed;
-    }
+        public boolean isHasPayed () {
+            return hasPayed;
+        }
 
-    public String getName() {
-        return name;
-    }
+        public String getName () {
+            return name;
+        }
 
-    public String getID() {
-        return ID;
-    }
+        public String getID () {
+            return ID;
+        }
 
-    public String getTelephoneNo() {
-        return telephoneNo;
-    }
+        public String getTelephoneNo () {
+            return telephoneNo;
+        }
 
-    public String getEmail() {
-        return email;
-    }
+        public String getEmail () {
+            return email;
+        }
 
-    public static ArrayList<Member> getMemberList() {
-        return memberList;
-    }
+        public static ArrayList<Member> getMemberList () {
+            return memberList;
+        }
+
+        public static boolean isNumeric (String str){
+            try {
+                parseLong(str);
+                return true;
+            } catch (NumberFormatException e) {
+                return false;
+            }
+        }
+
 }
