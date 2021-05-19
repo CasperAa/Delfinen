@@ -203,28 +203,44 @@ public class Member {
                     for (Member currentMember : memberList){
                         String currentID = currentMember.getID();
                         if (currentID.equals(inputID)){
-                            System.out.println("Vil du ændre følgende medlem?\n" + currentMember.getName());
-                            memberToEdit = currentMember;
-                            lineNumber = lineCounter;
+                            System.out.println("Vil du ændre følgende medlem?\n" + currentMember.getName() + " 1: Ja 2: Nej");
+                            userInput = input.nextLine();
+                            switch(userInput){
+                                case "1":
+                                    memberToEdit = currentMember;
+                                    lineNumber = lineCounter;
+                                    end = true;
+                                    break;
+                                case "2":
+                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+                                    break;
+                            }
                         }
 
                         lineCounter++;
                     }
-                    end = true;
                     break;
                 case "2":
                     System.out.println("Hvad er navnet på det medlem, du vil redigere?");
                     String inputName = input.nextLine();
                     lineCounter = 0;
                     for (Member currentMember : memberList){
-                        if (currentMember.getName().contains(inputName)){
-                            System.out.println("Vil du ændre følgende medlem?\n" + currentMember.getName());
-                            memberToEdit = currentMember;
-                            lineNumber = lineCounter;
+                        if (currentMember.getName().toLowerCase().contains(inputName.toLowerCase())){
+                            System.out.println("Vil du ændre følgende medlem?\n" + currentMember.getName() + " 1: Ja 2: Nej");
+                            userInput = input.nextLine();
+                            switch(userInput){
+                                case "1":
+                                    memberToEdit = currentMember;
+                                    lineNumber = lineCounter;
+                                    end = true;
+                                    break;
+                                case "2":
+                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+                                    break;
+                            }
                         }
                         lineCounter++;
                     }
-                    end = true;
                     break;
                 default:
                     System.out.println("Input ikke forstået. Prøv igen.\nVil du søge efter ID eller navn? 1: ID 2: Navn");
