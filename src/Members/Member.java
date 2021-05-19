@@ -42,8 +42,8 @@ public class Member {
 
 
     }
-    //!!!!!!!!-----------------------------------------------------------------------------!!!!!!!!
-    //Denne metode overwriter alle objekter i arrayet med det sidst tilføjede objekt.
+
+
     public static void addMembersFromFileToArray() throws FileNotFoundException {
         File membersFile = new File("src/Files/MembersList");
         Scanner sc = new Scanner(membersFile);
@@ -84,7 +84,6 @@ public class Member {
                 System.out.println("Fejl i tilføjelse af medlem.");
             }
         }
-        System.out.println(memberList);
     }
 
 
@@ -190,7 +189,8 @@ public class Member {
                     String inputID = input.nextLine();
                     int lineCounter = 0;
 
-                    //Nedenstående virker ikke, da alle ID, der hentes, er lig det sidste (0018)
+                    //Nedenstående er den nye løsning, der ikke var nødvendig,da fejlen var i fil-læseren
+                    /*
                     for (int i = 0; i < memberList.size(); i++) {
 
                         if (memberList.get(i).getID().equals(inputID)){
@@ -198,7 +198,8 @@ public class Member {
                             memberToEdit = memberList.get(i);
                             lineNumber = lineCounter;
                         }
-                    /* Dette var den første udgave, den har samme problem
+                     */
+
                     for (Member currentMember : memberList){
                         String currentID = currentMember.getID();
                         if (currentID.equals(inputID)){
@@ -207,7 +208,6 @@ public class Member {
                             lineNumber = lineCounter;
                         }
 
-                     */
                         lineCounter++;
                     }
                     end = true;
@@ -246,10 +246,11 @@ public class Member {
 
         input = new Scanner(System.in);
         end = false;
-        while(end==false){
+        while(end==false) {
             System.out.println("Hvad vil du ændre?\n1: Navn\n2: Fødselsdato\n3: Medlemsstatus\n4: Medlemsgruppe" +
                     "\n5: Telefonnummer\n6: e-mail\n7: Startdato\n8: Betalingsstatus");
-            switch(userInput){
+            userInput = input.nextLine();
+            switch (userInput) {
                 case "1":
                     name = addName();
                     break;
@@ -278,37 +279,41 @@ public class Member {
                     System.out.println("Input ikke forstået.");
                     break;
             }
-        }
-        System.out.println("Er du færdig med at redigere medlemmer? 1: Ja 2: Nej");
-        String userInput2 = input.nextLine();
-        boolean end2 = false;
-        while(end2 == false){
-            switch(userInput2){
-                case "1":
-                    end = true;
-                    end2 = true;
-                    break;
-                case "2":
-                    end2 = true;
-                    break;
-                default:
+
+            System.out.println("Er du færdig med at redigere medlemmer? 1: Ja 2: Nej");
+            String userInput2 = input.nextLine();
+            boolean end2 = false;
+            while (end2 == false) {
+                switch (userInput2) {
+                    case "1":
+                        end = true;
+                        end2 = true;
+                        break;
+                    case "2":
+                        end2 = true;
+                        break;
+                    default:
+                }
             }
         }
         Member updatedMember = new Member(name, ID, birthdate, memberStatus, memberGroup, memberType,
                 telephoneNo, email, startDate, hasPayed);
-
         memberList.set(lineNumber,updatedMember);
 
 
         File membersFile = new File("src/Files/MembersList");
-        FileWriter fw = new FileWriter(membersFile, true);   //Filen bliver ikke overwritten.
+        FileWriter fw = new FileWriter(membersFile, true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter pw = new PrintWriter(membersFile);
-
-        pw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";"
-                + memberType +
-                ";" + telephoneNo + ";" + email + ";" + startDate + ";" + hasPayed);   //Medlemmet skal tilføjes til filen
-        pw.close();     //Handlingen sker rent faktisk
+        System.out.println("Memberlist inden redigering af liste");
+        pw.write("name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDate;hasPayed");
+        for (Member currentMember : memberList){
+            pw.write("\n" + currentMember.name + ";" + currentMember.ID + ";" + currentMember.birthdate + ";" +
+                    currentMember.memberStatus + ";" + currentMember.memberGroup + ";" + currentMember.memberType +
+                    ";" + currentMember.telephoneNo + ";" + currentMember.email + ";" + currentMember.startDate + ";"
+                    + currentMember.hasPayed);   //Medlemmet skal tilføjes til filen
+        }
+        pw.close();
 
     }
 
