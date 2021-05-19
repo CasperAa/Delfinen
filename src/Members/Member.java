@@ -83,165 +83,25 @@ public class Member {
     }
 
 
-    public static void AddingProcess() throws IOException {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Indtast medlemmets fulde navn:");
-        String name = input.nextLine();
+    public static void addMemberToList() throws IOException {
 
-        System.out.println("Indtast medlemmets fødseldsdag (ddMMyyyy):");
-        boolean end = false;
-        String birthdate = null;
-        birthdate = input.nextLine();
-        while (end == false){
-            if(birthdate.length() != 8 || !isNumeric(birthdate) || parseInt(birthdate.substring(0,2))>31 ||
-                    parseInt(birthdate.substring(2,4))>12 || parseInt(birthdate.substring(0,2))==00 ||
-                    parseInt(birthdate.substring(2,4))==00||parseInt(birthdate.substring(4,8))>2021||
-                    parseInt(birthdate.substring(4,8))<1900){
-                System.out.println("Ugyldig fødselsdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år " +
-                        "før dags dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal " +
-                        "være mellem 1 og 12\n\nIndtast medlemmets fødseldsdag (ddMMyyyy):");
-                birthdate = input.nextLine();
-            } else{
-                System.out.println("Fødselsdato er blevet tilføjet.");
-                end = true;
-            }
+        String name = addName();
 
-        }
+        String birthdate = addBirthdate();
 
-        System.out.println("Er medlemmet aktivt? 1: Ja 2: Nej");
-        String memberStatus = null;
-        String userInput = input.nextLine();
-        end = false;
-        while (end == false) {
+        String memberStatus = addActivityStatus();
 
-                switch (userInput) {
-                    case "1":
-                        memberStatus = "active";
-                        end = true;
-                        break;
-                    case "2":
-                        memberStatus = "passive";
-                        end = true;
-                        break;
-                    default:
-                        System.out.println("Input ikke forstået. Prøv igen.\nEr medlemmet aktivt? 1: Ja 2: Nej");
-                        userInput = input.nextLine();
-                        break;
-                }
-        }
+        String memberGroup = addMemberType();
 
-        System.out.println("Hvad er medlemstypen? 1: Motionist 2: Konkurrencesvømmer");
-        String memberGroup = null;
-        userInput= input.nextLine();
-        end = false;
-        while (end == false) {
-            switch (userInput) {
-                case "1":
-                    memberGroup = "motionist";
-                    end = true;
-                    break;
-                case "2":
-                    memberGroup = "konkurrence";
-                    end = true;
-                    break;
-                default:
-                    System.out.println("Input ikke forstået. Prøve igen.\nHvad er medlemstypen? 1: Motionist " +
-                            "2: Konkurrencesvømmer");
-                    userInput = input.nextLine();
-                    break;
-            }
-        }
+        String telephoneNo = addPhoneNo();
 
-        System.out.println("Indtast medlemmets telefonnummer:");
-        String telephoneNo = input.nextLine();
-        end = false;
-        while (end == false){
-            if(telephoneNo.length() != 8 || !isNumeric(telephoneNo)){
-                System.out.println("Ugyldigt telefonnummer. Prøv igen:");
-                telephoneNo = input.nextLine();
-            } else{
-                System.out.println("Telefonnummeret er blevet tilføjet.");
-                end = true;
-            }
-        }
+        String email = addEmail();
 
-        System.out.println("Indtast medlemmets e-mail:");
-        String email = input.nextLine();
-        end = false;
-        while (end == false){
-            if(email.contains("@") && email.contains(".dk") || email.contains(".com") || email.contains(".net")
-                    || email.contains(".co.uk") || email.contains(".gov")){
-                System.out.println("E-mailen er blevet tilføjet.");
-                end = true;
-            } else{
-                System.out.println("Ugyldig e-mail. Prøv igen:");
-                email = input.nextLine();
-            }
-        }
+        String startDate = addStartDate();
 
-        System.out.println("Sæt startdato til i dag? 1: Ja 2: Nej");
-        String startDate = null;
-        userInput= input.nextLine();
-        end = false;
-        while(end == false){
-            switch (userInput) {
-                case "1":
-                    DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("ddMMyyyy");
-                    startDate = LocalDateTime.now().format(formatTime);
-                    end = true;
-                    break;
-                case "2":
-                    System.out.println("Indtast startdato (ddMMyyyy)");
-                    startDate = input.nextLine();
-                    end = false;
-                    while (end == false){
-                        if(startDate.length() != 8 || !isNumeric(startDate) || parseInt(startDate.substring(0,2))>31
-                                || parseInt(startDate.substring(2,4))>12
-                                || parseInt(startDate.substring(0,2))==00 || parseInt(startDate.substring(2,4))==00
-                                || parseInt(startDate.substring(4,8))>2021||parseInt(startDate.substring(4,8))<1900){
-                            System.out.println("Ugyldig startdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være " +
-                                    "140 år før dags " +
-                                    "dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal " +
-                                    "være mellem 1 og 12\n\nIndtast medlemmets startdato (ddMMyyyy):");
-                            startDate = input.nextLine();
-                        } else{
-                            System.out.println("Startdatoen er blevet tilføjet.");
-                            end = true;
-                        }
+        boolean hasPayed = addPaymentStatus();
 
-                    }
-                    end = true;
-                    break;
-                default:
-                    System.out.println("Input ikke forstået. Prøve igen.\nSæt startdato til i dag? 1: Ja 2: Nej");
-                    userInput = input.nextLine();
-                    break;
-            }
-        }
-
-        System.out.println("Har medlemmet betalt kontingent? 1: Ja 2: Nej");
-        boolean hasPayed = false;
-        userInput= input.nextLine();
-        end = false;
-        while(end == false){
-            switch (userInput) {
-                case "1":
-                    hasPayed = true;
-                    end = true;
-                    break;
-                case "2":
-                    hasPayed = false;
-                    end = true;
-                    break;
-                default:
-                    System.out.println("Input ikke forstået. Prøve igen.\nHar medlemmet betalt kontingent? 1: Ja " +
-                            "2: Nej");
-                    userInput = input.nextLine();
-                    break;
-            }
-        }
-
-            memberAdder(name, birthdate, memberStatus, memberGroup, telephoneNo, email, startDate, hasPayed);
+        memberAdder(name, birthdate, memberStatus, memberGroup, telephoneNo, email, startDate, hasPayed);
     }
 
 
@@ -343,9 +203,215 @@ public class Member {
             //allelements.remove(rowNumber) - denne skal bruges til at slette en række, efter en ændret version er blevet tilføjet
         }
 
+    public static String addName(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Indtast medlemmets fulde navn:");
+        String name = input.nextLine();
+        return name;
+    }
 
-        public static void main (String[]args) throws IOException {
-            AddingProcess();
+    public static String addBirthdate(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Indtast medlemmets fødseldsdag (ddMMyyyy):");
+        boolean end = false;
+        String birthdate = null;
+        birthdate = input.nextLine();
+        while (end == false){
+            if(birthdate.length() != 8 || !isNumeric(birthdate) || parseInt(birthdate.substring(0,2))>31 ||
+                    parseInt(birthdate.substring(2,4))>12 || parseInt(birthdate.substring(0,2))==00 ||
+                    parseInt(birthdate.substring(2,4))==00||parseInt(birthdate.substring(4,8))>2021||
+                    parseInt(birthdate.substring(4,8))<1900){
+                System.out.println("Ugyldig fødselsdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år " +
+                        "før dags dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal " +
+                        "være mellem 1 og 12\n\nIndtast medlemmets fødseldsdag (ddMMyyyy):");
+                birthdate = input.nextLine();
+            } else{
+                System.out.println("Fødselsdato er blevet tilføjet.");
+                end = true;
+            }
+
+        }
+        return birthdate;
+    }
+
+    public static String addActivityStatus(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Er medlemmet aktivt? 1: Ja 2: Nej");
+        boolean end = false;
+        String memberStatus = null;
+        String userInput = input.nextLine();
+        while (end == false) {
+
+            switch (userInput) {
+                case "1":
+                    memberStatus = "active";
+                    end = true;
+                    break;
+                case "2":
+                    memberStatus = "passive";
+                    end = true;
+                    break;
+                default:
+                    System.out.println("Input ikke forstået. Prøv igen.\nEr medlemmet aktivt? 1: Ja 2: Nej");
+                    userInput = input.nextLine();
+                    break;
+            }
+        }
+        return memberStatus;
+    }
+
+    public static String addMemberType(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Hvad er medlemstypen? 1: Motionist 2: Konkurrencesvømmer");
+        String memberGroup = null;
+        String userInput = input.nextLine();
+        boolean end = false;
+        while (end == false) {
+            switch (userInput) {
+                case "1":
+                    memberGroup = "motionist";
+                    end = true;
+                    break;
+                case "2":
+                    memberGroup = "konkurrence";
+                    end = true;
+                    break;
+                default:
+                    System.out.println("Input ikke forstået. Prøve igen.\nHvad er medlemstypen? 1: Motionist " +
+                            "2: Konkurrencesvømmer");
+                    userInput = input.nextLine();
+                    break;
+            }
+        }
+        return memberGroup;
+    }
+
+    public static String addPhoneNo() {
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Indtast medlemmets telefonnummer:");
+        String telephoneNo = input.nextLine();
+        boolean end = false;
+        while (end == false) {
+            if (telephoneNo.length() != 8 || !isNumeric(telephoneNo)) {
+                System.out.println("Ugyldigt telefonnummer. Prøv igen:");
+                telephoneNo = input.nextLine();
+            } else {
+                System.out.println("Telefonnummeret er blevet tilføjet.");
+                end = true;
+
+            }
+        }
+        return telephoneNo;
+    }
+
+    public static String addEmail(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Indtast medlemmets e-mail:");
+        String email = input.nextLine();
+        boolean end = false;
+        while (end == false){
+            if(email.contains("@") && email.contains(".dk") || email.contains(".com") || email.contains(".net")
+                    || email.contains(".co.uk") || email.contains(".gov")){
+                System.out.println("E-mailen er blevet tilføjet.");
+                end = true;
+            } else{
+                System.out.println("Ugyldig e-mail. Prøv igen:");
+                email = input.nextLine();
+            }
+        }
+        return email;
+    }
+
+    public static String addStartDate(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Sæt startdato til i dag? 1: Ja 2: Nej");
+        String startDate = null;
+        String userInput= input.nextLine();
+        boolean end = false;
+        while(end == false){
+            switch (userInput) {
+                case "1":
+                    DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("ddMMyyyy");
+                    startDate = LocalDateTime.now().format(formatTime);
+                    end = true;
+                    break;
+                case "2":
+                    System.out.println("Indtast startdato (ddMMyyyy)");
+                    startDate = input.nextLine();
+                    end = false;
+                    while (end == false){
+                        if(startDate.length() != 8 || !isNumeric(startDate) || parseInt(startDate.substring(0,2))>31
+                                || parseInt(startDate.substring(2,4))>12
+                                || parseInt(startDate.substring(0,2))==00 || parseInt(startDate.substring(2,4))==00
+                                || parseInt(startDate.substring(4,8))>2021||parseInt(startDate.substring(4,8))<1900){
+                            System.out.println("Ugyldig startdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være " +
+                                    "140 år før dags " +
+                                    "dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal " +
+                                    "være mellem 1 og 12\n\nIndtast medlemmets startdato (ddMMyyyy):");
+                            startDate = input.nextLine();
+                        } else{
+                            System.out.println("Startdatoen er blevet tilføjet.");
+                            end = true;
+                        }
+
+                    }
+                    end = true;
+                    break;
+                default:
+                    System.out.println("Input ikke forstået. Prøve igen.\nSæt startdato til i dag? 1: Ja 2: Nej");
+                    userInput = input.nextLine();
+                    break;
+            }
+        }
+        return startDate;
+    }
+
+    public static boolean addPaymentStatus(){
+        Scanner input = new Scanner(System.in);
+
+        System.out.println("Har medlemmet betalt kontingent? 1: Ja 2: Nej");
+        boolean hasPayed = false;
+        String userInput= input.nextLine();
+        boolean end = false;
+        while(end == false){
+            switch (userInput) {
+                case "1":
+                    hasPayed = true;
+                    end = true;
+                    break;
+                case "2":
+                    hasPayed = false;
+                    end = true;
+                    break;
+                default:
+                    System.out.println("Input ikke forstået. Prøve igen.\nHar medlemmet betalt kontingent? 1: Ja " +
+                            "2: Nej");
+                    userInput = input.nextLine();
+                    break;
+            }
+        }
+        return hasPayed;
+    }
+
+    public static String (){
+
+    }
+
+    public static String (){
+
+    }
+
+    public static String (){
+
+    }
+
+
+    public static void main (String[]args) throws IOException {
+            addMemberToList();
         }
 
         public String getBirthdate () {
