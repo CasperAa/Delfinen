@@ -14,16 +14,16 @@ import static java.lang.Long.parseLong;
 //@Amanda
 public class Member {
 
-    private final String name;
-    private final String ID;
-    private final String birthdate;
-    private final String memberStatus;
-    private final String memberGroup;
-    private final String memberType;
-    private final String telephoneNo;
-    private final String email;
-    private final String startDate;
-    private final boolean hasPayed;
+    private String name;
+    private static String ID = null;
+    private String birthdate;
+    private String memberStatus;
+    private String memberGroup;
+    private String memberType;
+    private String telephoneNo;
+    private String email;
+    private String startDate;
+    private boolean hasPayed;
     static ArrayList<Member> memberList = new ArrayList<>();
 
     //Constructor
@@ -42,7 +42,7 @@ public class Member {
 
     }
 
-    public static void memberReader() throws FileNotFoundException {
+    public static void addMembersFromFileToArray() throws FileNotFoundException {
         File membersFile = new File("src/Files/MembersList");
         Scanner sc = new Scanner(membersFile);
 
@@ -101,107 +101,107 @@ public class Member {
 
         boolean hasPayed = addPaymentStatus();
 
-        memberAdder(name, birthdate, memberStatus, memberGroup, telephoneNo, email, startDate, hasPayed);
+        writeMemberOnList(name, birthdate, memberStatus, memberGroup, telephoneNo, email, startDate, hasPayed);
     }
 
 
-        private static ArrayList<Integer> IDListe;
+    private static ArrayList<Integer> IDListe;
 
-        public static void memberAdder(String name, String birthdate, String memberStatus, String memberGroup,
-                                       String telephoneNo, String email, String startDate, boolean hasPayed) throws IOException {
+    public static void writeMemberOnList(String name, String birthdate, String memberStatus, String memberGroup,
+                                         String telephoneNo, String email, String startDate, boolean hasPayed) throws IOException {
 
-            try {
-                //Nedenstående tildeler et ID-nummer, der er én højere end det hidtil højeste ID.
-                String ID;
+        try {
+            //Nedenstående tildeler et ID-nummer, der er én højere end det hidtil højeste ID.
+            String ID;
 
-                File membersFile = new File("src/Files/MembersList");
-                Scanner sc = new Scanner(membersFile);
+            File membersFile = new File("src/Files/MembersList");
+            Scanner sc = new Scanner(membersFile);
 
-                IDListe = new ArrayList<Integer>();
-                //Skipper metadata linjen
-                sc.nextLine();
+            IDListe = new ArrayList<Integer>();
+            //Skipper metadata linjen
+            sc.nextLine();
 
-                //while loop for alle linjer
-                while (sc.hasNext()) {
+            //while loop for alle linjer
+            while (sc.hasNext()) {
 
-                    String currentMember = sc.nextLine();
+                String currentMember = sc.nextLine();
 
-                    String[] lineAsArray = currentMember.split(";");
-                    int currentID = parseInt(lineAsArray[1].trim());
+                String[] lineAsArray = currentMember.split(";");
+                int currentID = parseInt(lineAsArray[1].trim());
 
-                    IDListe.add(currentID);
-                }
-
-                String tempID = "000" + (Collections.max(IDListe) + 1);
-                ID = tempID.substring(tempID.length() - 4);
-                //ID-metoden er slut
-
-                //Nedenstående afgør, om medlemmet er junior eller senior
-
-                String memberType = null;
-
-                int year = parseInt(birthdate.substring(birthdate.length() - 4));
-                int month = parseInt(birthdate.substring(2, 4));
-                int date = parseInt(birthdate.substring(0, 2));
-                Period period = Period.between(LocalDate.of(year, month, date), LocalDate.now());
-                int age = period.getYears();
-                if (age >= 18) {
-                    memberType = "senior";
-                } else {
-                    memberType = "junior";
-                }
-
-                //Filen redigeres
-                FileWriter fw = new FileWriter(membersFile, true);   //Filen bliver ikke overwritten.
-                BufferedWriter bw = new BufferedWriter(fw);
-                //PrintWriter pw = new PrintWriter(membersFile);
-
-                bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";"
-                        + memberType +
-                        ";" + telephoneNo + ";" + email + ";" + startDate + ";" + hasPayed);   //Medlemmet skal tilføjes til filen
-                bw.close();     //Handlingen sker rent faktisk
-                System.out.println("Medlem blev tilføjet");
-            } catch (Exception e) {
-                System.out.println("Der skete en fejl. Medlemmet blev ikke tilføjet.");
+                IDListe.add(currentID);
             }
 
+            String tempID = "000" + (Collections.max(IDListe) + 1);
+            ID = tempID.substring(tempID.length() - 4);
+            //ID-metoden er slut
 
+            //Nedenstående afgør, om medlemmet er junior eller senior
+
+            String memberType = null;
+
+            int year = parseInt(birthdate.substring(birthdate.length() - 4));
+            int month = parseInt(birthdate.substring(2, 4));
+            int date = parseInt(birthdate.substring(0, 2));
+            Period period = Period.between(LocalDate.of(year, month, date), LocalDate.now());
+            int age = period.getYears();
+            if (age >= 18) {
+                memberType = "senior";
+            } else {
+                memberType = "junior";
+            }
+
+            //Filen redigeres
+            FileWriter fw = new FileWriter(membersFile, true);   //Filen bliver ikke overwritten.
+            BufferedWriter bw = new BufferedWriter(fw);
+            //PrintWriter pw = new PrintWriter(membersFile);
+
+            bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";"
+                    + memberType +
+                    ";" + telephoneNo + ";" + email + ";" + startDate + ";" + hasPayed);   //Medlemmet skal tilføjes til filen
+            bw.close();     //Handlingen sker rent faktisk
+            System.out.println("Medlem blev tilføjet");
+        } catch (Exception e) {
+            System.out.println("Der skete en fejl. Medlemmet blev ikke tilføjet.");
         }
 
-        //Nedenstående er ikke færdig
-        public static void memberEditor() throws FileNotFoundException {
-            memberReader();
-            Scanner input = new Scanner(System.in);
-            System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
-            String userInput = input.nextLine();
-            boolean end = false;
-            while (end == false) {
 
-                switch (userInput) {
-                    case "1":
-                        System.out.println("Hvad er ID-nummeret på det medlem, du vil redigere?");
-                        String inputID = input.nextLine();
-                        for (Member currentMember : memberList){
-                            if (getID().equals(inputID)){
-                                System.out.println("Vil du ændre følgende medlem?\n" + currentMember);
+    }
 
-                            }
+    //Nedenstående er ikke færdig
+    public static void editMemberProfile() throws FileNotFoundException {
+        addMembersFromFileToArray();
+        Scanner input = new Scanner(System.in);
+        System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+        String userInput = input.nextLine();
+        boolean end = false;
+        while (end == false) {
+
+            switch (userInput) {
+                case "1":
+                    System.out.println("Hvad er ID-nummeret på det medlem, du vil redigere?");
+                    String inputID = input.nextLine();
+                    for (Member currentMember : memberList){
+                        if (getID().equals(inputID)){
+                            System.out.println("Vil du ændre følgende medlem?\n" + currentMember);
+
                         }
-                        end = true;
-                        break;
-                    case "2":
-                        System.out.println("Hvad er navnet på det medlem, du vil redigere?");
+                    }
+                    end = true;
+                    break;
+                case "2":
+                    System.out.println("Hvad er navnet på det medlem, du vil redigere?");
 
-                        end = true;
-                        break;
-                    default:
-                        System.out.println("Input ikke forstået. Prøv igen.\nVil du søge efter ID eller navn? 1: ID 2: Navn");
-                        userInput = input.nextLine();
-                        break;
-                }
+                    end = true;
+                    break;
+                default:
+                    System.out.println("Input ikke forstået. Prøv igen.\nVil du søge efter ID eller navn? 1: ID 2: Navn");
+                    userInput = input.nextLine();
+                    break;
             }
-            //allelements.remove(rowNumber) - denne skal bruges til at slette en række, efter en ændret version er blevet tilføjet
         }
+        //allelements.remove(rowNumber) - denne skal bruges til at slette en række, efter en ændret version er blevet tilføjet
+    }
 
     public static String addName(){
         Scanner input = new Scanner(System.in);
@@ -231,6 +231,7 @@ public class Member {
                 end = true;
             }
 
+        }
         }
         return birthdate;
     }
@@ -395,18 +396,6 @@ public class Member {
             }
         }
         return hasPayed;
-    }
-
-    public static String (){
-
-    }
-
-    public static String (){
-
-    }
-
-    public static String (){
-
     }
 
 

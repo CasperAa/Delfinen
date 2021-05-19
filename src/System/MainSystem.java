@@ -13,7 +13,7 @@ public class MainSystem {
         MainMenu Menu = new MainMenu();
 
         //Adding data to ArrayList containing Members
-        Members.Member.memberReader();
+        Members.Member.addMembersFromFileToArray();
 
         //Printing welcome screen and main menu
         Menu.welcomeScreen();
