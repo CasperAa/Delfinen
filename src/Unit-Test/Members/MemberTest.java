@@ -165,6 +165,13 @@ class MemberTest {
         assertTrue(trueResult1);
         assertFalse(falseResult1);
         assertFalse(falseResult2);
+        assertFalse(falseResult3);
+        assertFalse(falseResult4);
+        assertFalse(falseResult5);
+        assertFalse(falseResult6);
+        assertFalse(falseResult7);
+        assertFalse(falseResult8);
+        assertFalse(falseResult9);
     }
 
     @Test
