@@ -28,23 +28,7 @@ class MemberTest {
     void addName() {
         //Arrange
 
-        //Act
-        String test1 = Member.addName();
-        String test2 = LetterToNumberEncryption.fromStringToNumber("Hello World");
-        String test3 = LetterToNumberEncryption.fromStringToNumber("Det er Amanda");
 
-        //Assert
-        //Asserting expected against actual results
-
-        //Legal age
-        assertEquals("Legal age",legalAge);
-
-        //Non legal age
-        assertEquals("not legal",illegalAge);
-        assertEquals("not legal",illegalAge2);
-
-        //Illegal input
-        assertEquals("Illegal",illegalInput);
     }
 
     @Test
