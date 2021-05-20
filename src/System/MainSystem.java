@@ -58,8 +58,13 @@ public class MainSystem {
                             Menu.menuScreenCashier();
                             break;
                         case "3":
-
                             //Method for editing members payment status
+                            Member.editPaymentStatus();
+                            break;
+
+                        case "4":
+                            //Method for resetting payment status and updating membertype for all members
+                            Member.startNewSeason();
                             break;
                         case "9":
                             endProgram = true;

@@ -11,6 +11,4 @@ public class CompetitionMember extends Member {
 
     }
 
-
-
 }
