@@ -1,6 +1,5 @@
 package Results;
 
-import java.io.IOException;
 
 public abstract class Results {
 

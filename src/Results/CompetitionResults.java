@@ -1,16 +1,13 @@
 package Results;
 
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Scanner;
 import Menu.MainMenu;
 
 //@Casper
 
 public class CompetitionResults extends Results {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         addNewCSVFile();
     }
 
@@ -24,7 +21,7 @@ public class CompetitionResults extends Results {
 
     }
 
-    public static void addNewCSVFile() throws IOException {
+    public static void addNewCSVFile(){
         Scanner userID = new Scanner(System.in);
         System.out.println("user ID");
         String swimmerID = userID.nextLine();
@@ -78,10 +75,17 @@ public class CompetitionResults extends Results {
 
         System.out.println("Dato: (DD/MM-ÅÅÅÅ)");
         String date = userInput.nextLine();
+        if (date.length() != 10){
+            MainMenu.errorMessage();
+            userInput.nextLine();
+        }
 
-
-        System.out.println("Tid:");
+        System.out.println("Tid: (12:34)");
         String time = userInput.nextLine();
+        if(time.length() != 5){
+            MainMenu.errorMessage();
+            userInput.nextLine();
+        }
 
         System.out.println("Metode:\n" + "     Tryk 1: Butterfly\n" + "     Tryk 2: Crawl\n" + "     Tryk 3: Rygcrawl\n" + "     Tryk 4: Brystsvømning");
         String method = userInput.nextLine();
@@ -109,15 +113,23 @@ public class CompetitionResults extends Results {
 
         System.out.println("Placering:");
         String placement = userInput.nextLine();
+        try {
+            Integer.parseInt(placement);
+        }
+        catch (Exception e){
+            MainMenu.errorMessage();
+            userInput.nextLine();
+        }
 
 
         try {
             // create FileWriter object with file as parameter
-            FileWriter fWriter = new FileWriter(file);
+            FileWriter fWriter = new FileWriter(file,true);
             BufferedWriter bWriter = new BufferedWriter(fWriter);
 
             // add data to csv
-            String data = resultType + ";" + date + ";" + time + ";" + swimMethod +  ";" + competition +  ";" + placement;
+
+            String data = "\n" + resultType + ";" + date + ";" + time + ";" + swimMethod +  ";" + competition +  ";" + placement;
             bWriter.write(data);
             bWriter.close();     //Handlingen sker rent faktisk
             System.out.println("Resultat blev tilføjet til fil: " + fileLocation.substring(fileLocation.length()-4));
@@ -134,9 +146,8 @@ public class CompetitionResults extends Results {
 
     private static void generateCsvFile(String fileLocation) {
 
-        FileWriter fWriter = null;
+        FileWriter fWriter;
         BufferedWriter bWriter = null;
-
 
         try {
 
@@ -150,6 +161,7 @@ public class CompetitionResults extends Results {
             e.printStackTrace();
         } finally {
             try {
+                assert bWriter != null;
                 bWriter.flush();
                 bWriter.close();
             } catch (IOException e) {
@@ -157,5 +169,8 @@ public class CompetitionResults extends Results {
             }
         }
     }
+
+
+
 }
 
