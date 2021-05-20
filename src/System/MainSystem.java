@@ -4,7 +4,6 @@ import Menu.MainMenu;
 import Subscriptions.Revenue;
 import Subscriptions.UnpaidSubscriptions;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Scanner;
 
@@ -40,7 +39,7 @@ public class MainSystem {
                         case "9":
                             endProgram = true;
                             break;
-                        default:
+                            default:
                             Menu.errorMessage();
                             Menu.menuScreenManager();
                     } break;
@@ -51,12 +50,15 @@ public class MainSystem {
                         case "1":
                             //Method for overview of yearly revenue
                             Revenue.yearlyRevenue();
+                            Menu.menuScreenCashier();
                             break;
                         case "2":
                             //Method for overview of members missing payment
                             UnpaidSubscriptions.paymentOverview();
+                            Menu.menuScreenCashier();
                             break;
                         case "3":
+
                             //Method for editing members payment status
                             break;
                         case "9":
@@ -72,6 +74,7 @@ public class MainSystem {
                     switch (userInput.nextLine()){
                         case "1":
                             //Method for adding new result
+                            Results.CompetitionResults.addNewCSVFile();
                             break;
                         case "2":
                             //Method for top 5 overview
