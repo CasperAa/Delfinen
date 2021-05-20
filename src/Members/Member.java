@@ -178,6 +178,7 @@ public class Member {
         Member memberToEdit = null;
         System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
         String userInput = input.nextLine();
+        boolean matchFound = false;
         int lineNumber = 0;
         boolean end = false;
         while (!end) {
@@ -204,8 +205,12 @@ public class Member {
                                     System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
                                     break;
                             }
+                            matchFound = true;
                         }
                         lineCounter++;
+                    }
+                    if (!matchFound){
+                        System.out.println("Der blev ikke fundet et match for ID'et. Prøv igen.");
                     }
                     break;
                 case "2":
@@ -227,8 +232,12 @@ public class Member {
                                     System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
                                     break;
                             }
+                            matchFound = true;
                         }
                         lineCounter++;
+                    }
+                    if (!matchFound){
+                        System.out.println("Der blev ikke fundet et match for navnet. Prøv igen.");
                     }
                     break;
                 default:
@@ -386,8 +395,9 @@ public class Member {
         readMembersFromFileAndAddToArray();
         Scanner input = new Scanner(System.in);
         Member memberToEdit = null;
-        System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+        System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn 3: Afslut");
         String userInput = input.nextLine();
+        boolean matchFound = false;
         int lineNumber = 0;
         boolean end = false;
         while (!end) {
@@ -431,12 +441,17 @@ public class Member {
                                         end2 = true;
                                         break;
                                     case "2":
-                                        System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+                                        end = true;
+                                        end2 = true;
                                         break;
                                 }
                             }
+                            matchFound = true;
                         }
                         lineCounter++;
+                    }
+                    if (!matchFound){
+                        System.out.println("Der blev ikke fundet et match for ID'et. Prøv igen.");
                     }
                     break;
                 case "2":
@@ -475,14 +490,20 @@ public class Member {
                                         end2 = true;
                                         break;
                                     case "2":
-                                        System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+                                        end = true;
+                                        end2 = true;
                                         break;
                                 }
                             }
-
+                            matchFound = false;
                         }
                         lineCounter++;
                     }
+                    if (!matchFound){
+                        System.out.println("Der blev ikke fundet et match for navnet. Prøv igen.");
+                    }
+                case "3":
+                    end = true;
                     break;
                 default:
                     System.out.println("Input ikke forstået. Prøv igen.\nVil du søge efter ID eller navn? 1: ID 2: Navn");
@@ -503,7 +524,7 @@ public class Member {
                     + currentMember.hasPayed);   //Medlemmet skal tilføjes til filen
         }
         pw.close();
-        System.out.println("Medlemmet er blevet opdateret.");
+        System.out.println("Proces er afsluttet.");
     }
 
 
