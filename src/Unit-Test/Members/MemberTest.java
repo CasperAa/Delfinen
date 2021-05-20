@@ -193,4 +193,31 @@ class MemberTest {
         assertTrue(trueResult1);
         assertFalse(falseResult1);
     }
+
+    @Test
+
+    void isValidName() {
+        //Arrange
+        Member member = new Member(null,null,null,null,null,
+                null,null,null,null,false);
+
+        //Act
+
+
+        //Opfylder alle krav (og indeholder alle typer tilladte tegn)
+        boolean trueResult1 = member.isValidName("Anne-Mette Åse B. Andersen");
+
+        //Indeholder tal
+        boolean falseResult1 = member.isValidName("Frederik d. 6.");
+
+        //Indeholder specialtegn
+        boolean falseResult2 = member.isValidName("eksempel@eksempel.dk");
+
+        //Assert
+        assertTrue(trueResult1);
+        assertFalse(falseResult1);
+        assertFalse(falseResult2);
+    }
+
+
 }

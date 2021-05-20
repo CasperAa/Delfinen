@@ -7,6 +7,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
+import static com.sun.org.apache.xml.internal.utils.XMLCharacterRecognizer.isWhiteSpace;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
 
@@ -40,10 +41,9 @@ public class Member {
         this.startDate = startDate;
         this.hasPayed = hasPayed;
 
-
     }
 
-    public static void addMembersFromFileToArray() throws FileNotFoundException {
+    public static void readMembersFromFileAndAddToArray() throws FileNotFoundException {
         File membersFile = new File("src/Files/MembersList");
         Scanner sc = new Scanner(membersFile);
 
@@ -87,7 +87,7 @@ public class Member {
     }
 
 
-    public static void addAttributesToNewMemberAndAddMemberToFile() throws IOException {
+    public static void writeNewMember() throws IOException {
         Scanner sc = new Scanner(System.in);
 
         String name = addName();
@@ -170,12 +170,11 @@ public class Member {
             System.out.println("Der skete en fejl. Medlemmet blev ikke tilføjet.");
         }
 
-
     }
 
-    //Nedenstående er ikke færdig
+
     public static void editMemberInfo() throws IOException {
-        addMembersFromFileToArray();
+        readMembersFromFileAndAddToArray();
         Scanner input = new Scanner(System.in);
         Member memberToEdit = null;
         System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
@@ -329,8 +328,32 @@ public class Member {
         Scanner input = new Scanner(System.in);
         System.out.println("Indtast medlemmets fulde navn:");
         String name = input.nextLine();
+
+        boolean end = false;
+        String memberStatus = null;
+        String userInput = input.nextLine();
+        while (!end){
+            if (isValidName(name)) {
+                System.out.println("Navnet er blevet tilføjet.");
+                end = true;
+            } else{
+                name = input.nextLine();
+            }
+        }
         return name;
     }
+
+    public static boolean isValidName(String name){
+        boolean onlyLetters = true;
+        char[] chars = name.toCharArray();
+        for(char c : chars){
+            if(!Character.isLetter(c) && !isWhiteSpace(c) && c != '-' && c != '.'){
+                onlyLetters = false;
+            }
+        }
+        return onlyLetters;
+    }
+
 
     public static String addBirthdate(){
         Scanner input = new Scanner(System.in);
@@ -556,7 +579,7 @@ public class Member {
 
 
     public static void main (String[]args) throws IOException {
-        addMembersFromFileToArray();
+        System.out.println(Character.isLetter('å'));
     }
 
         public String getBirthdate () {

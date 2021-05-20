@@ -14,7 +14,7 @@ public class MainSystem {
         MainMenu Menu = new MainMenu();
 
         //Adding data to ArrayList containing Members
-        Members.Member.addMembersFromFileToArray();
+        Members.Member.readMembersFromFileAndAddToArray();
 
         //Printing welcome screen and main menu
         Menu.welcomeScreen();
@@ -31,7 +31,7 @@ public class MainSystem {
                     Menu.menuScreenManager();
                     switch (userInput.nextLine()){
                         case "1":
-                            Member.addAttributesToNewMemberAndAddMemberToFile();//Method for adding members
+                            Member.writeNewMember();//Method for adding members
                             break;
                         case "2":
                             Member.editMemberInfo();//Method for editing existing members
@@ -91,7 +91,7 @@ public class MainSystem {
                     Menu.menuScreenAdmin();
                     switch (userInput.nextLine()){
                         case "1":
-                            Member.addAttributesToNewMemberAndAddMemberToFile();//Method for adding members
+                            Member.writeNewMember();//Method for adding members
                             break;
                         case "2":
                             Member.editMemberInfo();//Method for editing existing members
