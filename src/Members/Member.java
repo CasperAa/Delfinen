@@ -405,15 +405,35 @@ public class Member {
                                     currentMember.getName() + "\nBetalingsstatus: " + currentMember.hasPayed +
                                     "\n1: Ja 2: Nej");
                             userInput = input.nextLine();
-                            switch(userInput){
-                                case "1":
-                                    memberToEdit = currentMember;
-                                    lineNumber = lineCounter;
-                                    end = true;
-                                    break;
-                                case "2":
-                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
-                                    break;
+                            boolean end2 = false;
+                            boolean newHasPayed = false;
+                            while(!end2){
+                                switch(userInput){
+                                    case "1":
+                                        System.out.println("Hvad skal betalingsstatus være? 1: Betalt 2: Ikke betalt");
+                                        userInput = input.nextLine();
+                                        switch(userInput){
+                                            case "1":
+                                                newHasPayed = true;
+                                                break;
+                                            case "2":
+                                                newHasPayed = false;
+                                                break;
+                                        }
+                                        Member updatedMember = new Member(currentMember.name, currentMember.ID,
+                                                currentMember.birthdate, currentMember.memberStatus,
+                                                currentMember.memberGroup, currentMember.memberType,
+                                                currentMember.telephoneNo, currentMember.email,
+                                                currentMember.startDate, newHasPayed);
+                                        lineNumber = lineCounter;
+                                        memberList.set(lineNumber, updatedMember);
+                                        end = true;
+                                        end2 = true;
+                                        break;
+                                    case "2":
+                                        System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+                                        break;
+                                }
                             }
                         }
                         lineCounter++;
@@ -429,32 +449,37 @@ public class Member {
                                     currentMember.getName() + "\nBetalingsstatus: " + currentMember.hasPayed +
                                     "\n1: Ja 2: Nej");
                             userInput = input.nextLine();
+                            boolean end2 = false;
                             boolean newHasPayed = false;
-                            switch(userInput){
-                                case "1":
-                                    System.out.println("Hvad skal betalingsstatus være? 1: Betalt 2: Ikke betalt");
-                                    userInput = input.nextLine();
-                                    switch(userInput){
-                                        case "1":
-                                            newHasPayed = true;
-                                            break;
-                                        case "2":
-                                            newHasPayed = false;
-                                            break;
-                                    }
-                                    Member updatedMember = new Member(currentMember.name, currentMember.ID,
-                                            currentMember.birthdate, currentMember.memberStatus,
-                                            currentMember.memberGroup, currentMember.memberType,
-                                            currentMember.telephoneNo, currentMember.email,
-                                            currentMember.startDate, newHasPayed);
-                                    lineNumber = lineCounter;
-                                    memberList.set(lineNumber, updatedMember);
-                                    end = true;
-                                    break;
-                                case "2":
-                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
-                                    break;
+                            while(!end2){
+                                switch(userInput){
+                                    case "1":
+                                        System.out.println("Hvad skal betalingsstatus være? 1: Betalt 2: Ikke betalt");
+                                        userInput = input.nextLine();
+                                        switch(userInput){
+                                            case "1":
+                                                newHasPayed = true;
+                                                break;
+                                            case "2":
+                                                newHasPayed = false;
+                                                break;
+                                        }
+                                        Member updatedMember = new Member(currentMember.name, currentMember.ID,
+                                                currentMember.birthdate, currentMember.memberStatus,
+                                                currentMember.memberGroup, currentMember.memberType,
+                                                currentMember.telephoneNo, currentMember.email,
+                                                currentMember.startDate, newHasPayed);
+                                        lineNumber = lineCounter;
+                                        memberList.set(lineNumber, updatedMember);
+                                        end = true;
+                                        end2 = true;
+                                        break;
+                                    case "2":
+                                        System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+                                        break;
+                                }
                             }
+
                         }
                         lineCounter++;
                     }

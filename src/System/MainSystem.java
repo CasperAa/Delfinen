@@ -96,10 +96,12 @@ public class MainSystem {
                     Menu.menuScreenAdmin();
                     switch (userInput.nextLine()){
                         case "1":
-                            Member.writeNewMember();//Method for adding members
+                            //Method for adding members
+                            Member.writeNewMember();
                             break;
                         case "2":
-                            Member.editMemberInfo();//Method for editing existing members
+                            //Method for editing existing members
+                            Member.editMemberInfo();
                             break;
                         case "3":
                             //Method for overview of yearly revenue
@@ -107,10 +109,14 @@ public class MainSystem {
                             break;
                         case "4":
                             //Method for editing members payment status
+                            Member.editPaymentStatus();
                             break;
                         case "5":
                             Menu.menuScreenTrainer();
                             break;
+                        case "6":
+                            //Method for resetting payment status and updating membertype for all members
+                            Member.startNewSeason();
                         case "9":
                             endProgram = true;
                             break;
