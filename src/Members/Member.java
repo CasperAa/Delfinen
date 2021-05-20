@@ -350,23 +350,29 @@ public class Member {
         boolean end = false;
         String birthdate = null;
         birthdate = input.nextLine();
-        while (end == false){
-            if(birthdate.length() != 8 || !isNumeric(birthdate) || parseInt(birthdate.substring(0,2))>31 ||
-                    parseInt(birthdate.substring(2,4))>12 || parseInt(birthdate.substring(0,2))==00 ||
-                    parseInt(birthdate.substring(2,4))==00||parseInt(birthdate.substring(4,8))>2021||
-                    parseInt(birthdate.substring(4,8))<1900){
-                System.out.println("Ugyldig fødselsdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år " +
-                        "før dags dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal " +
-                        "være mellem 1 og 12\n\nIndtast medlemmets fødseldsdag (ddMMyyyy):");
+        while (!end){
+            if(isValidBirthdate(birthdate)){
                 birthdate = input.nextLine();
             } else{
                 System.out.println("Fødselsdato er blevet tilføjet.");
                 end = true;
             }
-
         }
-
         return birthdate;
+    }
+
+    public static boolean isValidBirthdate(String birthdate){
+        if(birthdate.length() != 8 || !isNumeric(birthdate) || parseInt(birthdate.substring(0,2))>31 ||
+                parseInt(birthdate.substring(2,4))>12 || parseInt(birthdate.substring(0,2))==00 ||
+                parseInt(birthdate.substring(2,4))==00||parseInt(birthdate.substring(4,8))>2021||
+                parseInt(birthdate.substring(4,8))<1900){
+            System.out.println("Ugyldig fødselsdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år " +
+                    "før dags dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal " +
+                    "være mellem 1 og 12\n\nIndtast medlemmets fødseldsdag (ddMMyyyy):");
+            return false;
+        } else{
+            return true;
+        }
     }
 
     public static String addActivityStatus(){

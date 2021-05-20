@@ -26,13 +26,13 @@ class MemberTest {
 
     @Test
     void addName() {
-        //Arrange
 
 
     }
 
     @Test
     void addBirthdate() {
+        Member.addBirthdate();
     }
 
     @Test
