@@ -182,24 +182,13 @@ public class Member {
         String userInput = input.nextLine();
         int lineNumber = 0;
         boolean end = false;
-        while (end == false) {
+        while (!end) {
 
             switch (userInput) {
                 case "1":
                     System.out.println("Hvad er ID-nummeret på det medlem, du vil redigere?");
                     String inputID = input.nextLine();
                     int lineCounter = 0;
-
-                    //Nedenstående er den nye løsning, der ikke var nødvendig,da fejlen var i fil-læseren
-                    /*
-                    for (int i = 0; i < memberList.size(); i++) {
-
-                        if (memberList.get(i).getID().equals(inputID)){
-                            System.out.println("Vil du ændre følgende medlem?\n" + memberList.get(i).getName());
-                            memberToEdit = memberList.get(i);
-                            lineNumber = lineCounter;
-                        }
-                     */
 
                     for (Member currentMember : memberList){
                         String currentID = currentMember.getID();
@@ -264,7 +253,7 @@ public class Member {
 
         input = new Scanner(System.in);
         end = false;
-        while(end==false) {
+        while(!end) {
             System.out.println("Hvad vil du ændre?\n1: Navn\n2: Fødselsdato\n3: Medlemsstatus\n4: Medlemsgruppe" +
                     "\n5: Telefonnummer\n6: e-mail\n7: Startdato\n8: Betalingsstatus");
             userInput = input.nextLine();
@@ -301,7 +290,7 @@ public class Member {
             System.out.println("Er du færdig med at redigere medlemmer? 1: Ja 2: Nej");
             String userInput2 = input.nextLine();
             boolean end2 = false;
-            while (end2 == false) {
+            while (!end2) {
                 switch (userInput2) {
                     case "1":
                         end = true;
@@ -351,7 +340,7 @@ public class Member {
         String birthdate = null;
         birthdate = input.nextLine();
         while (!end){
-            if(isValidBirthdate(birthdate)){
+            if(!isValidBirthdate(birthdate)){
                 birthdate = input.nextLine();
             } else{
                 System.out.println("Fødselsdato er blevet tilføjet.");
@@ -364,7 +353,7 @@ public class Member {
     public static boolean isValidBirthdate(String birthdate){
         if(birthdate.length() != 8 || !isNumeric(birthdate) || parseInt(birthdate.substring(0,2))>31 ||
                 parseInt(birthdate.substring(2,4))>12 || parseInt(birthdate.substring(0,2))==00 ||
-                parseInt(birthdate.substring(2,4))==00||parseInt(birthdate.substring(4,8))>2021||
+                parseInt(birthdate.substring(2,4))==00||parseInt(birthdate.substring(4,8))>2015||
                 parseInt(birthdate.substring(4,8))<1900){
             System.out.println("Ugyldig fødselsdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år " +
                     "før dags dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal " +
@@ -381,7 +370,7 @@ public class Member {
         boolean end = false;
         String memberStatus = null;
         String userInput = input.nextLine();
-        while (end == false) {
+        while (!end) {
 
             switch (userInput) {
                 case "1":
@@ -407,7 +396,7 @@ public class Member {
         String memberGroup = null;
         String userInput = input.nextLine();
         boolean end = false;
-        while (end == false) {
+        while (!end) {
             switch (userInput) {
                 case "1":
                     memberGroup = "motionist";
@@ -433,9 +422,8 @@ public class Member {
         System.out.println("Indtast medlemmets telefonnummer:");
         String telephoneNo = input.nextLine();
         boolean end = false;
-        while (end == false) {
-            if (telephoneNo.length() != 8 || !isNumeric(telephoneNo)) {
-                System.out.println("Ugyldigt telefonnummer. Prøv igen:");
+        while (!end) {
+            if (!isValidPhoneNo(telephoneNo)) {
                 telephoneNo = input.nextLine();
             } else {
                 System.out.println("Telefonnummeret er blevet tilføjet.");
@@ -446,6 +434,16 @@ public class Member {
         return telephoneNo;
     }
 
+    public static boolean isValidPhoneNo(String telephoneNo){
+        if (telephoneNo.length() != 8 || !isNumeric(telephoneNo)) {
+            System.out.println("Ugyldigt telefonnummer. Prøv igen:");
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+
     public static String addEmail(){
         Scanner input = new Scanner(System.in);
 
@@ -453,18 +451,26 @@ public class Member {
         System.out.println("Indtast medlemmets e-mail:");
         String tempEmail = input.nextLine();
         boolean end = false;
-        while (end == false){
-            if(tempEmail.contains("@") && tempEmail.contains(".dk") || tempEmail.contains(".com") || tempEmail.contains(".net")
-                    || tempEmail.contains(".co.uk") || tempEmail.contains(".gov")){
-                email = tempEmail;
+        while (!end){
+            if(isValidEmail(tempEmail)){
                 System.out.println("E-mailen er blevet tilføjet.");
+                email = tempEmail;
                 end = true;
             } else{
-                System.out.println("Ugyldig e-mail. Prøv igen:");
                 tempEmail = input.nextLine();
             }
         }
         return email;
+    }
+
+    public static boolean isValidEmail(String tempEmail){
+        if(tempEmail.contains("@") && tempEmail.contains(".dk") || tempEmail.contains(".com") || tempEmail.contains(".net")
+                || tempEmail.contains(".co.uk") || tempEmail.contains(".gov")){
+            return true;
+        } else{
+            System.out.println("Ugyldig e-mail. Prøv igen:");
+            return false;
+        }
     }
 
     public static String addStartDate(){
@@ -474,7 +480,7 @@ public class Member {
         String startDate = null;
         String userInput= input.nextLine();
         boolean end = false;
-        while(end == false){
+        while(!end){
             switch (userInput) {
                 case "1":
                     DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("ddMMyyyy");
@@ -485,15 +491,8 @@ public class Member {
                     System.out.println("Indtast startdato (ddMMyyyy)");
                     startDate = input.nextLine();
                     end = false;
-                    while (end == false){
-                        if(startDate.length() != 8 || !isNumeric(startDate) || parseInt(startDate.substring(0,2))>31
-                                || parseInt(startDate.substring(2,4))>12
-                                || parseInt(startDate.substring(0,2))==00 || parseInt(startDate.substring(2,4))==00
-                                || parseInt(startDate.substring(4,8))>2021||parseInt(startDate.substring(4,8))<1900){
-                            System.out.println("Ugyldig startdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være " +
-                                    "140 år før dags " +
-                                    "dato samt minimum 6 år fra dags dato\nDato skal være mellem 1 og 31\nMåned skal " +
-                                    "være mellem 1 og 12\n\nIndtast medlemmets startdato (ddMMyyyy):");
+                    while (!end){
+                        if(!isValidStartDate(startDate)){
                             startDate = input.nextLine();
                         } else{
                             System.out.println("Startdatoen er blevet tilføjet.");
@@ -512,6 +511,22 @@ public class Member {
         return startDate;
     }
 
+    public static boolean isValidStartDate(String startDate){
+        if(startDate.length() != 8 || !isNumeric(startDate) || parseInt(startDate.substring(0,2))>31
+                || parseInt(startDate.substring(2,4))>12
+                || parseInt(startDate.substring(0,2))==00 || parseInt(startDate.substring(2,4))==00
+                || parseInt(startDate.substring(4,8))>2021||parseInt(startDate.substring(4,8))<2005){
+            System.out.println("Ugyldig startdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være " +
+                    "2005\nDato skal være mellem 1 og 31\nMåned skal " +
+                    "være mellem 1 og 12\n\nIndtast medlemmets startdato (ddMMyyyy):");
+            return false;
+        } else{
+            System.out.println("Startdatoen er blevet tilføjet.");
+            return true;
+        }
+    }
+
+
     public static boolean addPaymentStatus(){
         Scanner input = new Scanner(System.in);
 
@@ -519,7 +534,7 @@ public class Member {
         boolean hasPayed = false;
         String userInput= input.nextLine();
         boolean end = false;
-        while(end == false){
+        while(!end){
             switch (userInput) {
                 case "1":
                     hasPayed = true;
@@ -541,8 +556,8 @@ public class Member {
 
 
     public static void main (String[]args) throws IOException {
-        editMemberInfo();
-        }
+
+    }
 
         public String getBirthdate () {
             return birthdate;
