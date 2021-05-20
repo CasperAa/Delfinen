@@ -1,14 +1,16 @@
 package System;
+import Members.Member;
 import Menu.MainMenu;
 import Subscriptions.Revenue;
 import Subscriptions.UnpaidSubscriptions;
 
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Scanner;
 
 //@Casper
 public class MainSystem {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws IOException {
         //New instance of mainMenu class
         MainMenu Menu = new MainMenu();
 
@@ -30,10 +32,10 @@ public class MainSystem {
                     Menu.menuScreenManager();
                     switch (userInput.nextLine()){
                         case "1":
-                            //Method for adding members
+                            Member.addAttributesToNewMemberAndAddMemberToFile();//Method for adding members
                             break;
                         case "2":
-                            //Method for editing existing members
+                            Member.editMemberInfo();//Method for editing existing members
                             break;
                         case "9":
                             endProgram = true;
@@ -86,10 +88,10 @@ public class MainSystem {
                     Menu.menuScreenAdmin();
                     switch (userInput.nextLine()){
                         case "1":
-                            //Method for adding members
+                            Member.addAttributesToNewMemberAndAddMemberToFile();//Method for adding members
                             break;
                         case "2":
-                            //Method for editing existing members
+                            Member.editMemberInfo();//Method for editing existing members
                             break;
                         case "3":
                             //Method for overview of yearly revenue
