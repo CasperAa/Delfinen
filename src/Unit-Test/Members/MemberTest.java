@@ -2,15 +2,15 @@ package Members;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 //@Amanda
 
 class MemberTest {
 
-    @Test
-    void addMemberToFile() {
-    }
 
     @Test
     void isValidBirthdate() {
@@ -125,13 +125,65 @@ class MemberTest {
 
     @Test
     void isValidStartDate() {
-    }
 
-    @Test
-    void isHasPayed() {
+        //Arrange
+        Member member = new Member(null,null,null,null,null,
+                null,null,null,null,false);
+
+
+        //Opfylder alle krav
+        boolean trueResult1 = member.isValidStartDate("10022020");
+
+        //For kort (længde=7)
+        boolean falseResult1 = member.isValidStartDate("1002202");
+
+        //For lang (længde=9)
+        boolean falseResult2 = member.isValidStartDate("100220200");
+
+        //Indeholder et bogstav
+        boolean falseResult3 = member.isValidStartDate("1002202o");
+
+        //Dato er for høj (over 31)
+        boolean falseResult4 = member.isValidStartDate("32022020");
+
+        //Måned er for høj (over 12)
+        boolean falseResult5 = member.isValidStartDate("10132020");
+
+        //Dato er 00
+        boolean falseResult6 = member.isValidStartDate("00022020");
+
+        //Måned er 00
+        boolean falseResult7 = member.isValidStartDate("10002020");
+
+        //Årstal er for højt (over 2021)
+        boolean falseResult8 = member.isValidStartDate("10022022");
+
+        //Årstal er for lavt (under 2005)
+        boolean falseResult9 = member.isValidStartDate("10022004");
+
+        //Assert
+        assertTrue(trueResult1);
+        assertFalse(falseResult1);
+        assertFalse(falseResult2);
     }
 
     @Test
     void isNumeric() {
+        //Arrange
+        Member member = new Member(null,null,null,null,null,
+                null,null,null,null,false);
+
+        //Act
+
+
+        //Opfylder alle krav
+        boolean trueResult1 = member.isNumeric("1234567890");
+
+        //Indeholder et bogstav
+        boolean falseResult1 = member.isNumeric("123456789o");
+
+        //Assert
+        assertTrue(trueResult1);
+        assertFalse(falseResult1);
     }
 }

@@ -43,7 +43,6 @@ public class Member {
 
     }
 
-
     public static void addMembersFromFileToArray() throws FileNotFoundException {
         File membersFile = new File("src/Files/MembersList");
         Scanner sc = new Scanner(membersFile);
@@ -84,6 +83,7 @@ public class Member {
                 System.out.println("Fejl i tilføjelse af medlem.");
             }
         }
+        System.out.println(memberList);
     }
 
 
@@ -556,7 +556,7 @@ public class Member {
 
 
     public static void main (String[]args) throws IOException {
-
+        addMembersFromFileToArray();
     }
 
         public String getBirthdate () {
