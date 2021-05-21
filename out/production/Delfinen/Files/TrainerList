@@ -1,0 +1,2 @@
+name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDate;hasPayed
+Steve Jobs;0001;24021955;passive;trainer;trainer;80249625;stevejobs@apple.com;21052021;false
