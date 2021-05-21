@@ -427,9 +427,157 @@ public class Member {
         FileWriter fw = new FileWriter(membersFile, true);
         BufferedWriter bw = new BufferedWriter(fw);
         PrintWriter pw = new PrintWriter(membersFile);
-        System.out.println("Memberlist inden redigering af liste");
         pw.write("name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDate;hasPayed");
         for (Member currentMember : memberList){
+            pw.write("\n" + currentMember.name + ";" + currentMember.ID + ";" + currentMember.birthdate + ";" +
+                    currentMember.memberStatus + ";" + currentMember.memberGroup + ";" + currentMember.memberType +
+                    ";" + currentMember.telephoneNo + ";" + currentMember.email + ";" + currentMember.startDate + ";"
+                    + currentMember.hasPayed);   //Medlemmet skal tilføjes til filen
+        }
+        pw.close();
+
+    }
+
+    public static void editTrainerInfo() throws IOException {
+        readTrainersFromFileAndAddToArray();
+        Scanner input = new Scanner(System.in);
+        Member memberToEdit = null;
+        System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+        String userInput = input.nextLine();
+        boolean matchFound = false;
+        int lineNumber = 0;
+        boolean end = false;
+        while (!end) {
+
+            switch (userInput) {
+                case "1":
+                    System.out.println("Hvad er ID-nummeret på den træner, du vil redigere?");
+                    String inputID = input.nextLine();
+                    int lineCounter = 0;
+
+                    for (Member currentMember : trainerList){
+                        String currentID = currentMember.getID();
+                        if (currentID.equals(inputID)){
+                            System.out.println("Vil du ændre følgende træner?\n" + currentMember.getID() + ", " +
+                                    currentMember.getName() + "\n1: Ja 2: Nej");
+                            userInput = input.nextLine();
+                            switch(userInput){
+                                case "1":
+                                    memberToEdit = currentMember;
+                                    lineNumber = lineCounter;
+                                    end = true;
+                                    break;
+                                case "2":
+                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+                                    break;
+                            }
+                            matchFound = true;
+                        }
+                        lineCounter++;
+                    }
+                    if (!matchFound){
+                        System.out.println("Der blev ikke fundet et match for ID'et. Prøv igen.");
+                    }
+                    break;
+                case "2":
+                    System.out.println("Hvad er navnet på den træner, du vil redigere?");
+                    String inputName = input.nextLine();
+                    lineCounter = 0;
+                    for (Member currentMember : trainerList){
+                        if (currentMember.getName().toLowerCase().contains(inputName.toLowerCase())){
+                            System.out.println("Vil du ændre følgende træner?\n\n---ID: " + currentMember.getID() + "; Navn: " +
+                                    currentMember.getName() + "---\n\n1: Ja 2: Nej");
+                            userInput = input.nextLine();
+                            switch(userInput){
+                                case "1":
+                                    memberToEdit = currentMember;
+                                    lineNumber = lineCounter;
+                                    end = true;
+                                    break;
+                                case "2":
+                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+                                    break;
+                            }
+                            matchFound = true;
+                        }
+                        lineCounter++;
+                    }
+                    if (!matchFound){
+                        System.out.println("Der blev ikke fundet et match for navnet. Prøv igen.");
+                    }
+                    break;
+                default:
+                    System.out.println("Input ikke forstået. Prøv igen.\nVil du søge efter ID eller navn? 1: ID 2: Navn");
+                    userInput = input.nextLine();
+                    break;
+            }
+        }
+
+        String name = memberToEdit.name;
+        String ID = memberToEdit.ID;
+        String birthdate = memberToEdit.birthdate;
+        String memberStatus = memberToEdit.memberStatus;
+        String telephoneNo = memberToEdit.telephoneNo;
+        String email = memberToEdit.email;
+        String startDate = memberToEdit.startDate;
+
+        input = new Scanner(System.in);
+        end = false;
+        while(!end) {
+            System.out.println("Hvad vil du ændre?\n1: Navn\n2: Fødselsdato\n3: Aktivitetsstatus" +
+                    "\n4: Telefonnummer\n5: e-mail\n6: Startdato\n");
+            userInput = input.nextLine();
+            switch (userInput) {
+                case "1":
+                    name = addName();
+                    break;
+                case "2":
+                    birthdate = addBirthdate();
+                    break;
+                case "3":
+                    memberStatus = addActivityStatus();
+                    break;
+                case "4":
+                    telephoneNo = addPhoneNo();
+                    break;
+                case "5":
+                    email = addEmail();
+                    break;
+                case "6":
+                    startDate = addStartDate();
+                    break;
+                default:
+                    System.out.println("Input ikke forstået.");
+                    break;
+            }
+
+            System.out.println("Er du færdig med at redigere træneren? 1: Ja 2: Nej");
+            String userInput2 = input.nextLine();
+            boolean end2 = false;
+            while (!end2) {
+                switch (userInput2) {
+                    case "1":
+                        end = true;
+                        end2 = true;
+                        break;
+                    case "2":
+                        end2 = true;
+                        break;
+                    default:
+                }
+            }
+        }
+        Trainer updatedTrainer = new Trainer(name, ID, birthdate, memberStatus, "trainer", "trainer",
+                telephoneNo, email, startDate, false);
+        trainerList.set(lineNumber,updatedTrainer);
+
+
+        File trainersFile = new File("src/Files/TrainerList");
+        FileWriter fw = new FileWriter(trainersFile, true);
+        BufferedWriter bw = new BufferedWriter(fw);
+        PrintWriter pw = new PrintWriter(trainersFile);
+        pw.write("name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDate;hasPayed");
+        for (Member currentMember : trainerList){
             pw.write("\n" + currentMember.name + ";" + currentMember.ID + ";" + currentMember.birthdate + ";" +
                     currentMember.memberStatus + ";" + currentMember.memberGroup + ";" + currentMember.memberType +
                     ";" + currentMember.telephoneNo + ";" + currentMember.email + ";" + currentMember.startDate + ";"
@@ -892,7 +1040,7 @@ public class Member {
 
 
     public static void main (String[]args) throws IOException {
-        writeNewTrainer();
+        editTrainerInfo();
     }
 
         public String getBirthdate () {
