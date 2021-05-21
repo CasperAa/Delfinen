@@ -3,6 +3,7 @@ package Results;
 
 import Menu.MainMenu;
 import ValidityChecker.DateAndTime;
+import com.sun.tools.javac.Main;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -28,6 +29,11 @@ public abstract class Results {
         Scanner userID = new Scanner(System.in);
         System.out.println("user ID");
         String memberID = userID.nextLine();
+
+        if(memberID.length() != 4){
+            MainMenu.errorMessage();
+            userID.nextLine();
+        }
 
         // test to see if a file exists
         File file = new File("src/Files/membersResults/" + memberID);
@@ -100,9 +106,8 @@ public static void addResultTraining(String fileLocation) {
 
         System.out.println("Tid: (i sekunder - 62,23)");
         String time = userInput.nextLine();
-
         try {
-        Integer.parseInt(time);
+        Double.parseDouble(time);
         }
         catch (Exception e) {
         MainMenu.errorMessage();
@@ -147,11 +152,14 @@ public static void addResultTraining(String fileLocation) {
             switch (userInput.nextLine()){
                 case "ja":
                     addNewCSVFile();
+                    break;
                 case "nej":
                     MainMenu.loginScreen();
+                    break;
                 default:
                     MainMenu.errorMessage();
                     userInput.nextLine();
+                    break;
             }
 
             // closing writer connection
