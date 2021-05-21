@@ -21,7 +21,6 @@ class MemberTest {
 
         //Act
 
-
         //Opfylder alle krav
         boolean trueResult1 = member.isValidBirthdate("03042000");
 
@@ -217,6 +216,29 @@ class MemberTest {
         assertTrue(trueResult1);
         assertFalse(falseResult1);
         assertFalse(falseResult2);
+    }
+
+    @Test
+
+    void alreadyExistsInFile() throws FileNotFoundException {
+        //Arrange
+        Member member = new Member(null,null,null,null,null,
+                null,null,null,null,false);
+
+        //Act
+
+        File membersFile = new File("src/Files/MembersList");
+
+        //True
+        boolean trueResult1 = member.alreadyExistsInFile("70121416", membersFile, 6);
+
+        //False
+        boolean falseResult1 = member.alreadyExistsInFile("12345678", membersFile, 6);
+
+
+        //Assert
+        assertTrue(trueResult1);
+        assertFalse(falseResult1);
     }
 
 

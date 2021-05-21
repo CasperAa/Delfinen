@@ -1,2 +1,4 @@
 name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDate;hasPayed
 Steve Jobs;0001;24021955;passive;trainer;trainer;11111111;stevejobs@apple.com;21052021;false
+Joakim von And;0002;12031951;active;trainer;trainer;29482023;joakim@penge.com;21052021;false
+Elizabeth Bennet;0003;20091950;active;trainer;trainer;58492942;ebennet@janeausten.co.uk;21052021;false

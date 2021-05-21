@@ -161,7 +161,7 @@ public static void addResultTraining(String fileLocation) {
         }
     }
 
-    private static void generateCsvFile(String fileLocation) {
+    public static void generateCsvFile(String fileLocation) {
 
         FileWriter fWriter;
         BufferedWriter bWriter = null;
