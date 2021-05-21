@@ -1,5 +1,5 @@
 name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDate;hasPayed
-Amanda Tolstrup Laursen;0001;10011994;active;motionist;senior;70121416;amanda@delfinen.dk;01012020;false
+Amanda Tolstrup Laursen;0001;10011994;active;motionist;senior;70121416;amanda@delfinen.dk;01012020;true
 Adam Karlsson;0002;14032000;active;konkurrence;senior;88888888;adam@delfinen.dk;01012020;true
 Karen Nielsen;0003;19122010;active;motionist;junior;92837419;karensmor@delfinen.dk;01012020;false
 Casper Steengaard;0004;01011940;active;motionist;senior;19283019;casper@delfinen.dk;01012020;true
