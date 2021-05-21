@@ -86,9 +86,6 @@ public class CompetitionResults extends Results {
             bWriter.close();     //Handlingen sker rent faktisk
             System.out.println("Resultat blev tilføjet til fil: " + fileLocation.substring(fileLocation.length() - 4));
 
-
-            // add data to csv
-
             // closing writer connection
         } catch (IOException e) {
             System.out.println("Der skete en fejl - Resultatet blev ikke tilføjet");
