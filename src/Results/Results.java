@@ -104,7 +104,7 @@ public static void addResultTraining(String fileLocation) {
             userInput.nextLine();
         }
 
-        System.out.println("Tid: (i sekunder - 62,23)");
+        System.out.println("Tid: (i sekunder - Eksemble: 62.23)");
         String time = userInput.nextLine();
         try {
         Double.parseDouble(time);

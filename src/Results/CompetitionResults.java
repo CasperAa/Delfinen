@@ -26,14 +26,14 @@ public class CompetitionResults extends Results {
 
         String resultType = "Konkurrence";
 
-        System.out.println("Dato: (DD/MM-ÅÅÅÅ)");
+        System.out.println("Dato: (DD/MM/ÅÅÅÅ)");
         String date = userInput.nextLine();
         if (!DateAndTime.dateValidation(date)) {
             MainMenu.errorMessage();
             userInput.nextLine();
         }
 
-        System.out.println("Tid: (i sekunder - 62,23)");
+        System.out.println("Tid: (i sekunder - Eksemple: 62.23)");
         String time = userInput.nextLine();
         try {
             Double.parseDouble(time);
