@@ -900,7 +900,7 @@ public class Member {
         return memberGroup;
     }
 
-    public static String addPhoneNo() {
+    public static String addPhoneNo() throws FileNotFoundException {
         Scanner input = new Scanner(System.in);
 
         System.out.println("Indtast medlemmets telefonnummer:");
@@ -911,8 +911,54 @@ public class Member {
                 System.out.println("Ugyldigt telefonnummer. Prøv igen:");
                 telephoneNo = input.nextLine();
             } else {
-                System.out.println("Telefonnummeret er blevet tilføjet.");
-                end = true;
+
+                //Tjekker om telefonnummeret allerede eksisterer i databasen
+                boolean allreadyExists = false;
+                File membersFile = new File("src/Files/MembersList");
+                Scanner sc = new Scanner(membersFile);
+
+                //Skipper metadata linjen
+                sc.nextLine();
+
+                //while loop for alle linjer
+                while (sc.hasNext()) {
+
+                    String currentMember = sc.nextLine();
+
+                    String[] lineAsArray = currentMember.split(";");
+                    String currentPhonenumber = lineAsArray[6].trim();
+                    if (telephoneNo.equals(currentPhonenumber)){
+                        allreadyExists = true;
+                    }
+                }
+                if (!allreadyExists){
+                    System.out.println("Telefonnummeret er blevet tilføjet.");
+                    end = true;
+                } else {
+                    boolean end2 = false;
+                    System.out.println("Nummeret eksisterer allerede i databasen. Vil du tilføje det alligevel? " +
+                            "1: Ja 2: Nej");
+                    String userInput = sc.nextLine();
+                    while(!end2){
+                        switch(userInput){
+                            case "1":
+                                System.out.println("Telefonnummeret er blevet tilføjet.");
+                                end = true;
+                                end2 = true;
+                                break;
+                            case "2":
+                                System.out.println("Indtast nyt telefonnummer:");
+                                telephoneNo = input.nextLine();
+                                end2 = true;
+                                break;
+                            default:
+                                System.out.println("Input ikke forstået. Prøv igen.");
+                                break;
+
+                        }
+                    }
+                }
+
 
             }
         }
@@ -1040,7 +1086,7 @@ public class Member {
 
 
     public static void main (String[]args) throws IOException {
-        editTrainerInfo();
+        writeNewMember();
     }
 
         public String getBirthdate () {
