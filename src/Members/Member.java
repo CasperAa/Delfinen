@@ -16,14 +16,14 @@ import static java.lang.Long.parseLong;
 public class Member {
 
     private String name;
-    private String ID;
+    private final String ID;
     private String birthdate;
     private String memberStatus;
     private String memberGroup;
     private String memberType;
     private String telephoneNo;
     private String email;
-    private String startDate;
+    private final String startDate;
     private boolean hasPayed;
     static ArrayList<Member> memberList = new ArrayList<Member>();
 
