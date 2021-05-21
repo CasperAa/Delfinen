@@ -1153,7 +1153,7 @@ public class Member {
             while (!end) {
                 switch (userInput) {
                     case "1":
-                        //Her skal tilføjes kode, hvor brugeren søger efter medlemmet, der skal tilføjes, vha. navn eller ID.
+                        //Herunder er kode, hvor brugeren søger efter medlemmet, der skal tilføjes, vha. navn eller ID.
                         // Derefter tilføjes medlemmet til arraylisten, og brugeren får mulighed for at fortsætte med at
                         // redigere listen. Til sidst overkrives alt i filen med det opdaterede array.
                         Scanner input = new Scanner(System.in);
@@ -1262,7 +1262,7 @@ public class Member {
                         end = true;
                         break;
                     case "2":
-                        //Her skal tilføjes kode, hvor brugeren søger efter medlemmet, der skal slettes, vha. navn eller ID.
+                        //Herunder er kode, hvor brugeren søger efter medlemmet, der skal slettes, vha. navn eller ID.
                         // Derefter slettes medlemmet fra arraylisten, og brugeren får mulighed for at fortsætte med at
                         // redigere listen. Til sidst overkrives alt i filen med det opdaterede array.
                         input = new Scanner(System.in);
