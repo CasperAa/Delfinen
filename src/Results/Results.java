@@ -3,6 +3,7 @@ package Results;
 
 import Menu.MainMenu;
 import ValidityChecker.DateAndTime;
+import com.sun.tools.javac.Main;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -10,14 +11,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public abstract class Results {
+public class Results {
 
-    String resultTime;
+    double resultTime;
     String date;
     String swimType;
     String resultType;
 
-    public Results (String resultTime, String date, String swimType, String resultType){
+    public Results (double resultTime, String date, String swimType, String resultType){
         this.resultTime = resultTime;
         this.date = date;
         this.swimType = swimType;
@@ -28,6 +29,11 @@ public abstract class Results {
         Scanner userID = new Scanner(System.in);
         System.out.println("user ID");
         String memberID = userID.nextLine();
+
+        if(memberID.length() != 4){
+            MainMenu.errorMessage();
+            userID.nextLine();
+        }
 
         // test to see if a file exists
         File file = new File("src/Files/membersResults/" + memberID);
@@ -100,9 +106,8 @@ public static void addResultTraining(String fileLocation) {
 
         System.out.println("Tid: (i sekunder - 62,23)");
         String time = userInput.nextLine();
-
         try {
-        Integer.parseInt(time);
+        Double.parseDouble(time);
         }
         catch (Exception e) {
         MainMenu.errorMessage();
@@ -138,7 +143,7 @@ public static void addResultTraining(String fileLocation) {
 
             // add data to csv
 
-            String data = "\n" + resultType + ";" + date + ";" + time + ";" + swimMethod +  ";" + "N/A" +  ";" + "N/A";
+            String data = "\n" + resultType + ";" + date + ";" + time + ";" + swimMethod +  ";" + null +  ";" + null;
             bWriter.write(data);
             bWriter.close();     //Handlingen sker rent faktisk
             System.out.println("Resultat blev tilføjet til fil: " + fileLocation.substring(fileLocation.length()-4));
@@ -147,11 +152,14 @@ public static void addResultTraining(String fileLocation) {
             switch (userInput.nextLine()){
                 case "ja":
                     addNewCSVFile();
+                    break;
                 case "nej":
                     MainMenu.loginScreen();
+                    break;
                 default:
                     MainMenu.errorMessage();
                     userInput.nextLine();
+                    break;
             }
 
             // closing writer connection
@@ -187,4 +195,19 @@ public static void addResultTraining(String fileLocation) {
         }
     }
 
+    public double getResultTime() {
+        return resultTime;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getSwimType() {
+        return swimType;
+    }
+
+    public String getResultType() {
+        return resultType;
+    }
 }

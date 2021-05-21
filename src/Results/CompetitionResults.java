@@ -10,7 +10,7 @@ public class CompetitionResults extends Results {
     String competitionName;
     int placement;
 
-    public CompetitionResults(String resultTime, String date, String swimType, String resultType, String competitionName, int placement) {
+    public CompetitionResults(double resultTime, String date, String swimType, String resultType, String competitionName, int placement) {
         super(resultTime, date, swimType, resultType);
         this.competitionName = competitionName;
         this.placement = placement;
@@ -33,9 +33,11 @@ public class CompetitionResults extends Results {
             userInput.nextLine();
         }
 
-        System.out.println("Tid: (12:34)");
+        System.out.println("Tid: (i sekunder - 62,23)");
         String time = userInput.nextLine();
-        if (!DateAndTime.validateTime(time)) {
+        try {
+            Double.parseDouble(time);
+        } catch (Exception e){
             MainMenu.errorMessage();
             userInput.nextLine();
         }
@@ -86,11 +88,33 @@ public class CompetitionResults extends Results {
             bWriter.close();     //Handlingen sker rent faktisk
             System.out.println("Resultat blev tilføjet til fil: " + fileLocation.substring(fileLocation.length() - 4));
 
+            System.out.println("Opret flere resultater? ja/nej");
+            switch (userInput.nextLine()) {
+                case "ja":
+                    addNewCSVFile();
+                    break;
+                case "nej":
+                    MainMenu.loginScreen();
+                    break;
+                default:
+                    MainMenu.errorMessage();
+                    userInput.nextLine();
+                    break;
+            }
+
             // closing writer connection
         } catch (IOException e) {
             System.out.println("Der skete en fejl - Resultatet blev ikke tilføjet");
             e.printStackTrace();
         }
+    }
+
+    public String getCompetitionName() {
+        return competitionName;
+    }
+
+    public int getPlacement() {
+        return placement;
     }
 }
 
