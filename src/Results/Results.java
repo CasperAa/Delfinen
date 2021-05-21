@@ -11,14 +11,14 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public abstract class Results {
+public class Results {
 
-    String resultTime;
+    double resultTime;
     String date;
     String swimType;
     String resultType;
 
-    public Results (String resultTime, String date, String swimType, String resultType){
+    public Results (double resultTime, String date, String swimType, String resultType){
         this.resultTime = resultTime;
         this.date = date;
         this.swimType = swimType;
@@ -143,7 +143,7 @@ public static void addResultTraining(String fileLocation) {
 
             // add data to csv
 
-            String data = "\n" + resultType + ";" + date + ";" + time + ";" + swimMethod +  ";" + "N/A" +  ";" + "N/A";
+            String data = "\n" + resultType + ";" + date + ";" + time + ";" + swimMethod +  ";" + null +  ";" + null;
             bWriter.write(data);
             bWriter.close();     //Handlingen sker rent faktisk
             System.out.println("Resultat blev tilføjet til fil: " + fileLocation.substring(fileLocation.length()-4));
@@ -195,4 +195,19 @@ public static void addResultTraining(String fileLocation) {
         }
     }
 
+    public double getResultTime() {
+        return resultTime;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public String getSwimType() {
+        return swimType;
+    }
+
+    public String getResultType() {
+        return resultType;
+    }
 }

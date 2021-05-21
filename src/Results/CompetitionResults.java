@@ -10,7 +10,7 @@ public class CompetitionResults extends Results {
     String competitionName;
     int placement;
 
-    public CompetitionResults(String resultTime, String date, String swimType, String resultType, String competitionName, int placement) {
+    public CompetitionResults(double resultTime, String date, String swimType, String resultType, String competitionName, int placement) {
         super(resultTime, date, swimType, resultType);
         this.competitionName = competitionName;
         this.placement = placement;
@@ -107,6 +107,14 @@ public class CompetitionResults extends Results {
             System.out.println("Der skete en fejl - Resultatet blev ikke tilføjet");
             e.printStackTrace();
         }
+    }
+
+    public String getCompetitionName() {
+        return competitionName;
+    }
+
+    public int getPlacement() {
+        return placement;
     }
 }
 
