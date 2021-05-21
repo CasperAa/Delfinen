@@ -1,6 +1,7 @@
 package System;
 import Members.Member;
 import Menu.MainMenu;
+import Results.TrainigResults;
 import Subscriptions.Revenue;
 import Subscriptions.UnpaidSubscriptions;
 
@@ -79,7 +80,7 @@ public class MainSystem {
                     switch (userInput.nextLine()){
                         case "1":
                             //Method for adding new result
-                            Results.CompetitionResults.addNewCSVFile();
+                            TrainigResults.addNewCSVFile();
                             break;
                         case "2":
                             //Method for top 5 overview

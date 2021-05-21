@@ -6,24 +6,37 @@ import Members.Member;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.Scanner;
 
 public class TopFive {
 
 
-    static ArrayList<Results> resultsArrayList;
+    private ArrayList<ConstructorData> resultsArrayList;
+
+    private ArrayList<ConstructorData> seniorCrawl;
+    private ArrayList<ConstructorData> seniorBreaststroke;
+    private ArrayList<ConstructorData> seniorBufferfly;
+    private ArrayList<ConstructorData> seniorRygcrawl;
+    private ArrayList<ConstructorData> juniorCrawl;
+    private ArrayList<ConstructorData> juniorBreaststroke;
+    private ArrayList<ConstructorData> juniorBufferfly;
+    private ArrayList<ConstructorData> juniorRygcrawl;
 
 
     public static void main(String[] args) throws FileNotFoundException {
-        fileReader();
+        TopFive test = new TopFive();
+        test.fileReader();
+        //test.sortDataBySwimMethod();
     }
 
-    public static void fileReader() throws FileNotFoundException {
+    public void fileReader() throws FileNotFoundException {
         File[] memberFiles = new File("src/Files/membersResults").listFiles();
 
-        resultsArrayList = new ArrayList<Results>();
+        resultsArrayList = new ArrayList<>();
 
+        assert memberFiles != null;
         for (File currentFile : memberFiles) {
 
             Scanner scanCurrentFile = new Scanner(currentFile);
@@ -40,33 +53,36 @@ public class TopFive {
 
                 String[] lineAsArray = currentRow.split(";");
 
+                String id = currentFile.getName();
                 String type = lineAsArray[0].trim();
                 String date = lineAsArray[1].trim();
                 double time = Double.parseDouble(lineAsArray[2].trim());
                 String method = lineAsArray[3].trim();
-                String competitionName = null;
-                int placement = 0;
-                if(type.equals("Konkurrence")) {
-                    competitionName = lineAsArray[4].trim();
-                    placement = Integer.parseInt(lineAsArray[5].trim());
-                }
+                String competitionName = lineAsArray[4].trim();
+                String placement = lineAsArray[5].trim();
 
-                if (type.equals("Konkurrence")) {
-                    CompetitionResults currentCompetitionResult = new CompetitionResults(time, date, method, type, competitionName, placement);
-                    resultsArrayList.add(currentCompetitionResult);
-                } else {
-                    Results currentResult = new Results(time, date, method, type);
-                    resultsArrayList.add(currentResult);
-                }
+
+                ConstructorData currentCompetitionResult = new ConstructorData(id, time, date, method, type, competitionName, placement);
+                resultsArrayList.add(currentCompetitionResult);
+                System.out.println(id + " " + time + " " + date + " " + method + " " + type + " " + competitionName + " " + placement);
+
 
             }
-
         }
-        System.out.println(resultsArrayList.toString());
+    }
+/*
+    public void sortDataBySwimMethod() {
+        try {
+            for (int i = 0; i < resultsArrayList.size(); i++) {
+                if (resultsArrayList.get(i).swimType.equals("Brystsvømning")) {
+                    seniorBreaststroke.add(resultsArrayList.get(i));
+                    System.out.println(seniorBreaststroke.size());
+                }
+            }
+        } catch (NullPointerException e){
+            System.out.println("something is wrong");
+        }
     }
 
-    @Override
-    public String toString(){
-        return CompetitionResults.getCompetitionName();
-    }
+ */
 }
