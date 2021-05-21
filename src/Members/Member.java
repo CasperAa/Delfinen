@@ -26,6 +26,7 @@ public class Member {
     private String startDate;
     private boolean hasPayed;
     static ArrayList<Member> memberList = new ArrayList<Member>();
+    static ArrayList<Trainer> trainerList = new ArrayList<Trainer>();
 
     //Constructor
     public Member(String name, String ID, String birthdate, String memberStatus, String memberGroup, String memberType,
@@ -85,6 +86,40 @@ public class Member {
         }
     }
 
+    public static void readTrainersFromFileAndAddToArray() throws FileNotFoundException {
+        File membersFile = new File("src/Files/TrainerList");
+        Scanner sc = new Scanner(membersFile);
+
+
+        //Skipper metadatalinjen
+        sc.nextLine();
+
+
+        //While-loop, så alle linjer læses
+        while (sc.hasNext()) {
+
+            //En variabel, som indeholder den nuværende linje
+            String currentMember = sc.nextLine();
+
+            String[] lineAsArray = currentMember.split(";");
+
+            String name = lineAsArray[0].trim();
+            String ID = lineAsArray[1].trim();
+            String birthdate = lineAsArray[2].trim();
+            String memberStatus = lineAsArray[3].trim();
+            String memberGroup = lineAsArray[4].trim();
+            String memberType = lineAsArray[5].trim();
+            String telephoneNo = lineAsArray[6].trim();
+            String email = lineAsArray[7].trim();
+            String startDate = lineAsArray[8].trim();
+            boolean hasPayed = Boolean.parseBoolean(lineAsArray[9].trim());
+
+            Trainer newMember = new Trainer(name, ID, birthdate, memberStatus, memberGroup,
+                    memberType, telephoneNo, email, startDate, hasPayed);
+            trainerList.add(newMember);
+        }
+    }
+
 
     public static void writeNewMember() throws IOException {
         Scanner sc = new Scanner(System.in);
@@ -110,6 +145,7 @@ public class Member {
 
 
     private static ArrayList<Integer> IDListe;
+    private static ArrayList<Integer> IDListeTrainer;
 
     public static void addMemberToFile(String name, String birthdate, String memberStatus, String memberGroup,
                                        String telephoneNo, String email, String startDate, boolean hasPayed) throws IOException {
@@ -136,8 +172,12 @@ public class Member {
                 IDListe.add(currentID);
             }
 
-            String tempID = "000" + (Collections.max(IDListe) + 1);
-            ID = tempID.substring(tempID.length() - 4);
+            if (IDListe.size()!=0){
+                String tempID = "000" + (Collections.max(IDListe) + 1);
+                ID = tempID.substring(tempID.length() - 4);
+            } else {
+                ID = "0001";
+            }
             //ID-metoden er slut
 
             //Nedenstående afgør, om medlemmet er junior eller senior
@@ -163,6 +203,74 @@ public class Member {
             bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";"
                     + memberType +
                     ";" + telephoneNo + ";" + email + ";" + startDate + ";" + hasPayed);   //Medlemmet skal tilføjes til filen
+            bw.close();     //Handlingen sker rent faktisk
+            System.out.println("Medlem blev tilføjet");
+        } catch (Exception e) {
+            System.out.println("Der skete en fejl. Medlemmet blev ikke tilføjet.");
+        }
+
+    }
+
+    public static void writeNewTrainer() throws IOException {
+        Scanner sc = new Scanner(System.in);
+
+        String name = addName();
+
+        String birthdate = addBirthdate();
+
+        String memberStatus = addActivityStatus();
+
+        String telephoneNo = addPhoneNo();
+
+        String email = addEmail();
+
+        String startDate = addStartDate();
+
+
+        addTrainerToFile(name, birthdate, memberStatus, telephoneNo, email, startDate);
+    }
+
+
+    public static void addTrainerToFile(String name, String birthdate, String memberStatus,
+                                       String telephoneNo, String email, String startDate) throws IOException {
+
+        try {
+            //Nedenstående tildeler et ID-nummer, der er én højere end det hidtil højeste ID.
+            String ID;
+
+            File trainersFile = new File("src/Files/TrainerList");
+            Scanner sc = new Scanner(trainersFile);
+
+            IDListeTrainer = new ArrayList<Integer>();
+            //Skipper metadata linjen
+            sc.nextLine();
+
+            //while loop for alle linjer
+            while (sc.hasNext()) {
+
+                String currentTrainer = sc.nextLine();
+
+                String[] lineAsArray = currentTrainer.split(";");
+                int currentID = parseInt(lineAsArray[1].trim());
+
+                IDListeTrainer.add(currentID);
+            }
+            if (IDListeTrainer.size()!=0){
+                String tempID = "000" + (Collections.max(IDListeTrainer) + 1);
+                ID = tempID.substring(tempID.length() - 4);
+            } else {
+                ID = "0001";
+            }
+            //ID-metoden er slut
+
+            //Filen redigeres
+            FileWriter fw = new FileWriter(trainersFile, true);   //Filen bliver ikke overwritten.
+            BufferedWriter bw = new BufferedWriter(fw);
+            //PrintWriter pw = new PrintWriter(membersFile);
+
+            bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + "trainer" + ";"
+                    + "trainer" +
+                    ";" + telephoneNo + ";" + email + ";" + startDate + ";" + false);   //Træneren skal tilføjes til filen
             bw.close();     //Handlingen sker rent faktisk
             System.out.println("Medlem blev tilføjet");
         } catch (Exception e) {
@@ -784,7 +892,7 @@ public class Member {
 
 
     public static void main (String[]args) throws IOException {
-        editPaymentStatus();
+        writeNewTrainer();
     }
 
         public String getBirthdate () {
