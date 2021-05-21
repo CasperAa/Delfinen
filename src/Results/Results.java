@@ -27,29 +27,29 @@ public abstract class Results {
     public static void addNewCSVFile(){
         Scanner userID = new Scanner(System.in);
         System.out.println("user ID");
-        String swimmerID = userID.nextLine();
+        String memberID = userID.nextLine();
 
         // test to see if a file exists
-        File file = new File("src/Files/competitionResults/" + swimmerID);
+        File file = new File("src/Files/membersResults/" + memberID);
         boolean exists = file.exists();
         if (exists) {
             System.out.println("Denne fil eksitere!");
-            String fileLocation = "src/Files/competitionResults/";
-            resultType(fileLocation+swimmerID);
+            String fileLocation = "src/Files/membersResults/";
+            resultType(fileLocation+memberID);
         } else {
             System.out.println("Denne fil eksitere ikke\n");
             System.out.println("Vil du oprette en ny fil for dette ID?  ja/nej");
             switch (userID.nextLine()){
                 case "ja":
-                    String fileLocation = "src/Files/competitionResults/";
-                    generateCsvFile(fileLocation+swimmerID);
+                    String fileLocation = "src/Files/membersResults/";
+                    generateCsvFile(fileLocation+memberID);
 
                     System.out.println("Registrer resultat? ja/nej");
                     switch (userID.nextLine()){
                         case "ja":
-                            resultType(fileLocation+swimmerID);
+                            resultType(fileLocation+memberID);
                         case "nej":
-
+                            MainMenu.loginScreen();
                             break;
                         default:
                             MainMenu.errorMessage();
@@ -57,6 +57,7 @@ public abstract class Results {
                     }
                     break;
                 case "nej":
+                    MainMenu.loginScreen();
                     break;
                 default:
                     MainMenu.errorMessage();
@@ -90,18 +91,22 @@ public static void addResultTraining(String fileLocation) {
 
         String resultType = "Træning";
 
-        System.out.println("Dato: (DD/MM-ÅÅÅÅ)");
+        System.out.println("Dato: (DD/MM/ÅÅÅÅ)");
         String date = userInput.nextLine();
         if (!DateAndTime.dateValidation(date)){
             MainMenu.errorMessage();
             userInput.nextLine();
         }
 
-        System.out.println("Tid: (12:34)");
+        System.out.println("Tid: (i sekunder - 62,23)");
         String time = userInput.nextLine();
-        if(!DateAndTime.validateTime(time)){
-            MainMenu.errorMessage();
-            userInput.nextLine();
+
+        try {
+        Integer.parseInt(time);
+        }
+        catch (Exception e) {
+        MainMenu.errorMessage();
+        userInput.nextLine();
         }
 
         System.out.println("Metode:\n" + "     Tryk 1: Butterfly\n" + "     Tryk 2: Crawl\n" + "     Tryk 3: Rygcrawl\n" + "     Tryk 4: Brystsvømning");
@@ -138,8 +143,16 @@ public static void addResultTraining(String fileLocation) {
             bWriter.close();     //Handlingen sker rent faktisk
             System.out.println("Resultat blev tilføjet til fil: " + fileLocation.substring(fileLocation.length()-4));
 
-
-            // add data to csv
+            System.out.println("Opret flere resultater? ja/nej");
+            switch (userInput.nextLine()){
+                case "ja":
+                    addNewCSVFile();
+                case "nej":
+                    MainMenu.loginScreen();
+                default:
+                    MainMenu.errorMessage();
+                    userInput.nextLine();
+            }
 
             // closing writer connection
         } catch (IOException e) {
@@ -173,4 +186,5 @@ public static void addResultTraining(String fileLocation) {
             }
         }
     }
+
 }
