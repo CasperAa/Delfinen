@@ -938,7 +938,7 @@ public class Member {
                     boolean end2 = false;
                     System.out.println("Nummeret eksisterer allerede i databasen. Vil du tilføje det alligevel? " +
                             "1: Ja 2: Nej");
-                    String userInput = sc.nextLine();
+                    String userInput = input.nextLine();
                     while(!end2){
                         switch(userInput){
                             case "1":
