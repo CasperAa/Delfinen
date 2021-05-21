@@ -26,16 +26,18 @@ public class CompetitionResults extends Results {
 
         String resultType = "Konkurrence";
 
-        System.out.println("Dato: (DD/MM-ÅÅÅÅ)");
+        System.out.println("Dato: (DD/MM/ÅÅÅÅ)");
         String date = userInput.nextLine();
         if (!DateAndTime.dateValidation(date)) {
             MainMenu.errorMessage();
             userInput.nextLine();
         }
 
-        System.out.println("Tid: (12:34)");
+        System.out.println("Tid: (I sekunder - 62,23)");
         String time = userInput.nextLine();
-        if (!DateAndTime.validateTime(time)) {
+        try {
+            Integer.parseInt(time);
+        } catch (Exception e) {
             MainMenu.errorMessage();
             userInput.nextLine();
         }
@@ -86,7 +88,16 @@ public class CompetitionResults extends Results {
             bWriter.close();     //Handlingen sker rent faktisk
             System.out.println("Resultat blev tilføjet til fil: " + fileLocation.substring(fileLocation.length() - 4));
 
-
+            System.out.println("Opret flere resultater? ja/nej");
+            switch (userInput.nextLine()){
+                case "ja":
+                    addNewCSVFile();
+                case "nej":
+                    MainMenu.menuScreenTrainer();
+                default:
+                    MainMenu.errorMessage();
+                    userInput.nextLine();
+            }
             // add data to csv
 
             // closing writer connection
