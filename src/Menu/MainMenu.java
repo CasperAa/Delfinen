@@ -24,13 +24,18 @@ public class MainMenu {
         System.out.println("Tryk 4: Se medlemmer, der i restance");
         System.out.println("Tryk 5: Svømmeresultater");
         System.out.println("Tryk 6: Start ny sæson");
+        System.out.println("Tryk 7: Tilføj ny træner");
+        System.out.println("Tryk 8: Rediger eksisterende træner");
         System.out.println("Tryk 9: Afslut program");
 
     }
+
     // Main menu screen for Manager
     public static void menuScreenManager (){
         System.out.println("Tryk 1: Tilføj nyt medlem");
         System.out.println("Tryk 2: Rediger eksisterende medlemmer");
+        System.out.println("Tryk 3: Tilføj ny træner");
+        System.out.println("Tryk 4: Rediger eksisterende træner");
         System.out.println("Tryk 9: Afslut program");
     }
 
