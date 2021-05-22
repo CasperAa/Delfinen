@@ -109,7 +109,7 @@ public class CompetitionResults extends Results {
         }
     }
 
-    public String getCompetitionName() {
+    public static String getCompetitionName() {
         return competitionName;
     }
 
