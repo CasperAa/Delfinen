@@ -86,7 +86,7 @@ public class SuperResult {
             userInput.nextLine();
         }
     }
-    static void generateCsvFile(String fileLocation) {
+    public static void generateCsvFile(String fileLocation) {
 
         FileWriter fWriter;
         BufferedWriter bWriter = null;

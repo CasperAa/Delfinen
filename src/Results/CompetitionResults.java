@@ -6,14 +6,11 @@ import Menu.MainMenu;
 import ValidityChecker.DateAndTime;
 //@Casper
 
-public class CompetitionResults extends Results {
-    static String competitionName;
-    int placement;
+public class CompetitionResults extends SuperResult {
 
-    public CompetitionResults(double resultTime, String date, String swimType, String resultType, String competitionName, int placement) {
-        super(resultTime, date, swimType, resultType);
-        this.competitionName = competitionName;
-        this.placement = placement;
+
+    public CompetitionResults(double resultTime, String date, String swimType, String resultType, String competitionName, String placement) {
+        super(resultTime, date, swimType, resultType, competitionName, placement);
     }
 
 
@@ -109,11 +106,11 @@ public class CompetitionResults extends Results {
         }
     }
 
-    public static String getCompetitionName() {
+    public String getCompetitionName() {
         return competitionName;
     }
 
-    public int getPlacement() {
+    public String getPlacement() {
         return placement;
     }
 }
