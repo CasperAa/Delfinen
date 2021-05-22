@@ -26,9 +26,8 @@ public class MainMenu {
         System.out.println("Tryk 6: Start ny sæson");
         System.out.println("Tryk 7: Tilføj ny træner");
         System.out.println("Tryk 8: Rediger eksisterende træner");
-        System.out.println(("Tryk 9: Rediger hold");
+        System.out.println("Tryk 9: Rediger hold");
         System.out.println("Tryk 10: Afslut program");
-
     }
 
     // Main menu screen for Manager
@@ -37,7 +36,7 @@ public class MainMenu {
         System.out.println("Tryk 2: Rediger eksisterende medlemmer");
         System.out.println("Tryk 3: Tilføj ny træner");
         System.out.println("Tryk 4: Rediger eksisterende træner");
-        System.out.println(("Tryk 5: Rediger hold");
+        System.out.println("Tryk 5: Rediger hold");
         System.out.println("Tryk 9: Afslut program");
     }
 
