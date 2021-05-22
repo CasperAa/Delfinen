@@ -7,7 +7,7 @@ import ValidityChecker.DateAndTime;
 //@Casper
 
 public class CompetitionResults extends Results {
-    String competitionName;
+    static String competitionName;
     int placement;
 
     public CompetitionResults(double resultTime, String date, String swimType, String resultType, String competitionName, int placement) {
