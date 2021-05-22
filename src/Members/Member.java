@@ -1,7 +1,5 @@
 package Members;
 
-import Menu.MainMenu;
-
 import java.io.*;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
@@ -10,7 +8,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static Results.Results.generateCsvFile;
-import static Results.Results.resultType;
 import static com.sun.org.apache.xml.internal.utils.XMLCharacterRecognizer.isWhiteSpace;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
@@ -19,16 +16,16 @@ import static java.lang.Long.parseLong;
 //@Amanda
 public class Member {
 
-    private String name;
-    private final String ID;
-    private String birthdate;
-    private String memberStatus;
-    private String memberGroup;
-    private String memberType;
-    private String telephoneNo;
-    private String email;
-    private final String startDate;
-    private boolean hasPayed;
+    protected String name;
+    protected final String ID;
+    protected String birthdate;
+    protected String memberStatus;
+    protected String memberGroup;
+    protected String memberType;
+    protected String telephoneNo;
+    protected String email;
+    protected final String startDate;
+    protected boolean hasPayed;
     static ArrayList<Member> memberList = new ArrayList<Member>();
     static ArrayList<Trainer> trainerList = new ArrayList<Trainer>();
     static ArrayList<Member> currentTrainerList = new ArrayList<Member>();
@@ -118,9 +115,10 @@ public class Member {
             String email = lineAsArray[7].trim();
             String startDate = lineAsArray[8].trim();
             boolean hasPayed = Boolean.parseBoolean(lineAsArray[9].trim());
+            String discipline = lineAsArray[10].trim();
 
             Trainer newMember = new Trainer(name, ID, birthdate, memberStatus, memberGroup,
-                    memberType, telephoneNo, email, startDate, hasPayed);
+                    memberType, telephoneNo, email, startDate, hasPayed, discipline);
             trainerList.add(newMember);
         }
     }
@@ -135,7 +133,7 @@ public class Member {
 
         String memberStatus = addActivityStatus();
 
-        String memberGroup = addMemberType();
+        String memberType = addMemberGroup();
 
         String telephoneNo = addPhoneNo();
 
@@ -145,7 +143,7 @@ public class Member {
 
         boolean hasPayed = addPaymentStatus();
 
-        addMemberToFile(name, birthdate, memberStatus, memberGroup, telephoneNo, email, startDate, hasPayed);
+        addMemberToFile(name, birthdate, memberStatus, memberType, telephoneNo, email, startDate, hasPayed);
     }
 
 
@@ -225,19 +223,23 @@ public class Member {
 
         String memberStatus = addActivityStatus();
 
+        String memberType = addMemberType();
+
         String telephoneNo = addPhoneNo();
 
         String email = addEmail();
 
         String startDate = addStartDate();
 
+        String discipline = addDiscipline();
 
-        addTrainerToFile(name, birthdate, memberStatus, telephoneNo, email, startDate);
+
+        addTrainerToFile(name, birthdate, memberStatus, memberType, telephoneNo, email, startDate, discipline);
     }
 
 
-    public static void addTrainerToFile(String name, String birthdate, String memberStatus,
-                                        String telephoneNo, String email, String startDate) throws IOException {
+    public static void addTrainerToFile(String name, String birthdate, String memberStatus, String memberType,
+                                        String telephoneNo, String email, String startDate, String discipline) throws IOException {
 
         try {
             //Nedenstående tildeler et ID-nummer, der er én højere end det hidtil højeste ID.
@@ -274,14 +276,73 @@ public class Member {
             //PrintWriter pw = new PrintWriter(membersFile);
 
             bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + "trainer" + ";"
-                    + "trainer" +
-                    ";" + telephoneNo + ";" + email + ";" + startDate + ";" + false);   //Træneren skal tilføjes til filen
+                    + memberType +
+                    ";" + telephoneNo + ";" + email + ";" + startDate + ";" + false + ";" + discipline);   //Træneren skal tilføjes til filen
             bw.close();     //Handlingen sker rent faktisk
             System.out.println("Medlem blev tilføjet");
         } catch (Exception e) {
             System.out.println("Der skete en fejl. Medlemmet blev ikke tilføjet.");
         }
 
+    }
+
+    public static String addMemberType(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Hvilken aldersgruppe skal træneren træne? 1: Senior 2: Junior");
+        String memberType = null;
+        String userInput = input.nextLine();
+        boolean end = false;
+        while (!end) {
+            switch (userInput) {
+                case "1":
+                    memberType = "senior";
+                    end = true;
+                    break;
+                case "2":
+                    memberType = "junior";
+                    end = true;
+                    break;
+                default:
+                    System.out.println("Input ikke forstået. Prøv igen.\nHvilken aldersgruppe skal træneren træne? 1: Senior 2: Junior");
+                    userInput = input.nextLine();
+                    break;
+            }
+        }
+        return memberType;
+    }
+
+
+    public static String addDiscipline(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Hvilken disciplin skal tilknyttes træneren? 1: Butterfly 2: Crawl 3: Rygcrawl 4: Brystsvømning");
+        String discipline = null;
+        String userInput = input.nextLine();
+        boolean end = false;
+        while (!end) {
+            switch (userInput) {
+                case "1":
+                    discipline = "butterfly";
+                    end = true;
+                    break;
+                case "2":
+                    discipline = "crawl";
+                    end = true;
+                    break;
+                case "3":
+                    discipline = "rygcrawl";
+                    end = true;
+                    break;
+                case "4":
+                    discipline = "brystsvømning";
+                    end = true;
+                    break;
+                default:
+                    System.out.println("Input ikke forstået. Prøv igen.\nHvilken disciplin skal tilknyttes træneren? 1: Butterfly 2: Crawl 3: Rygcrawl 4: Brystsvømning");
+                    userInput = input.nextLine();
+                    break;
+            }
+        }
+        return discipline;
     }
 
 
@@ -388,7 +449,7 @@ public class Member {
                     memberStatus = addActivityStatus();
                     break;
                 case "4":
-                    memberGroup = addMemberType();
+                    memberGroup = addMemberGroup();
                     break;
                 case "5":
                     telephoneNo = addPhoneNo();
@@ -446,7 +507,7 @@ public class Member {
     public static void editTrainerInfo() throws IOException {
         readTrainersFromFileAndAddToArray();
         Scanner input = new Scanner(System.in);
-        Member memberToEdit = null;
+        Trainer memberToEdit = null;
         System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
         String userInput = input.nextLine();
         boolean matchFound = false;
@@ -460,7 +521,7 @@ public class Member {
                     String inputID = input.nextLine();
                     int lineCounter = 0;
 
-                    for (Member currentMember : trainerList) {
+                    for (Trainer currentMember : trainerList) {
                         String currentID = currentMember.getID();
                         if (currentID.equals(inputID)) {
                             System.out.println("Vil du ændre følgende træner?\n" + currentMember.getID() + ", " +
@@ -488,7 +549,7 @@ public class Member {
                     System.out.println("Hvad er navnet på den træner, du vil redigere?");
                     String inputName = input.nextLine();
                     lineCounter = 0;
-                    for (Member currentMember : trainerList) {
+                    for (Trainer currentMember : trainerList) {
                         if (currentMember.getName().toLowerCase().contains(inputName.toLowerCase())) {
                             System.out.println("Vil du ændre følgende træner?\n\n---ID: " + currentMember.getID() + "; Navn: " +
                                     currentMember.getName() + "---\n\n1: Ja 2: Nej");
@@ -525,12 +586,13 @@ public class Member {
         String telephoneNo = memberToEdit.telephoneNo;
         String email = memberToEdit.email;
         String startDate = memberToEdit.startDate;
+        String discipline = memberToEdit.discipline;
 
         input = new Scanner(System.in);
         end = false;
         while (!end) {
             System.out.println("Hvad vil du ændre?\n1: Navn\n2: Fødselsdato\n3: Aktivitetsstatus" +
-                    "\n4: Telefonnummer\n5: e-mail\n6: Startdato\n");
+                    "\n4: Telefonnummer\n5: e-mail\n6: Startdato\n7: Disciplin");
             userInput = input.nextLine();
             switch (userInput) {
                 case "1":
@@ -550,6 +612,9 @@ public class Member {
                     break;
                 case "6":
                     startDate = addStartDate();
+                    break;
+                case "7":
+                    discipline = addDiscipline();
                     break;
                 default:
                     System.out.println("Input ikke forstået.");
@@ -573,7 +638,7 @@ public class Member {
             }
         }
         Trainer updatedTrainer = new Trainer(name, ID, birthdate, memberStatus, "trainer", "trainer",
-                telephoneNo, email, startDate, false);
+                telephoneNo, email, startDate, false, discipline);
         trainerList.set(lineNumber, updatedTrainer);
 
 
@@ -877,7 +942,7 @@ public class Member {
         return memberStatus;
     }
 
-    public static String addMemberType() {
+    public static String addMemberGroup() {
         Scanner input = new Scanner(System.in);
         System.out.println("Hvad er medlemstypen? 1: Motionist 2: Konkurrencesvømmer");
         String memberGroup = null;
@@ -1132,7 +1197,7 @@ public class Member {
         makeNewTrainerCSVFile(trainerID);
         File file = new File("src/TrainerFiles/" + trainerID);
 
-        readMembersFromTrainerFileAndAddToArray(file);
+        readTrainersFromFileAndAddToArray(file);
 
         if (currentTrainerList.size() != 0) {
             System.out.println("Nuværende liste");
@@ -1173,7 +1238,7 @@ public class Member {
 
                                     for (Member currentMember : memberList) {
                                         String currentID = currentMember.getID();
-                                        if (currentID.equals(inputID)) {
+                                        if (currentID.equals(inputID) && trainerList.get(lineNumber).getMemberType().equals(currentMember.getMemberType())) {
                                             System.out.println("Vil du tilføje følgende medlem?\n" + currentMember.getID() + ", " +
                                                     currentMember.getName() + "\n1: Ja 2: Nej");
                                             userInput = input.nextLine();
@@ -1188,6 +1253,12 @@ public class Member {
                                                     break;
                                             }
                                             matchFound = true;
+                                        } else if (currentID.equals(inputID) && !trainerList.get(lineNumber).
+                                                getMemberType().equals(currentMember.getMemberType())){
+                                            System.out.println("Træneren træner ikke svømmere i denne aldersgruppe. " +
+                                                    "Træneren træner " + trainerList.get(lineNumber).getMemberType()
+                                                    + ", denne svømmer er " + currentMember.getMemberType() + ". " +
+                                                    "Prøv igen\nHvad er ID-nummeret på det medlem, du vil tilføje?");
                                         }
                                         lineCounter++;
                                     }
@@ -1200,7 +1271,9 @@ public class Member {
                                     String inputName = input.nextLine();
                                     lineCounter = 0;
                                     for (Member currentMember : memberList) {
-                                        if (currentMember.getName().toLowerCase().contains(inputName.toLowerCase())) {
+                                        if (currentMember.getName().toLowerCase().contains(inputName.toLowerCase())
+                                                && trainerList.get(lineNumber).getMemberType().equals(currentMember.
+                                                getMemberType())) {
                                             System.out.println("Vil du tilføje følgende medlem?\n\n---ID: " + currentMember.getID() + "; Navn: " +
                                                     currentMember.getName() + "---\n\n1: Ja 2: Nej");
                                             userInput = input.nextLine();
@@ -1215,6 +1288,13 @@ public class Member {
                                                     break;
                                             }
                                             matchFound = true;
+                                        } else if (currentMember.getName().toLowerCase().contains(inputName.
+                                                toLowerCase()) && !trainerList.get(lineNumber).
+                                                getMemberType().equals(currentMember.getMemberType())){
+                                            System.out.println("Træneren træner ikke svømmere i denne aldersgruppe. " +
+                                                    "Træneren træner " + trainerList.get(lineNumber).getMemberType()
+                                                    + ", denne svømmer er " + currentMember.getMemberType() + ". " +
+                                                    "Prøv igen\nHvad er navnet på det medlem, du vil tilføje?");
                                         }
                                         lineCounter++;
                                     }
@@ -1380,7 +1460,7 @@ public class Member {
         }
     }
 
-        public static void readMembersFromTrainerFileAndAddToArray (File trainerFile) throws FileNotFoundException {
+        public static void readTrainersFromFileAndAddToArray(File trainerFile) throws FileNotFoundException {
             Scanner sc = new Scanner(trainerFile);
 
             currentTrainerList.clear();

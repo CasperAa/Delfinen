@@ -37,6 +37,15 @@ public class MainSystem {
                         case "2":
                             Member.editMemberInfo();//Method for editing existing members
                             break;
+                        case "3":
+                            Member.writeNewTrainer(); //Method for adding trainers
+                            break;
+                        case "4":
+                            Member.editTrainerInfo(); //Method for editing existing trainers
+                            break;
+                        case "5":
+                            Member.editTrainerTeams(); //Method for editing teams
+                            break;
                         case "9":
                             endProgram = true;
                             break;
@@ -119,6 +128,9 @@ public class MainSystem {
                             //Method for resetting payment status and updating membertype for all members
                             Member.startNewSeason();
                         case "9":
+                            Member.editTrainerTeams(); //Method for editing teams
+                            break;
+                        case "10":
                             endProgram = true;
                             break;
                         default:

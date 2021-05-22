@@ -6,10 +6,14 @@ import Menu.MainMenu;
 import ValidityChecker.DateAndTime;
 //@Casper
 
-public class CompetitionResults extends SuperResult {
+public class CompetitionResults extends Results {
+    static String competitionName;
+    int placement;
 
-    public CompetitionResults(double resultTime, String date, String swimType, String resultType, String competitionName, String placement) {
-        super(resultTime, date, swimType, resultType, competitionName, placement);
+    public CompetitionResults(double resultTime, String date, String swimType, String resultType, String competitionName, int placement) {
+        super(resultTime, date, swimType, resultType);
+        this.competitionName = competitionName;
+        this.placement = placement;
     }
 
 
@@ -22,14 +26,14 @@ public class CompetitionResults extends SuperResult {
 
         String resultType = "Konkurrence";
 
-        System.out.println("Dato: (DD/MM/ÅÅÅÅ)");
+        System.out.println("Dato: (DD/MM-ÅÅÅÅ)");
         String date = userInput.nextLine();
         if (!DateAndTime.dateValidation(date)) {
             MainMenu.errorMessage();
             userInput.nextLine();
         }
 
-        System.out.println("Tid: (i sekunder - Eksemple: 62.23)");
+        System.out.println("Tid: (i sekunder - 62,23)");
         String time = userInput.nextLine();
         try {
             Double.parseDouble(time);
@@ -87,7 +91,7 @@ public class CompetitionResults extends SuperResult {
             System.out.println("Opret flere resultater? ja/nej");
             switch (userInput.nextLine()) {
                 case "ja":
-                    TrainigResults.addNewCSVFile();
+                    addNewCSVFile();
                     break;
                 case "nej":
                     MainMenu.loginScreen();
@@ -103,6 +107,14 @@ public class CompetitionResults extends SuperResult {
             System.out.println("Der skete en fejl - Resultatet blev ikke tilføjet");
             e.printStackTrace();
         }
+    }
+
+    public static String getCompetitionName() {
+        return competitionName;
+    }
+
+    public int getPlacement() {
+        return placement;
     }
 }
 
