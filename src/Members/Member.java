@@ -133,7 +133,7 @@ public class Member {
 
         String memberStatus = addActivityStatus();
 
-        String memberGroup = addMemberType();
+        String memberType = addMemberGroup();
 
         String telephoneNo = addPhoneNo();
 
@@ -143,7 +143,7 @@ public class Member {
 
         boolean hasPayed = addPaymentStatus();
 
-        addMemberToFile(name, birthdate, memberStatus, memberGroup, telephoneNo, email, startDate, hasPayed);
+        addMemberToFile(name, birthdate, memberStatus, memberType, telephoneNo, email, startDate, hasPayed);
     }
 
 
@@ -286,6 +286,32 @@ public class Member {
 
     }
 
+    public static String addMemberType(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Hvilken aldersgruppe skal træneren træne? 1: Senior 2: Junior");
+        String memberType = null;
+        String userInput = input.nextLine();
+        boolean end = false;
+        while (!end) {
+            switch (userInput) {
+                case "1":
+                    memberType = "senior";
+                    end = true;
+                    break;
+                case "2":
+                    memberType = "junior";
+                    end = true;
+                    break;
+                default:
+                    System.out.println("Input ikke forstået. Prøv igen.\nHvilken aldersgruppe skal træneren træne? 1: Senior 2: Junior");
+                    userInput = input.nextLine();
+                    break;
+            }
+        }
+        return memberType;
+    }
+
+
     public static String addDiscipline(){
         Scanner input = new Scanner(System.in);
         System.out.println("Hvilken disciplin skal tilknyttes træneren? 1: Butterfly 2: Crawl 3: Rygcrawl 4: Brystsvømning");
@@ -423,7 +449,7 @@ public class Member {
                     memberStatus = addActivityStatus();
                     break;
                 case "4":
-                    memberGroup = addMemberType();
+                    memberGroup = addMemberGroup();
                     break;
                 case "5":
                     telephoneNo = addPhoneNo();
@@ -916,7 +942,7 @@ public class Member {
         return memberStatus;
     }
 
-    public static String addMemberType() {
+    public static String addMemberGroup() {
         Scanner input = new Scanner(System.in);
         System.out.println("Hvad er medlemstypen? 1: Motionist 2: Konkurrencesvømmer");
         String memberGroup = null;
@@ -1483,7 +1509,7 @@ public class Member {
 
 
         public static void main (String[]args) throws IOException {
-            editTrainerTeams();
+            writeNewTrainer();
         }
 
         public String getBirthdate () {
