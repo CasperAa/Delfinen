@@ -1,6 +1,10 @@
 package Members;
 //@Amanda
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 public class Trainer extends Member {
     protected String discipline;
 
@@ -11,6 +15,7 @@ public class Trainer extends Member {
                 telephoneNo, email, startDate, hasPayed);
 
         this.discipline = discipline;
+
 
     }
 
