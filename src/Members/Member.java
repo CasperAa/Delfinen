@@ -1509,7 +1509,7 @@ public class Member {
 
 
         public static void main (String[]args) throws IOException {
-            writeNewTrainer();
+            editTrainerTeams();
         }
 
         public String getBirthdate () {
