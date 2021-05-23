@@ -930,13 +930,22 @@ public class Member {
     }
 
     public static boolean isValidBirthdate(String birthdate) {
-        if (birthdate.length() != 8 || !isNumeric(birthdate) || parseInt(birthdate.substring(0, 2)) > 31 ||
-                parseInt(birthdate.substring(2, 4)) > 12 || parseInt(birthdate.substring(0, 2)) == 00 ||
-                parseInt(birthdate.substring(2, 4)) == 00 || parseInt(birthdate.substring(4, 8)) > 2015  ||
-                parseInt(birthdate.substring(4, 8)) < 1900) {
-            return false;
+
+        if (birthdate.length() == 8 && isNumeric(birthdate) && parseInt(birthdate.substring(0, 2)) <= 31 &&
+                parseInt(birthdate.substring(2, 4)) <= 12 && parseInt(birthdate.substring(0, 2)) != 00 &&
+                parseInt(birthdate.substring(2, 4)) != 00) {
+            int year = parseInt(birthdate.substring(birthdate.length() - 4));
+            int month = parseInt(birthdate.substring(2, 4));
+            int date = parseInt(birthdate.substring(0, 2));
+            Period period = Period.between(LocalDate.of(year, month, date), LocalDate.now());
+            int age = period.getYears();
+            if (age >= 6 && age <= 140){
+                return true;
+            }else{
+                return false;
+            }
         } else {
-            return true;
+            return false;
         }
     }
 

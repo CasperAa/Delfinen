@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -45,11 +47,18 @@ class MemberTest {
         //Måned er 00
         boolean falseResult7 = member.isValidBirthdate("03002000");
 
-        //Årstal er for højt (over 2015)
-        boolean falseResult8 = member.isValidBirthdate("03122016");
+        //Årstal er for højt (alderen er under 5)
+        DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("ddMMyyyy");
+        String date = LocalDateTime.now().minusYears(5).format(formatTime);
+        boolean falseResult8 = member.isValidBirthdate(date);
 
-        //Årstal er for lavt (under 1900)
-        boolean falseResult9 = member.isValidBirthdate("03041899");
+        //Årstal er for lavt (alderen er over 140)
+        date = LocalDateTime.now().minusYears(141).format(formatTime);
+        boolean falseResult9 = member.isValidBirthdate(date);
+
+        //Alderen opfylder kravene
+        date = LocalDateTime.now().minusYears(15).format(formatTime);
+        boolean trueResult2= member.isValidBirthdate(date);
 
         //Assert
         assertTrue(trueResult1);
@@ -62,6 +71,7 @@ class MemberTest {
         assertFalse(falseResult7);
         assertFalse(falseResult8);
         assertFalse(falseResult9);
+        assertTrue(trueResult2);
 
     }
 
