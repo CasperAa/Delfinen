@@ -56,7 +56,7 @@ class MemberTest {
         date = LocalDateTime.now().minusYears(141).format(formatTime);
         boolean falseResult9 = member.isValidBirthdate(date);
 
-        //Alderen opfylder kravene
+        //Alderen opfylder kravene (alderen er 15)
         date = LocalDateTime.now().minusYears(15).format(formatTime);
         boolean trueResult2= member.isValidBirthdate(date);
 
@@ -123,7 +123,7 @@ class MemberTest {
         //Indeholder ikke @
         boolean falseResult1 = member.isValidEmail("eksempeleksempel.dk");
 
-        //Indeholder ikke .com/.net/.co.uk/.gov
+        //Indeholder ikke .dk/.com/.net/.co.uk/.gov
         boolean falseResult2 = member.isValidEmail("eksempel@eksempel");
 
         //Assert
