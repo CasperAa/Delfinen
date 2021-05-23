@@ -46,7 +46,7 @@ class MemberTest {
         boolean falseResult7 = member.isValidBirthdate("03002000");
 
         //Årstal er for højt (over 2015)
-        boolean falseResult8 = member.isValidBirthdate("03042016");
+        boolean falseResult8 = member.isValidBirthdate("03122016");
 
         //Årstal er for lavt (under 1900)
         boolean falseResult9 = member.isValidBirthdate("03041899");
