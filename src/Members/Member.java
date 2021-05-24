@@ -48,13 +48,12 @@ public class Member {
 
     }
 
-    //Denne metode scanner filen MembersList og tilføjer alle medlemmer som et member-objekt til arrayListen memberList
+    //Denne metode scanner filen MembersList og tilføjer alle medlemmer som et member-objekt til arrayListen memberList.
     public static void readMembersFromFileAndAddToArray() {
 
         try {
             File membersFile = new File("src/Files/MembersList");
             Scanner sc = new Scanner(membersFile);
-
 
 
         //Skipper metadatalinjen
@@ -82,7 +81,7 @@ public class Member {
             boolean hasPayed = Boolean.parseBoolean(lineAsArray[9].trim());
 
             //Herunder afgøres det, om det er tale om objektet Member eller CompetetionMember baseret på attributten
-            // memberGroup
+            // memberGroup. Objektet oprettes derefter og tilføjes til arrayListen memberList.
             if (memberGroup.equalsIgnoreCase("motionist")) {
                 Member newMember = new Member(name, ID, birthdate, memberStatus, memberGroup, memberType,
                         telephoneNo, email, startDate, hasPayed);
@@ -721,7 +720,8 @@ public class Member {
     }
 
 
-    //
+    //Denne metode bruges ved starten af en ny sæson: Betalingsstatus for alle medlemmer nulstilles til
+    // ikke-betalt (false), og alle medlemmers alder undersøges, så medlemstypen kan fastsættes på baggrund af denne.
     public static void startNewSeason() {
         readMembersFromFileAndAddToArray();
         try {
@@ -767,6 +767,7 @@ public class Member {
                 }
             }
 
+            //Alle de opdaterede medlemmer tilføjes filen MemerList, idet den overrides.
             File membersFile = new File("src/Files/MembersList");
             FileWriter fw = new FileWriter(membersFile, true);
             BufferedWriter bw = new BufferedWriter(fw);
@@ -785,6 +786,7 @@ public class Member {
         }
     }
 
+    //Denne metode bruges til at ændre attributten hasPayed, der fortæller, om et medlem har betalt kontingent.
     public static void editPaymentStatus() {
         readMembersFromFileAndAddToArray();
         try {
@@ -924,7 +926,7 @@ public class Member {
         }
     }
 
-
+    //Denne metode prompter brugeren til at skrive et navn, og den giver dette som et String-output.
     public static String addName() {
         Scanner input = new Scanner(System.in);
         System.out.println("Indtast medlemmets fulde navn:");
@@ -943,6 +945,7 @@ public class Member {
         return name;
     }
 
+    //Denne metode tjekker, om en String opfylder de krav, som et navn i systemet skal opfylde.
     public static boolean isValidName(String name) {
         boolean onlyLetters = true;
         char[] chars = name.toCharArray();
@@ -954,7 +957,7 @@ public class Member {
         return onlyLetters;
     }
 
-
+    //Denne metode prompter brugeren til at skrive en fødselsdato, og den giver denne som et String-output.
     public static String addBirthdate() {
         Scanner input = new Scanner(System.in);
 
@@ -977,6 +980,7 @@ public class Member {
         return birthdate;
     }
 
+    //Denne metode tjekker, om en String opfylder de krav, som en førdselsdato i systemet skal opfylde.
     public static boolean isValidBirthdate(String birthdate) {
 
         if (birthdate.length() == 8 && isNumeric(birthdate) && parseInt(birthdate.substring(0, 2)) <= 31 &&
@@ -997,6 +1001,8 @@ public class Member {
         }
     }
 
+    //Denne metode prompter brugeren til at vælge, hvorvidt medlemmet er aktivt, og outputter et en string enten
+    // lig "active" eller "passive".
     public static String addActivityStatus() {
         Scanner input = new Scanner(System.in);
         System.out.println("Er medlemmet aktivt? 1: Ja 2: Nej");
@@ -1023,6 +1029,8 @@ public class Member {
         return memberStatus;
     }
 
+    //Denne metode prompter brugeren til at vælge, hvilken medlemtype, medlemmet er, og outputter et en string enten
+    // lig "Motionist" eller "Konkurrencesvømmer".
     public static String addMemberGroup() {
         Scanner input = new Scanner(System.in);
         System.out.println("Hvad er medlemstypen? 1: Motionist 2: Konkurrencesvømmer");
@@ -1049,6 +1057,7 @@ public class Member {
         return memberGroup;
     }
 
+    //Denne metode prompter brugeren til at skrive en telefonnummer, og den giver dette som et String-output.
     public static String addPhoneNo() {
 
         Scanner input = new Scanner(System.in);
@@ -1101,6 +1110,8 @@ public class Member {
         return telephoneNo;
     }
 
+    //Denne metode tjekker, om en String allerede findes i en fil, idet filen laves til et array, og der scannes
+    // i et bestemt index.
     public static boolean alreadyExistsInFile(String toBeChecked, File file, int index) {
         boolean alreadyExists = false;
         try {
@@ -1128,6 +1139,7 @@ public class Member {
         return alreadyExists;
     }
 
+    //Denne metode tjekker, om en String opfylder de krav, som et telefonnummer i systemet skal opfylde.
     public static boolean isValidPhoneNo(String telephoneNo) {
         if (telephoneNo.length() != 8 || !isNumeric(telephoneNo)) {
             return false;
@@ -1551,7 +1563,7 @@ public class Member {
             }
     }
 
-        public static void readTrainersFromFileAndAddToArray(File trainerFile) {
+    public static void readTrainersFromFileAndAddToArray(File trainerFile) {
         try {
             Scanner sc = new Scanner(trainerFile);
 
@@ -1586,10 +1598,10 @@ public class Member {
         } catch (FileNotFoundException e){
             System.out.println("Fejl.");
         }
-        }
+    }
 
         //@Amanda med udgangspunkt i Caspers arbejde
-        public static void makeNewTrainerCSVFile (String trainerID){
+    public static void makeNewTrainerCSVFile (String trainerID){
             // test to see if a file exists
             File file = new File("src/TrainerFiles/" + trainerID);
             boolean exists = file.exists();
@@ -1600,91 +1612,73 @@ public class Member {
                 generateCsvFile(fileLocation + trainerID);
                 System.out.println("En ny fil er blevet oprettet for denne træner.");
             }
-        }
+    }
 
 
-        public static void main (String[]args) {
+    public static void main (String[]args) {
             editTrainerTeams();
-        }
+    }
 
-        public String getBirthdate () {
+    public String getBirthdate () {
             return birthdate;
-        }
+    }
 
-        public String getMemberStatus () {
+    public String getMemberStatus () {
             return memberStatus;
-        }
+    }
 
-        public String getMemberGroup () {
+    public String getMemberGroup () {
             return memberGroup;
-        }
+    }
 
-
-        public String getMemberType () {
+    public String getMemberType () {
             return memberType;
-        }
+    }
 
-        public boolean isHasPayed () {
+    public boolean isHasPayed () {
             return hasPayed;
-        }
+    }
 
-        public String getName () {
+    public String getName () {
             return name;
-        }
+    }
 
-        public String getID () {
+    public String getID () {
             return ID;
-        }
+    }
 
-        public String getTelephoneNo () {
+    public String getTelephoneNo () {
             return telephoneNo;
-        }
+    }
 
-        public String getEmail () {
+    public String getEmail () {
             return email;
-        }
+    }
 
-        public static ArrayList<Member> getMemberList () {
+    public static ArrayList<Member> getMemberList () {
             return memberList;
-        }
+    }
 
-        public static boolean isNumeric (String str){
+    //Denne metode undersøger, om et String-input udelukkende består af tal.
+    public static boolean isNumeric (String str){
             try {
                 parseLong(str);
                 return true;
             } catch (NumberFormatException e) {
                 return false;
             }
-        }
-
-        /* Jeg droppede denne
-        public static boolean birthdateChecker(String birthdate){
-            try{
-                Date birthdateTest=new SimpleDateFormat("ddMMyyyy").parse(birthdate);
-                System.out.println("Fødselsdato er blevet tilføjet.");
-                return true;
-            }
-            catch (Exception e){
-                System.out.println("Ugyldig fødselsdato\nFormatet er ‘ddMMyyyy’\nÅrstal skal tidligst være 140 år " +
-                        "før dags dato samt minimum 6 år fra dags dato\nDatoskal være mellem 1 og 31\nMåned skal " +
-                        "være mellem 1 og 12");
-                return false;
-            }
-        }
-
-         */
-
-
-        @Override
-        public String toString () {
-            return "Telefon: " + getTelephoneNo() + " ID: " + getID();
-        }
-
-        public void setHasPayed ( boolean hasPayed){
-            this.hasPayed = hasPayed;
-        }
-
-        public void setMemberType (String memberType){
-            this.memberType = memberType;
-        }
     }
+
+    @Override
+    public String toString () {
+            return "Telefon: " + getTelephoneNo() + " ID: " + getID();
+    }
+
+    public void setHasPayed ( boolean hasPayed){
+            this.hasPayed = hasPayed;
+    }
+
+    public void setMemberType (String memberType){
+            this.memberType = memberType;
+    }
+}
