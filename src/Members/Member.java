@@ -1,7 +1,6 @@
 package Members;
 
 import java.io.*;
-import java.nio.channels.ScatteringByteChannel;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.Period;
@@ -30,6 +29,8 @@ public class Member {
     static ArrayList<Member> memberList = new ArrayList<Member>();
     static ArrayList<Trainer> trainerList = new ArrayList<Trainer>();
     static ArrayList<Member> currentTrainerList = new ArrayList<Member>();
+    private static ArrayList<Integer> IDListe;
+    private static ArrayList<Integer> IDListeTrainer;
 
     //Constructor
     public Member(String name, String ID, String birthdate, String memberStatus, String memberGroup, String memberType,
@@ -47,6 +48,7 @@ public class Member {
 
     }
 
+    //Denne metode scanner filen MembersList og tilføjer alle medlemmer som et member-objekt til arrayListen memberList
     public static void readMembersFromFileAndAddToArray() {
 
         try {
@@ -62,9 +64,10 @@ public class Member {
         //While-loop, så alle linjer læses
         while (sc.hasNext()) {
 
-            //En variabel, som indeholder den nuværende linje
+            //En variabel, som indeholder den linje, scanneren netop har læst
             String currentMember = sc.nextLine();
 
+            //Linjen deles op i attributter, der defineres
             String[] lineAsArray = currentMember.split(";");
 
             String name = lineAsArray[0].trim();
@@ -78,6 +81,8 @@ public class Member {
             String startDate = lineAsArray[8].trim();
             boolean hasPayed = Boolean.parseBoolean(lineAsArray[9].trim());
 
+            //Herunder afgøres det, om det er tale om objektet Member eller CompetetionMember baseret på attributten
+            // memberGroup
             if (memberGroup.equalsIgnoreCase("motionist")) {
                 Member newMember = new Member(name, ID, birthdate, memberStatus, memberGroup, memberType,
                         telephoneNo, email, startDate, hasPayed);
@@ -95,6 +100,7 @@ public class Member {
         }
     }
 
+    //Denne metode scanner filen TrainerList og tilføjer alle trænere som et trainer-objekt til arrayListen trainerList
     public static void readTrainersFromFileAndAddToArray() {
         try {
         File membersFile = new File("src/Files/TrainerList");
@@ -136,6 +142,8 @@ public class Member {
     }
 
 
+    //Denne metode kalder andre metoder, der beder brugeren om at definere et nyt medlems attributter.
+    // Til sidst kaldes en metode, der tilføjer medlemmet til filen MemberList.
     public static void writeNewMember(){
         Scanner sc = new Scanner(System.in);
 
@@ -158,11 +166,8 @@ public class Member {
         addMemberToFile(name, birthdate, memberStatus, memberType, telephoneNo, email, startDate, hasPayed);
     }
 
-
-
-    private static ArrayList<Integer> IDListe;
-    private static ArrayList<Integer> IDListeTrainer;
-
+    //Denne metode får som input et medlemmers definerede attributter og tilføjer en linje med disse til filen
+    // MembersList
     public static void addMemberToFile(String name, String birthdate, String memberStatus, String memberGroup,
                                        String telephoneNo, String email, String startDate, boolean hasPayed){
         try {
@@ -226,6 +231,8 @@ public class Member {
 
     }
 
+    //Denne metode kalder andre metoder, der beder brugeren om at definere en ny træners attributter.
+    // Til sidst kaldes en metode, der tilføjer træneren til filen TrainerList.
     public static void writeNewTrainer() {
         Scanner sc = new Scanner(System.in);
 
@@ -250,6 +257,8 @@ public class Member {
     }
 
 
+    //Denne metode får som input en træners definerede attributter og tilføjer en linje med disse til filen
+    // TrainerList
     public static void addTrainerToFile(String name, String birthdate, String memberStatus, String memberType,
                                         String telephoneNo, String email, String startDate, String discipline) {
 
@@ -298,6 +307,7 @@ public class Member {
 
     }
 
+    //Denne metode beder brugeren om at vælge mellem senior og junior og giver dette som e String-output.
     public static String addMemberType(){
         Scanner input = new Scanner(System.in);
         System.out.println("Hvilken aldersgruppe skal træneren træne? 1: Senior 2: Junior");
@@ -323,7 +333,7 @@ public class Member {
         return memberType;
     }
 
-
+    //Denne metode beder brugeren om at vælge disciplin og giver dette som e String-output.
     public static String addDiscipline(){
         Scanner input = new Scanner(System.in);
         System.out.println("Hvilken disciplin skal tilknyttes træneren? 1: Butterfly 2: Crawl 3: Rygcrawl 4: Brystsvømning");
@@ -358,10 +368,15 @@ public class Member {
     }
 
 
+    //Denne metode får brugeren til at vælge et eksisterende medlem og gør det muligt for denne at ændre medlemmets
+    // attributter. Filen MembersList opdateres med de nye oplysninger, idet hele filen overrides.
     public static void editMemberInfo() {
+
+        //Her kaldes metoden, der læser MemberList og tilføjer medlemsobjekterne til arrayListen memberList.
         readMembersFromFileAndAddToArray();
         try {
 
+            //Brugeren får mulighed for at søge efter medlemmet i arrayListen memberList enten vha. ID eller navn.
             Scanner input = new Scanner(System.in);
             Member memberToEdit = null;
             System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
@@ -395,6 +410,8 @@ public class Member {
                                 }
                                 matchFound = true;
                             }
+                            //En linecounter holder sammen med attributten lineNumber styr på, hvilket medlem,
+                            // der skal ændres.
                             lineCounter++;
                         }
                         if (!matchFound) {
@@ -422,6 +439,8 @@ public class Member {
                                 }
                                 matchFound = true;
                             }
+                            //En linecounter holder sammen med attributten lineNumber styr på, hvilket medlem,
+                            // der skal ændres.
                             lineCounter++;
                         }
                         if (!matchFound) {
@@ -435,6 +454,8 @@ public class Member {
                 }
             }
 
+            //Medlemmets attributter hentes, så de attributter, der ikke ændres, kan tilføjes, når medlemmet
+            // oprettes på ny.
             String name = memberToEdit.name;
             String ID = memberToEdit.ID;
             String birthdate = memberToEdit.birthdate;
@@ -446,6 +467,8 @@ public class Member {
             String startDate = memberToEdit.startDate;
             boolean hasPayed = memberToEdit.hasPayed;
 
+            //Brugeren får mulighed for at vælge, hvilken attribut, der skal ændres, og metoden,
+            // der tilføjer denne attribut, kaldes.
             input = new Scanner(System.in);
             end = false;
             while (!end) {
@@ -482,6 +505,7 @@ public class Member {
                         break;
                 }
 
+                //Brugeren får mulighed for at afslutte ændringen af medlemmet eller ændre endnu en attribut.
                 System.out.println("Er du færdig med at redigere medlemmer? 1: Ja 2: Nej");
                 String userInput2 = input.nextLine();
                 boolean end2 = false;
@@ -498,11 +522,14 @@ public class Member {
                     }
                 }
             }
+
+            //Medlemmet defineres med de evt. ændrede attributter
             Member updatedMember = new Member(name, ID, birthdate, memberStatus, memberGroup, memberType,
                     telephoneNo, email, startDate, hasPayed);
             memberList.set(lineNumber, updatedMember);
 
 
+            //Filen MembersFile overrides med oplysninger fra memberList, deriblandt er det netop opdaterede medlem.
             File membersFile = new File("src/Files/MembersList");
             FileWriter fw = new FileWriter(membersFile, true);
             BufferedWriter bw = new BufferedWriter(fw);
@@ -515,14 +542,20 @@ public class Member {
                         + currentMember.hasPayed);   //Medlemmet skal tilføjes til filen
             }
             pw.close();
+
+            //Exception catches, hvis der sker fejl v. input/output
         } catch (IOException e){
             System.out.println("Fejl");
         }
     }
 
+    //Denne metode får brugeren til at vælge en eksisterende træner og gør det muligt for denne at ændre trænerens
+    // attributter. Filen TrainerList opdateres med de nye oplysninger, idet hele filen overrides.
     public static void editTrainerInfo() {
+        //Her kaldes metoden, der læser TrainerList og tilføjer trænerobjekterne til arrayListen trainerList.
         readTrainersFromFileAndAddToArray();
         try {
+            // Brugeren får mulighed for at søge efter træneren i arrayListen trainerList enten vha. ID eller navn.
             Scanner input = new Scanner(System.in);
             Trainer memberToEdit = null;
             System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
@@ -556,6 +589,8 @@ public class Member {
                                 }
                                 matchFound = true;
                             }
+                            //En linecounter holder sammen med attributten lineNumber styr på, hvilken træner,
+                            // der skal ændres.
                             lineCounter++;
                         }
                         if (!matchFound) {
@@ -596,6 +631,8 @@ public class Member {
                 }
             }
 
+            //Trænerens attributter hentes, så de attributter, der ikke ændres, kan tilføjes, når træneren
+            // oprettes på ny.
             String name = memberToEdit.name;
             String ID = memberToEdit.ID;
             String birthdate = memberToEdit.birthdate;
@@ -605,6 +642,8 @@ public class Member {
             String startDate = memberToEdit.startDate;
             String discipline = memberToEdit.discipline;
 
+            //Brugeren får mulighed for at vælge, hvilken attribut, der skal ændres, og metoden,
+            // der tilføjer denne attribut, kaldes.
             input = new Scanner(System.in);
             end = false;
             while (!end) {
@@ -638,6 +677,7 @@ public class Member {
                         break;
                 }
 
+                //Brugeren får mulighed for at afslutte ændringen af træneren eller ændre endnu en attribut.
                 System.out.println("Er du færdig med at redigere træneren? 1: Ja 2: Nej");
                 String userInput2 = input.nextLine();
                 boolean end2 = false;
@@ -654,11 +694,13 @@ public class Member {
                     }
                 }
             }
+
+            //Træneren defineres med de evt. ændrede attributter
             Trainer updatedTrainer = new Trainer(name, ID, birthdate, memberStatus, "trainer", "trainer",
                     telephoneNo, email, startDate, false, discipline);
             trainerList.set(lineNumber, updatedTrainer);
 
-
+            //Filen TrainerFile overrides med oplysninger fra trainerList, deriblandt er den netop opdaterede træner.
             File trainersFile = new File("src/Files/TrainerList");
             FileWriter fw = new FileWriter(trainersFile, true);
             BufferedWriter bw = new BufferedWriter(fw);
@@ -671,12 +713,15 @@ public class Member {
                         + currentMember.hasPayed);   //Medlemmet skal tilføjes til filen
             }
             pw.close();
+
+            //Exception catches, hvis der sker fejl v. input/output
         } catch (IOException e) {
             System.out.println("Fejl.");
         }
     }
 
 
+    //
     public static void startNewSeason() {
         readMembersFromFileAndAddToArray();
         try {
@@ -744,7 +789,6 @@ public class Member {
         readMembersFromFileAndAddToArray();
         try {
             Scanner input = new Scanner(System.in);
-            Member memberToEdit = null;
             System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn 3: Afslut");
             String userInput = input.nextLine();
             boolean matchFound = false;
@@ -875,7 +919,7 @@ public class Member {
             }
             pw.close();
             System.out.println("Proces er afsluttet.");
-        }catch (IOException e){
+        } catch (IOException e){
             System.out.println("Fejl.");
         }
     }
