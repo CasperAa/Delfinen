@@ -111,4 +111,8 @@ public class SuperResult {
             }
         }
     }
+
+    public double getResultTime(){
+        return resultTime;
+    }
 }

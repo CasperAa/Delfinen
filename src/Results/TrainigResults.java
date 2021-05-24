@@ -24,21 +24,31 @@ public static void addResultTraining(String fileLocation) {
         String resultType = "Træning";
 
         System.out.println("Dato: (DD/MM/ÅÅÅÅ)");
-        String date = userInput.nextLine();
-        if (!DateAndTime.dateValidation(date)){
-            MainMenu.errorMessage();
-            userInput.nextLine();
+        boolean dateIsValid = false;
+        String date = null;
+        while (!dateIsValid) {
+            date = userInput.nextLine();
+            if (!DateAndTime.dateValidation(date)) {
+                date = null;
+                MainMenu.errorMessage();
+            } else {
+                dateIsValid = true;
+            }
         }
 
+
         System.out.println("Tid: (i sekunder - Eksemble: 62.23)");
-        String time = userInput.nextLine();
+        boolean timeIsValid = false;
+        String time = null;
+        while (!timeIsValid) {
+            time = userInput.nextLine();
         try {
-        Double.parseDouble(time);
+            Double.parseDouble(time);
+            timeIsValid = true;
+        } catch (Exception e) {
+            MainMenu.errorMessage();
         }
-        catch (Exception e) {
-        MainMenu.errorMessage();
-        userInput.nextLine();
-        }
+    }
 
         System.out.println("Metode:\n" + "     Tryk 1: Butterfly\n" + "     Tryk 2: Crawl\n" + "     Tryk 3: Rygcrawl\n" + "     Tryk 4: Brystsvømning");
         String method = userInput.nextLine();

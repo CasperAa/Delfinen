@@ -23,20 +23,31 @@ public class CompetitionResults extends SuperResult {
 
         String resultType = "Konkurrence";
 
-        System.out.println("Dato: (DD/MM-ÅÅÅÅ)");
-        String date = userInput.nextLine();
-        if (!DateAndTime.dateValidation(date)) {
-            MainMenu.errorMessage();
-            userInput.nextLine();
+        System.out.println("Dato: (DD/MM/ÅÅÅÅ)");
+        boolean dateIsValid = false;
+        String date = null;
+        while (!dateIsValid) {
+            date = userInput.nextLine();
+            if (!DateAndTime.dateValidation(date)) {
+                date = null;
+                MainMenu.errorMessage();
+            } else {
+                dateIsValid = true;
+            }
         }
 
-        System.out.println("Tid: (i sekunder - 62,23)");
-        String time = userInput.nextLine();
-        try {
-            Double.parseDouble(time);
-        } catch (Exception e){
-            MainMenu.errorMessage();
-            userInput.nextLine();
+        System.out.println("Tid: (i sekunder - 62.23)");
+        boolean timeIsValid = false;
+        String time = null;
+        while (!timeIsValid) {
+            time = userInput.nextLine();
+            try {
+                Double.parseDouble(time);
+                timeIsValid = true;
+
+            } catch (Exception e) {
+                MainMenu.errorMessage();
+            }
         }
 
         System.out.println("Metode:\n" + "     Tryk 1: Butterfly\n" + "     Tryk 2: Crawl\n" + "     Tryk 3: Rygcrawl\n" + "     Tryk 4: Brystsvømning");
@@ -68,6 +79,7 @@ public class CompetitionResults extends SuperResult {
         try {
             Integer.parseInt(placement);
         } catch (Exception e) {
+            placement = null;
             MainMenu.errorMessage();
             userInput.nextLine();
         }
