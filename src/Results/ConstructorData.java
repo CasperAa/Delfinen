@@ -23,4 +23,16 @@ public class ConstructorData extends SuperResult implements Comparable <Construc
             return 0;
         }
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ConstructorData) {
+            return ((ConstructorData) obj).id == id;
+        }
+        return false;
+    }
+    @Override
+    public int hashCode() {
+        return Integer.parseInt(this.id);
+    }
 }

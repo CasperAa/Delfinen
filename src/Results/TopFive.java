@@ -3,9 +3,7 @@ package Results;
 import Members.Member;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Scanner;
+import java.util.*;
 
 //@Casper
 
@@ -114,7 +112,17 @@ public class TopFive{
                 }
             }
 
-            Collections.sort(juniorBreaststroke);
+            //Collections.sort(juniorBreaststroke);
+            /*
+            for(ConstructorData obj1 : juniorBreaststroke){
+                for(ConstructorData obj2: juniorBreaststroke){
+                    if(obj1.equals(obj2)) juniorBreaststroke.remove(obj1);
+                }
+            }
+            */
+            //Collections.sort(juniorBreaststroke);
+
+
             Collections.sort(juniorButterfly);
             Collections.sort(juniorBreaststroke);
             Collections.sort(juniorButterfly);
@@ -125,16 +133,19 @@ public class TopFive{
             Collections.sort(seniorCrawl);
             Collections.sort(seniorRygcrawl);
 
+
         } catch (NullPointerException e) {
             System.out.println("something went wrong");
         }
     }
+
 
     public void topFiveJuniorBreaststroke(){
         for (int i = 0 ; i < 5 ; i++ ){
             System.out.println( "Tid: " + juniorBreaststroke.get(i).resultTime + "      ID: "+  juniorBreaststroke.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(juniorBreaststroke.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
         }
     }
+
     public void topFiveJuniorButterfly(){
         for (int i = 0 ; i < 5 ; i++ ){
             System.out.println( "Tid: " + juniorButterfly.get(i).resultTime + "      ID: "+  juniorButterfly.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(juniorButterfly.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
@@ -177,6 +188,18 @@ public class TopFive{
         } else {
             return text;
         }
+    }
+    private static List removeDuplicate(List transactionList)
+    {
+        //Convert List to Set
+        Set transactionSet=new HashSet(transactionList);
+        //Convert Set to Array List
+        transactionList=new ArrayList(transactionSet);
+
+        //Sort object by transaction date and time
+        Collections.sort(transactionList);
+
+        return transactionList;
     }
 
 

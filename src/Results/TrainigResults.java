@@ -1,11 +1,12 @@
 package Results;
 
 import Menu.MainMenu;
-import ValidityChecker.DateAndTime;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
 public class TrainigResults extends SuperResult{
@@ -28,7 +29,7 @@ public static void addResultTraining(String fileLocation) {
         String date = null;
         while (!dateIsValid) {
             date = userInput.nextLine();
-            if (!DateAndTime.dateValidation(date)) {
+            if (!dateValidation(date)) {
                 date = null;
                 MainMenu.errorMessage();
             } else {
@@ -99,5 +100,28 @@ public static void addResultTraining(String fileLocation) {
             System.out.println("Der skete en fejl - Resultatet blev ikke tilføjet");
             e.printStackTrace();
         }
+    }
+    public static boolean dateValidation(String date) {
+        boolean status = false;
+        if (checkDate(date)) {
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            dateFormat.setLenient(false);
+            try {
+                dateFormat.parse(date);
+                status = true;
+            } catch (Exception e) {
+                status = false;
+            }
+        }
+        return status;
+    }
+
+    static boolean checkDate(String date) {
+        String pattern = "(0?[1-9]|[12][0-9]|3[01])\\/(0?[1-9]|1[0-2])\\/([0-9]{4})";
+        boolean flag = false;
+        if (date.matches(pattern)) {
+            flag = true;
+        }
+        return flag;
     }
 }

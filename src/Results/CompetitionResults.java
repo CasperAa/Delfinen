@@ -1,9 +1,10 @@
 package Results;
 
 import java.io.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Scanner;
 import Menu.MainMenu;
-import ValidityChecker.DateAndTime;
 //@Casper
 
 public class CompetitionResults extends SuperResult {
@@ -28,7 +29,7 @@ public class CompetitionResults extends SuperResult {
         String date = null;
         while (!dateIsValid) {
             date = userInput.nextLine();
-            if (!DateAndTime.dateValidation(date)) {
+            if (!dateValidation(date)) {
                 date = null;
                 MainMenu.errorMessage();
             } else {
@@ -118,12 +119,28 @@ public class CompetitionResults extends SuperResult {
         }
     }
 
-    public String getCompetitionName() {
-        return competitionName;
+    public static boolean dateValidation(String date) {
+        boolean status = false;
+        if (checkDate(date)) {
+            DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+            dateFormat.setLenient(false);
+            try {
+                dateFormat.parse(date);
+                status = true;
+            } catch (Exception e) {
+                status = false;
+            }
+        }
+        return status;
     }
 
-    public String getPlacement() {
-        return placement;
+    static boolean checkDate(String date) {
+        String pattern = "(0?[1-9]|[12][0-9]|3[01])\\/(0?[1-9]|1[0-2])\\/([0-9]{4})";
+        boolean flag = false;
+        if (date.matches(pattern)) {
+            flag = true;
+        }
+        return flag;
     }
 }
 
