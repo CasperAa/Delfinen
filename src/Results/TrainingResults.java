@@ -1,28 +1,28 @@
 package Results;
 
-import java.io.*;
+import Menu.MainMenu;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
-import Menu.MainMenu;
-//@Casper
 
-public class CompetitionResults extends Result {
+public class TrainingResults extends Result {
 
-
-    public CompetitionResults(double resultTime, String date, String swimType, String resultType, String competitionName, String placement) {
+    public TrainingResults(double resultTime, String date, String swimType, String resultType, String competitionName, String placement){
         super(resultTime, date, swimType, resultType, competitionName, placement);
     }
 
+public static void addResultTraining(String fileLocation) {
+    // first create file object for file placed at location
+    // specified by filepath
+    File file = new File(fileLocation);
 
-    public static void addResultCompetition(String fileLocation) {
-        // first create file object for file placed at location
-        // specified by filepath
-        File file = new File(fileLocation);
+    Scanner userInput = new Scanner(System.in);
 
-        Scanner userInput = new Scanner(System.in);
-
-        String resultType = "Konkurrence";
+        String resultType = "Træning";
 
         System.out.println("Dato: (DD/MM/ÅÅÅÅ)");
         boolean dateIsValid = false;
@@ -37,24 +37,24 @@ public class CompetitionResults extends Result {
             }
         }
 
-        System.out.println("Tid: (i sekunder - 62.23)");
+
+        System.out.println("Tid: (i sekunder - Eksemble: 62.23)");
         boolean timeIsValid = false;
         String time = null;
         while (!timeIsValid) {
             time = userInput.nextLine();
-            try {
-                Double.parseDouble(time);
-                timeIsValid = true;
-
-            } catch (Exception e) {
-                MainMenu.errorMessage();
-            }
+        try {
+            Double.parseDouble(time);
+            timeIsValid = true;
+        } catch (Exception e) {
+            MainMenu.errorMessage();
         }
+    }
 
         System.out.println("Metode:\n" + "     Tryk 1: Butterfly\n" + "     Tryk 2: Crawl\n" + "     Tryk 3: Rygcrawl\n" + "     Tryk 4: Brystsvømning");
         String method = userInput.nextLine();
         String swimMethod = null;
-        switch (Integer.parseInt(method)) {
+        switch (Integer.parseInt(method)){
             case 1:
                 swimMethod = "Butterfly";
                 break;
@@ -71,37 +71,21 @@ public class CompetitionResults extends Result {
                 MainMenu.errorMessage();
                 userInput.nextLine();
         }
-
-        System.out.println("Konkurrence Navn:");
-        String competition = userInput.nextLine();
-
-        System.out.println("Placering:");
-        String placement = userInput.nextLine();
-        try {
-            Integer.parseInt(placement);
-        } catch (Exception e) {
-            placement = null;
-            MainMenu.errorMessage();
-            userInput.nextLine();
-        }
-
-
         try {
             // create FileWriter object with file as parameter
-            FileWriter fWriter = new FileWriter(file, true);
+            FileWriter fWriter = new FileWriter(file,true);
             BufferedWriter bWriter = new BufferedWriter(fWriter);
 
             // add data to csv
-
-            String data = "\n" + resultType + ";" + date + ";" + time + ";" + swimMethod + ";" + competition + ";" + placement;
+            String data = "\n" + resultType + ";" + date + ";" + time + ";" + swimMethod + ";" + " " + ";" + 0;
             bWriter.write(data);
             bWriter.close();     //Handlingen sker rent faktisk
-            System.out.println("Resultat blev tilføjet til fil: " + fileLocation.substring(fileLocation.length() - 4));
+            System.out.println("Resultat blev tilføjet til fil: " + fileLocation.substring(fileLocation.length()-4));
 
             System.out.println("Opret flere resultater? ja/nej");
-            switch (userInput.nextLine()) {
+            switch (userInput.nextLine()){
                 case "ja":
-                    addNewCSVFile();
+                    Result.addNewCSVFile();
                     break;
                 case "nej":
                     MainMenu.loginScreen();
@@ -111,14 +95,12 @@ public class CompetitionResults extends Result {
                     userInput.nextLine();
                     break;
             }
-
             // closing writer connection
         } catch (IOException e) {
             System.out.println("Der skete en fejl - Resultatet blev ikke tilføjet");
             e.printStackTrace();
         }
     }
-
     public static boolean dateValidation(String date) {
         boolean status = false;
         if (checkDate(date)) {
@@ -143,6 +125,3 @@ public class CompetitionResults extends Result {
         return flag;
     }
 }
-
-
-
