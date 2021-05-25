@@ -54,7 +54,7 @@ public class MainSystem {
                                 break;
                             case "9":
                                 endManager = true;
-                                endProgram = true;
+                                MainMenu.loginScreen();
                                 break;
                             default:
                                 MainMenu.errorMessage();
@@ -64,33 +64,38 @@ public class MainSystem {
 
                 case "2": // Cashier
                     MainMenu.menuScreenCashier();
-                    switch (userInput.nextLine()){
-                        case "1":
-                            //Method for overview of yearly revenue
-                            Revenue.yearlyRevenue();
-                            MainMenu.menuScreenCashier();
-                            break;
-                        case "2":
-                            //Method for overview of members missing payment
-                            UnpaidSubscriptions.paymentOverview();
-                            MainMenu.menuScreenCashier();
-                            break;
-                        case "3":
-                            //Method for editing members payment status
-                            Member.editPaymentStatus();
-                            break;
+                    boolean cashierMainMenu = true;
+                    while (cashierMainMenu) {
+                        switch (userInput.nextLine()) {
+                            case "1":
+                                //Method for overview of yearly revenue
+                                Revenue.yearlyRevenue();
+                                MainMenu.menuScreenCashier();
+                                break;
+                            case "2":
+                                //Method for overview of members missing payment
+                                UnpaidSubscriptions.paymentOverview();
+                                MainMenu.menuScreenCashier();
+                                break;
+                            case "3":
+                                //Method for editing members payment status
+                                Member.editPaymentStatus();
+                                break;
 
-                        case "4":
-                            //Method for resetting payment status and updating membertype for all members
-                            Member.startNewSeason();
-                            break;
-                        case "9":
-                            endProgram = true;
-                            break;
-                        default:
-                            MainMenu.errorMessage();
-                            MainMenu.menuScreenCashier();
-                    } break;
+                            case "4":
+                                //Method for resetting payment status and updating membertype for all members
+                                Member.startNewSeason();
+                                break;
+                            case "9":
+                                cashierMainMenu = false;
+                                MainMenu.loginScreen();
+                                break;
+                            default:
+                                MainMenu.errorMessage();
+                                MainMenu.menuScreenCashier();
+                        }
+                    }
+                    break;
 
                 case "3": // Trainer
                     mainSystem.trainerMenu(userInput);
@@ -98,39 +103,44 @@ public class MainSystem {
 
                 case "4": // Admin
                     MainMenu.menuScreenAdmin();
-                    switch (userInput.nextLine()){
-                        case "1":
-                            //Method for adding members
-                            Member.writeNewMember();
-                            break;
-                        case "2":
-                            //Method for editing existing members
-                            Member.editMemberInfo();
-                            break;
-                        case "3":
-                            //Method for overview of yearly revenue
-                            Revenue.yearlyRevenue();
-                            break;
-                        case "4":
-                            //Method for editing members payment status
-                            Member.editPaymentStatus();
-                            break;
-                        case "5":
-                            mainSystem.trainerMenu(userInput);
-                            break;
-                        case "6":
-                            //Method for resetting payment status and updating membertype for all members
-                            Member.startNewSeason();
-                        case "9":
-                            Trainer.editTrainerTeams(); //Method for editing teams
-                            break;
-                        case "10":
-                            endProgram = true;
-                            break;
-                        default:
-                            MainMenu.errorMessage();
-                            MainMenu.menuScreenAdmin();
-                    } break;
+                    boolean adminMainMenu = true;
+                    while (adminMainMenu) {
+                        switch (userInput.nextLine()) {
+                            case "1":
+                                //Method for adding members
+                                Member.writeNewMember();
+                                break;
+                            case "2":
+                                //Method for editing existing members
+                                Member.editMemberInfo();
+                                break;
+                            case "3":
+                                //Method for overview of yearly revenue
+                                Revenue.yearlyRevenue();
+                                break;
+                            case "4":
+                                //Method for editing members payment status
+                                Member.editPaymentStatus();
+                                break;
+                            case "5":
+                                mainSystem.trainerMenu(userInput);
+                                break;
+                            case "6":
+                                //Method for resetting payment status and updating membertype for all members
+                                Member.startNewSeason();
+                            case "9":
+                                Trainer.editTrainerTeams(); //Method for editing teams
+                                break;
+                            case "10":
+                                adminMainMenu = false;
+                                MainMenu.loginScreen();
+                                break;
+                            default:
+                                MainMenu.errorMessage();
+                                MainMenu.menuScreenAdmin();
+                        }
+                    }
+                    break;
 
                 case "9": // End Program
                     endProgram = true;

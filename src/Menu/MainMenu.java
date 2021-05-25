@@ -14,6 +14,7 @@ public class MainMenu {
         System.out.println("Tryk 2: Kasserer");
         System.out.println("Tryk 3: Træner");
         System.out.println("Tryk 4: Admin");
+        System.out.println("Tryk 9: Afslut program");
     }
 
     // Main menu screen for Admin
@@ -27,7 +28,7 @@ public class MainMenu {
         System.out.println("Tryk 7: Tilføj ny træner");
         System.out.println("Tryk 8: Rediger eksisterende træner");
         System.out.println("Tryk 9: Rediger hold");
-        System.out.println("Tryk 10: Afslut program");
+        System.out.println("Tryk 10: Tilbage");
     }
 
     // Main menu screen for Manager
@@ -37,7 +38,7 @@ public class MainMenu {
         System.out.println("Tryk 3: Tilføj ny træner");
         System.out.println("Tryk 4: Rediger eksisterende træner");
         System.out.println("Tryk 5: Rediger hold");
-        System.out.println("Tryk 9: Afslut program");
+        System.out.println("Tryk 9: Tilbage");
     }
 
     // Main menu screen for Cashier
@@ -46,7 +47,7 @@ public class MainMenu {
         System.out.println("Tryk 2: Se medlemmer, der i restance");
         System.out.println("Tryk 3: Rediger medlems betalingsstatus");
         System.out.println("Tryk 4: Start ny sæson");
-        System.out.println("Tryk 9: Afslut program");
+        System.out.println("Tryk 9: Tilbage");
     }
 
     // Main result screen for Trainer
