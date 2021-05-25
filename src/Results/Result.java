@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
-public class SuperResult {
+public class Result {
 
     double resultTime;
     String date;
@@ -17,7 +17,7 @@ public class SuperResult {
     String competitionName;
     String placement;
 
-    public SuperResult (double resultTime, String date, String swimType, String resultType, String competitionName, String placement){
+    public Result(double resultTime, String date, String swimType, String resultType, String competitionName, String placement){
         this.resultTime = resultTime;
         this.date = date;
         this.swimType = swimType;

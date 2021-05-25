@@ -7,7 +7,7 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static Results.SuperResult.generateCsvFile;
+import static Results.Result.generateCsvFile;
 import static com.sun.org.apache.xml.internal.utils.XMLCharacterRecognizer.isWhiteSpace;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;

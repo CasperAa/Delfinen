@@ -7,7 +7,7 @@ import java.util.Scanner;
 import Menu.MainMenu;
 //@Casper
 
-public class CompetitionResults extends SuperResult {
+public class CompetitionResults extends Result {
 
 
     public CompetitionResults(double resultTime, String date, String swimType, String resultType, String competitionName, String placement) {

@@ -1,9 +1,8 @@
 package System;
 import Members.Member;
-import Results.TrainigResults;
+import Menu.MainMenu;
 import Subscriptions.Revenue;
 import Subscriptions.UnpaidSubscriptions;
-import Results.TopFive;
 
 import java.io.IOException;
 import java.util.Scanner;
@@ -11,17 +10,15 @@ import java.util.Scanner;
 //@Casper
 public class MainSystem {
     public static void main(String[] args) throws IOException {
-        //Adding new instance of Top 5 class
-        TopFive topFive = new TopFive();
-        topFive.fileReader();
-
+        //New instance of mainMenu class
+        MainMenu Menu = new MainMenu();
 
         //Adding data to ArrayList containing Members
         Members.Member.readMembersFromFileAndAddToArray();
 
         //Printing welcome screen and main menu
-        Menu.MainMenu.welcomeScreen();
-        Menu.MainMenu.loginScreen();
+        Menu.welcomeScreen();
+        Menu.loginScreen();
 
 
         Scanner userInput = new Scanner(System.in);
@@ -31,7 +28,7 @@ public class MainSystem {
             switch (userInput.nextLine()) {
 
                 case "1": // Manager
-                    Menu.MainMenu.menuScreenManager();
+                    Menu.menuScreenManager();
                     switch (userInput.nextLine()){
                         case "1":
                             Member.writeNewMember();//Method for adding members
@@ -39,35 +36,26 @@ public class MainSystem {
                         case "2":
                             Member.editMemberInfo();//Method for editing existing members
                             break;
-                        case "3":
-                            Member.writeNewTrainer(); //Method for adding trainers
-                            break;
-                        case "4":
-                            Member.editTrainerInfo(); //Method for editing existing trainers
-                            break;
-                        case "5":
-                            Member.editTrainerTeams(); //Method for editing teams
-                            break;
                         case "9":
                             endProgram = true;
                             break;
                             default:
-                            Menu.MainMenu.errorMessage();
-                            Menu.MainMenu.menuScreenManager();
+                            Menu.errorMessage();
+                            Menu.menuScreenManager();
                     } break;
 
                 case "2": // Cashier
-                    Menu.MainMenu.menuScreenCashier();
+                    Menu.menuScreenCashier();
                     switch (userInput.nextLine()){
                         case "1":
                             //Method for overview of yearly revenue
                             Revenue.yearlyRevenue();
-                            Menu.MainMenu.menuScreenCashier();
+                            Menu.menuScreenCashier();
                             break;
                         case "2":
                             //Method for overview of members missing payment
                             UnpaidSubscriptions.paymentOverview();
-                            Menu.MainMenu.menuScreenCashier();
+                            Menu.menuScreenCashier();
                             break;
                         case "3":
                             //Method for editing members payment status
@@ -82,102 +70,30 @@ public class MainSystem {
                             endProgram = true;
                             break;
                         default:
-                            Menu.MainMenu.errorMessage();
-                            Menu.MainMenu.menuScreenCashier();
+                            Menu.errorMessage();
+                            Menu.menuScreenCashier();
                     } break;
 
                 case "3": // Trainer
-                    Menu.MainMenu.menuScreenTrainer();
+                    Menu.menuScreenTrainer();
                     switch (userInput.nextLine()){
                         case "1":
                             //Method for adding new result
-                            TrainigResults.addNewCSVFile();
+                            Results.CompetitionResults.addNewCSVFile();
                             break;
                         case "2":
-                            Menu.MainMenu.trainerTopFiveScreen1();
-                            switch (userInput.nextLine()){
-                                case "1":
-                                    Menu.MainMenu.trainerTopFiveScreen2Senior();
-                                    switch (userInput.nextLine()){
-                                        case "1":
-                                            System.out.print("\n");
-                                            topFive.topFiveSeniorBreaststroke();
-                                            break;
-                                        case "2":
-                                            System.out.print("\n");
-                                            topFive.topFiveSeniorButterfly();
-                                            break;
-                                        case "3":
-                                            System.out.print("\n");
-                                            topFive.topFiveSeniorCrawl();
-                                            break;
-                                        case "4":
-                                            System.out.print("\n");
-                                            topFive.topFiveSeniorRygcrawl();
-                                            break;
-                                        case "9":
-                                            Menu.MainMenu.loginScreen();
-                                            break;
-                                        default:
-                                            Menu.MainMenu.errorMessage();
-                                            Menu.MainMenu.trainerTopFiveScreen2Senior();
-                                    }
-                                    Menu.MainMenu.loginScreen();
-                                    break;
-
-                                case "2":
-                                    Menu.MainMenu.trainerTopFiveScreen2Junior();
-                                    switch (userInput.nextLine()){
-                                        case "1":
-                                            topFive.topFiveJuniorBreaststroke();
-                                            System.out.print("\n");
-                                            break;
-                                        case "2":
-                                            topFive.topFiveJuniorButterfly();
-                                            System.out.print("\n");
-
-                                            break;
-                                        case "3":
-                                            topFive.topFiveJuniorCrawl();
-                                            System.out.print("\n");
-
-                                            break;
-                                        case "4":
-                                            topFive.topFiveJuniorRygcrawl();
-                                            System.out.print("\n");
-
-                                            break;
-                                        case "9":
-                                            Menu.MainMenu.loginScreen();
-                                            break;
-                                        default:
-                                            Menu.MainMenu.errorMessage();
-                                            Menu.MainMenu.trainerTopFiveScreen2Senior();
-                                    }
-                                    Menu.MainMenu.loginScreen();
-
-                                    break;
-
-                                case "9":
-                                    Menu.MainMenu.menuScreenTrainer();
-                                    break;
-
-                                default:
-                                    Menu.MainMenu.errorMessage();
-                                    Menu.MainMenu.trainerTopFiveScreen1();
-                            }
-
+                            //Method for top 5 overview
                             break;
                         case "9":
                             endProgram = true;
                             break;
                         default:
-                            Menu.MainMenu.errorMessage();
-                            Menu.MainMenu.menuScreenTrainer();
+                            Menu.errorMessage();
+                            Menu.menuScreenTrainer();
                     } break;
 
                 case "4": // Admin
-                    Menu.MainMenu.menuScreenAdmin();
+                    Menu.menuScreenAdmin();
                     switch (userInput.nextLine()){
                         case "1":
                             //Method for adding members
@@ -196,20 +112,17 @@ public class MainSystem {
                             Member.editPaymentStatus();
                             break;
                         case "5":
-                            Menu.MainMenu.menuScreenTrainer();
+                            Menu.menuScreenTrainer();
                             break;
                         case "6":
                             //Method for resetting payment status and updating membertype for all members
                             Member.startNewSeason();
                         case "9":
-                            Member.editTrainerTeams(); //Method for editing teams
-                            break;
-                        case "10":
                             endProgram = true;
                             break;
                         default:
-                            Menu.MainMenu.errorMessage();
-                            Menu.MainMenu.menuScreenAdmin();
+                            Menu.errorMessage();
+                            Menu.menuScreenAdmin();
                     } break;
 
                 case "9": // End Program
@@ -217,8 +130,8 @@ public class MainSystem {
                     break;
 
                 default:
-                    Menu.MainMenu.errorMessage();
-                    Menu.MainMenu.loginScreen();
+                    Menu.errorMessage();
+                    Menu.loginScreen();
             }
 
         }
