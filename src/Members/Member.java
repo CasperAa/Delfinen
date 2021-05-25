@@ -983,6 +983,7 @@ public class Member {
                         if (!matchFound) {
                             System.out.println("Der blev ikke fundet et match for navnet. Prøv igen.");
                         }
+                        break;
                     case "3":
                         end = true;
                         break;
