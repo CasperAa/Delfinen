@@ -142,43 +142,43 @@ public class TopFive{
 
     public void topFiveJuniorBreaststroke(){
         for (int i = 0 ; i < 5 ; i++ ){
-            System.out.println( "Tid: " + juniorBreaststroke.get(i).resultTime + "      ID: "+  juniorBreaststroke.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(juniorBreaststroke.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
+            System.out.println( "Tid: " + juniorBreaststroke.get(i).resultTime + " - " + juniorBreaststroke.get(i).resultType +"      ID: "+  juniorBreaststroke.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(juniorBreaststroke.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
         }
     }
 
     public void topFiveJuniorButterfly(){
         for (int i = 0 ; i < 5 ; i++ ){
-            System.out.println( "Tid: " + juniorButterfly.get(i).resultTime + "      ID: "+  juniorButterfly.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(juniorButterfly.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
+            System.out.println( "Tid: " + juniorButterfly.get(i).resultTime + " - " + juniorButterfly.get(i).resultType +"      ID: "+  juniorButterfly.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(juniorButterfly.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
         }
     }
     public void topFiveJuniorCrawl(){
         for (int i = 0 ; i < 5 ; i++ ){
-            System.out.println( "Tid: " + juniorCrawl.get(i).resultTime + "      ID: "+  juniorCrawl.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(juniorCrawl.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
+            System.out.println( "Tid: " + juniorCrawl.get(i).resultTime + " - " + juniorCrawl.get(i).resultType +"      ID: "+  juniorCrawl.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(juniorCrawl.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
         }
     }
     public void topFiveJuniorRygcrawl(){
         for (int i = 0 ; i < 5 ; i++ ){
-            System.out.println( "Tid: " + juniorRygcrawl.get(i).resultTime + "      ID: "+  juniorRygcrawl.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(juniorRygcrawl.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
+            System.out.println( "Tid: " + juniorRygcrawl.get(i).resultTime +" - " + juniorRygcrawl.get(i).resultType + "      ID: "+  juniorRygcrawl.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(juniorRygcrawl.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
         }
     }
     public void topFiveSeniorBreaststroke(){
         for (int i = 0 ; i < 5 ; i++ ){
-            System.out.println( "Tid: " + seniorBreaststroke.get(i).resultTime + "      ID: "+  seniorBreaststroke.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(seniorBreaststroke.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
+            System.out.println( "Tid: " + seniorBreaststroke.get(i).resultTime + " - " + seniorBreaststroke.get(i).resultType + "      ID: "+  seniorBreaststroke.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(seniorBreaststroke.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
         }
     }
     public void topFiveSeniorButterfly(){
         for (int i = 0 ; i < 5 ; i++ ){
-            System.out.println( "Tid: " + seniorButterfly.get(i).resultTime + "      ID: "+  seniorButterfly.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(seniorButterfly.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
+            System.out.println( "Tid: " + seniorButterfly.get(i).resultTime + " - " + seniorButterfly.get(i).resultType +"      ID: "+  seniorButterfly.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(seniorButterfly.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
         }
     }
     public void topFiveSeniorCrawl(){
         for (int i = 0 ; i < 5 ; i++ ){
-            System.out.println( "Tid: " + seniorCrawl.get(i).resultTime + "      ID: "+  seniorCrawl.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(seniorCrawl.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
+            System.out.println( "Tid: " + seniorCrawl.get(i).resultTime +" - " + seniorCrawl.get(i).resultType + "      ID: "+  seniorCrawl.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(seniorCrawl.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
         }
     }
     public void topFiveSeniorRygcrawl(){
         for (int i = 0 ; i < 5 ; i++ ){
-            System.out.println( "Tid: " + seniorRygcrawl.get(i).resultTime + "      ID: "+  seniorRygcrawl.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(seniorRygcrawl.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
+            System.out.println( "Tid: " + seniorRygcrawl.get(i).resultTime + " - " + juniorBreaststroke.get(i).resultType +"      ID: "+  seniorRygcrawl.get(i).getId() + " Navn: " + Member.getMemberList().get((Integer.parseInt(seniorRygcrawl.get(i).getId().replaceFirst("^0+(?!$)", "")))-1).getName() );
         }
     }
 
@@ -189,19 +189,5 @@ public class TopFive{
             return text;
         }
     }
-    private static List removeDuplicate(List transactionList)
-    {
-        //Convert List to Set
-        Set transactionSet=new HashSet(transactionList);
-        //Convert Set to Array List
-        transactionList=new ArrayList(transactionSet);
-
-        //Sort object by transaction date and time
-        Collections.sort(transactionList);
-
-        return transactionList;
-    }
-
-
 }
 
