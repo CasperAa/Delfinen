@@ -112,16 +112,6 @@ public class TopFive{
                 }
             }
 
-            //Collections.sort(juniorBreaststroke);
-            /*
-            for(ConstructorData obj1 : juniorBreaststroke){
-                for(ConstructorData obj2: juniorBreaststroke){
-                    if(obj1.equals(obj2)) juniorBreaststroke.remove(obj1);
-                }
-            }
-            */
-            //Collections.sort(juniorBreaststroke);
-
 
             Collections.sort(juniorButterfly);
             Collections.sort(juniorBreaststroke);
