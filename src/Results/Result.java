@@ -1,5 +1,6 @@
 package Results;
 
+import Members.Member;
 import Menu.MainMenu;
 
 import java.io.BufferedWriter;
@@ -42,7 +43,10 @@ public class Result {
         File file = new File("src/Files/membersResults/" + memberID);
         boolean exists = file.exists();
         if (exists) {
-            System.out.println("Denne fil eksitere!");
+
+
+
+            System.out.println("Denne fil eksitere - Tilhøre: " + returnMemberName(memberID));
             String fileLocation = "src/Files/membersResults/";
             resultType(fileLocation+memberID);
         } else {
@@ -101,7 +105,7 @@ public class Result {
         String date = null;
         while (!dateIsValid) {
             date = userInput.nextLine();
-            if (!dateValidation(date)) {
+            if (!dateFormatValidator(date)) {
                 date = null;
                 MainMenu.errorMessage();
             } else {
@@ -109,21 +113,7 @@ public class Result {
             }
         }
 
-        System.out.println("Tid: (i sekunder - 62.23)");
-        boolean timeIsValid = false;
-        String time = null;
-        while (!timeIsValid) {
-            time = userInput.nextLine();
-            try {
-                Double.parseDouble(time);
-                timeIsValid = true;
-
-            } catch (Exception e) {
-                MainMenu.errorMessage();
-            }
-        }
-
-        System.out.println("Metode:\n" + "     Tryk 1: Butterfly\n" + "     Tryk 2: Crawl\n" + "     Tryk 3: Rygcrawl\n" + "     Tryk 4: Brystsvømning");
+        System.out.println("Svømmedisciplin:\n" + "     Tryk 1: Butterfly\n" + "     Tryk 2: Crawl\n" + "     Tryk 3: Rygcrawl\n" + "     Tryk 4: Brystsvømning");
         String method = userInput.nextLine();
         String swimMethod = null;
         switch (Integer.parseInt(method)) {
@@ -142,6 +132,20 @@ public class Result {
             default:
                 MainMenu.errorMessage();
                 userInput.nextLine();
+        }
+
+        System.out.println("Tid: (i sekunder - 62.23)");
+        boolean timeIsValid = false;
+        String time = null;
+        while (!timeIsValid) {
+            time = userInput.nextLine();
+            try {
+                Double.parseDouble(time);
+                timeIsValid = true;
+
+            } catch (Exception e) {
+                MainMenu.errorMessage();
+            }
         }
 
         String competition;
@@ -182,7 +186,7 @@ public class Result {
                     addNewCSVFile();
                     break;
                 case "nej":
-                    MainMenu.loginScreen();
+                    MainMenu.menuScreenTrainer();
                     break;
                 default:
                     MainMenu.errorMessage();
@@ -225,7 +229,7 @@ public class Result {
         }
     }
 
-    public static boolean dateValidation(String date) {
+    public static boolean dateFormatValidator(String date) {
         boolean status = false;
         if (checkDate(date)) {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
@@ -241,12 +245,21 @@ public class Result {
     }
 
     static boolean checkDate(String date) {
-        String pattern = "(0?[1-9]|[12][0-9]|3[01])\\/(0?[1-9]|1[0-2])\\/([0-9]{4})";
+        String pattern = "(0?[1-9]|[12][0-9]|3[01])(0?[1-9]|1[0-2])([0-9]{4})";
         boolean flag = false;
         if (date.matches(pattern)) {
             flag = true;
         }
         return flag;
+    }
+
+    public static String returnMemberName(String memberID){
+        String name = null;
+        for (Member members : Member.getMemberList()){
+            if(members.getID().equals(memberID)){
+                name = members.getName();
+            }
+        } return name;
     }
 
     public double getResultTime(){

@@ -22,7 +22,6 @@ public class MainSystem {
 
         Scanner userInput = new Scanner(System.in);
         boolean endProgram = false;
-        boolean endManager = false;
 
         while (!endProgram) {
             switch (userInput.nextLine()) {
@@ -30,6 +29,7 @@ public class MainSystem {
                 case "1": // Manager
 
                     MainMenu.menuScreenManager();
+                    boolean endManager = false;
                     while(!endManager){
                         switch (userInput.nextLine()){
                             case "1":
@@ -159,8 +159,8 @@ public class MainSystem {
         Members.Member.readMembersFromFileAndAddToArray();
         TopFive topFive = new TopFive();
         topFive.fileReader();
-        MainMenu.menuScreenTrainer();
 
+        MainMenu.menuScreenTrainer();
         boolean stayTrainerMenu = true;
         while (stayTrainerMenu) {
             switch (userInput.nextLine()) {
@@ -215,10 +215,11 @@ public class MainSystem {
                                 break;
 
                             case "2":
+                                MainMenu.trainerTopFiveScreen2Junior();
                                 boolean stayTopFiveJuniorMenu = true;
                                 while (stayTopFiveJuniorMenu) {
-                                    MainMenu.trainerTopFiveScreen2Junior();
                                     switch (userInput.nextLine()) {
+
                                         case "1":
                                             topFive.topFiveJuniorBreaststroke();
                                             System.out.print("\n");
