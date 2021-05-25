@@ -11,7 +11,7 @@ class TrainigResultsTest {
     void addResultTraining() {
 
         //Arrange
-        TrainigResults trainigResults = new TrainigResults(0, null, null, null, null, null);
+        TrainingResults trainigResults = new TrainingResults(0, null, null, null, null, null);
 
         //Act
 
