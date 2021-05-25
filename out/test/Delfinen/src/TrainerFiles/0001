@@ -1,0 +1,2 @@
+name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDate;hasPayed
+Adam Karlsson;0002;14032000;active;konkurrence;senior;88888888;adam@delfinen.dk;01012020;true
