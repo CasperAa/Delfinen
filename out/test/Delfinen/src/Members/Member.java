@@ -387,7 +387,8 @@ public class Member {
                         hasPayed = addPaymentStatus();
                         break;
                     default:
-                        System.out.println("Input ikke forstået.");
+                        System.out.println("Input ikke forstået. Prøv igen.");
+                        userInput = input.nextLine();
                         break;
                 }
 
@@ -405,6 +406,9 @@ public class Member {
                             end2 = true;
                             break;
                         default:
+                            System.out.println("Input ikke forstået. Prøv igen.");
+                            userInput2 = input.nextLine();
+                            break;
                     }
                 }
             }
@@ -675,6 +679,7 @@ public class Member {
                                 break;
                             default:
                                 System.out.println("Input ikke forstået. Prøv igen.");
+                                userInput = input.nextLine();
                                 break;
 
                         }
@@ -767,6 +772,7 @@ public class Member {
                                 break;
                             default:
                                 System.out.println("Input ikke forstået. Prøv igen.");
+                                userInput = input.nextLine();
                                 break;
 
                         }
@@ -977,6 +983,7 @@ public class Member {
                         if (!matchFound) {
                             System.out.println("Der blev ikke fundet et match for navnet. Prøv igen.");
                         }
+                        break;
                     case "3":
                         end = true;
                         break;

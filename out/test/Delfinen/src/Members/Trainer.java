@@ -321,6 +321,7 @@ public class Trainer extends Member {
                         break;
                     default:
                         System.out.println("Input ikke forstået.");
+                        userInput = input.nextLine();
                         break;
                 }
 
@@ -338,6 +339,9 @@ public class Trainer extends Member {
                             end2 = true;
                             break;
                         default:
+                            System.out.println("Input ikke forstået, prøv igen.");
+                            userInput2 = input.nextLine();
+                            break;
                     }
                 }
             }
@@ -541,8 +545,11 @@ public class Trainer extends Member {
                                         break;
                                     case "2":
                                         end3 = true;
+                                        break;
                                     default:
-                                        System.out.println("Input ikke forstået. Prøv igen.\nEr du færdig med at tilføje? 1: Ja 2: Nej");
+                                        System.out.println("Input ikke forstået. Prøv igen.\nEr du færdig med at redigere? 1: Ja 2: Nej");
+                                        userInput = input.nextLine();
+                                        break;
                                 }
                             }
 
