@@ -44,7 +44,7 @@ public class MainMenu {
     public static void menuScreenCashier () {
         System.out.println("Tryk 1: Årlig indtjening");
         System.out.println("Tryk 2: Se medlemmer, der i restance");
-        System.out.println("Tryk 3: Rediger medlems betalings status");
+        System.out.println("Tryk 3: Rediger medlems betalingsstatus");
         System.out.println("Tryk 4: Start ny sæson");
         System.out.println("Tryk 9: Afslut program");
     }

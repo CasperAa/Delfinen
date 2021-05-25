@@ -1,6 +1,6 @@
 package System;
 import Members.Member;
-import Results.TrainigResults;
+import Members.Trainer;
 import Subscriptions.Revenue;
 import Subscriptions.UnpaidSubscriptions;
 import Results.TopFive;
@@ -26,34 +26,44 @@ public class MainSystem {
 
         Scanner userInput = new Scanner(System.in);
         boolean endProgram = false;
+        boolean endManager = false;
 
         while (!endProgram) {
             switch (userInput.nextLine()) {
 
                 case "1": // Manager
+
                     Menu.MainMenu.menuScreenManager();
-                    switch (userInput.nextLine()){
-                        case "1":
-                            Member.writeNewMember();//Method for adding members
-                            break;
-                        case "2":
-                            Member.editMemberInfo();//Method for editing existing members
-                            break;
-                        case "3":
-                            Member.writeNewTrainer(); //Method for adding trainers
-                            break;
-                        case "4":
-                            Member.editTrainerInfo(); //Method for editing existing trainers
-                            break;
-                        case "5":
-                            Member.editTrainerTeams(); //Method for editing teams
-                            break;
-                        case "9":
-                            endProgram = true;
-                            break;
+                    while(!endManager){
+                        switch (userInput.nextLine()){
+                            case "1":
+                                Member.writeNewMember();//Method for adding members
+                                Menu.MainMenu.menuScreenManager();
+                                break;
+                            case "2":
+                                Member.editMemberInfo();//Method for editing existing members
+                                Menu.MainMenu.menuScreenManager();
+                                break;
+                            case "3":
+                                Trainer.writeNewTrainer(); //Method for adding trainers
+                                Menu.MainMenu.menuScreenManager();
+                                break;
+                            case "4":
+                                Trainer.editTrainerInfo(); //Method for editing existing trainers
+                                Menu.MainMenu.menuScreenManager();
+                                break;
+                            case "5":
+                                Trainer.editTrainerTeams(); //Method for editing teams
+                                Menu.MainMenu.menuScreenManager();
+                                break;
+                            case "9":
+                                endManager = true;
+                                endProgram = true;
+                                break;
                             default:
-                            Menu.MainMenu.errorMessage();
-                            Menu.MainMenu.menuScreenManager();
+                                Menu.MainMenu.errorMessage();
+                                Menu.MainMenu.menuScreenManager();
+                        }
                     } break;
 
                 case "2": // Cashier
@@ -201,7 +211,7 @@ public class MainSystem {
                             //Method for resetting payment status and updating membertype for all members
                             Member.startNewSeason();
                         case "9":
-                            Member.editTrainerTeams(); //Method for editing teams
+                            Trainer.editTrainerTeams(); //Method for editing teams
                             break;
                         case "10":
                             endProgram = true;
