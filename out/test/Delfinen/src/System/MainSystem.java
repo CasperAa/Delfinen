@@ -1,27 +1,23 @@
 package System;
 import Members.Member;
 import Members.Trainer;
+import Menu.MainMenu;
 import Subscriptions.Revenue;
 import Subscriptions.UnpaidSubscriptions;
 import Results.TopFive;
-
-import java.io.IOException;
 import java.util.Scanner;
 
 //@Casper
 public class MainSystem {
-    public static void main(String[] args) throws IOException {
-        //Adding new instance of Top 5 class
-        TopFive topFive = new TopFive();
-        topFive.fileReader();
-
+    public static void main(String[] args){
 
         //Adding data to ArrayList containing Members
         Members.Member.readMembersFromFileAndAddToArray();
 
         //Printing welcome screen and main menu
-        Menu.MainMenu.welcomeScreen();
-        Menu.MainMenu.loginScreen();
+        MainMenu.welcomeScreen();
+        MainMenu.loginScreen();
+        MainSystem mainSystem = new MainSystem();
 
 
         Scanner userInput = new Scanner(System.in);
@@ -33,51 +29,51 @@ public class MainSystem {
 
                 case "1": // Manager
 
-                    Menu.MainMenu.menuScreenManager();
+                    MainMenu.menuScreenManager();
                     while(!endManager){
                         switch (userInput.nextLine()){
                             case "1":
                                 Member.writeNewMember();//Method for adding members
-                                Menu.MainMenu.menuScreenManager();
+                                MainMenu.menuScreenManager();
                                 break;
                             case "2":
                                 Member.editMemberInfo();//Method for editing existing members
-                                Menu.MainMenu.menuScreenManager();
+                                MainMenu.menuScreenManager();
                                 break;
                             case "3":
                                 Trainer.writeNewTrainer(); //Method for adding trainers
-                                Menu.MainMenu.menuScreenManager();
+                                MainMenu.menuScreenManager();
                                 break;
                             case "4":
                                 Trainer.editTrainerInfo(); //Method for editing existing trainers
-                                Menu.MainMenu.menuScreenManager();
+                                MainMenu.menuScreenManager();
                                 break;
                             case "5":
                                 Trainer.editTrainerTeams(); //Method for editing teams
-                                Menu.MainMenu.menuScreenManager();
+                                MainMenu.menuScreenManager();
                                 break;
                             case "9":
                                 endManager = true;
                                 endProgram = true;
                                 break;
                             default:
-                                Menu.MainMenu.errorMessage();
-                                Menu.MainMenu.menuScreenManager();
+                                MainMenu.errorMessage();
+                                MainMenu.menuScreenManager();
                         }
                     } break;
 
                 case "2": // Cashier
-                    Menu.MainMenu.menuScreenCashier();
+                    MainMenu.menuScreenCashier();
                     switch (userInput.nextLine()){
                         case "1":
                             //Method for overview of yearly revenue
                             Revenue.yearlyRevenue();
-                            Menu.MainMenu.menuScreenCashier();
+                            MainMenu.menuScreenCashier();
                             break;
                         case "2":
                             //Method for overview of members missing payment
                             UnpaidSubscriptions.paymentOverview();
-                            Menu.MainMenu.menuScreenCashier();
+                            MainMenu.menuScreenCashier();
                             break;
                         case "3":
                             //Method for editing members payment status
@@ -92,101 +88,16 @@ public class MainSystem {
                             endProgram = true;
                             break;
                         default:
-                            Menu.MainMenu.errorMessage();
-                            Menu.MainMenu.menuScreenCashier();
+                            MainMenu.errorMessage();
+                            MainMenu.menuScreenCashier();
                     } break;
 
                 case "3": // Trainer
-                    Menu.MainMenu.menuScreenTrainer();
-                    switch (userInput.nextLine()){
-                        case "1":
-                            //Method for adding new result
-                            Results.Result.addNewCSVFile();
-                            break;
-                        case "2":
-                            Menu.MainMenu.trainerTopFiveScreen1();
-                            switch (userInput.nextLine()){
-                                case "1":
-                                    Menu.MainMenu.trainerTopFiveScreen2Senior();
-                                    switch (userInput.nextLine()){
-                                        case "1":
-                                            System.out.print("\n");
-                                            topFive.topFiveSeniorBreaststroke();
-                                            break;
-                                        case "2":
-                                            System.out.print("\n");
-                                            topFive.topFiveSeniorButterfly();
-                                            break;
-                                        case "3":
-                                            System.out.print("\n");
-                                            topFive.topFiveSeniorCrawl();
-                                            break;
-                                        case "4":
-                                            System.out.print("\n");
-                                            topFive.topFiveSeniorRygcrawl();
-                                            break;
-                                        case "9":
-                                            Menu.MainMenu.loginScreen();
-                                            break;
-                                        default:
-                                            Menu.MainMenu.errorMessage();
-                                            Menu.MainMenu.trainerTopFiveScreen2Senior();
-                                    }
-                                    Menu.MainMenu.loginScreen();
-                                    break;
-
-                                case "2":
-                                    Menu.MainMenu.trainerTopFiveScreen2Junior();
-                                    switch (userInput.nextLine()){
-                                        case "1":
-                                            topFive.topFiveJuniorBreaststroke();
-                                            System.out.print("\n");
-                                            break;
-                                        case "2":
-                                            topFive.topFiveJuniorButterfly();
-                                            System.out.print("\n");
-
-                                            break;
-                                        case "3":
-                                            topFive.topFiveJuniorCrawl();
-                                            System.out.print("\n");
-
-                                            break;
-                                        case "4":
-                                            topFive.topFiveJuniorRygcrawl();
-                                            System.out.print("\n");
-
-                                            break;
-                                        case "9":
-                                            Menu.MainMenu.loginScreen();
-                                            break;
-                                        default:
-                                            Menu.MainMenu.errorMessage();
-                                            Menu.MainMenu.trainerTopFiveScreen2Senior();
-                                    }
-                                    Menu.MainMenu.loginScreen();
-
-                                    break;
-
-                                case "9":
-                                    Menu.MainMenu.menuScreenTrainer();
-                                    break;
-
-                                default:
-                                    Menu.MainMenu.errorMessage();
-                                    Menu.MainMenu.trainerTopFiveScreen1();
-                            }
-                            break;
-                        case "9":
-                            endProgram = true;
-                            break;
-                        default:
-                            Menu.MainMenu.errorMessage();
-                            Menu.MainMenu.menuScreenTrainer();
-                    } break;
+                    mainSystem.trainerMenu(userInput);
+                    break;
 
                 case "4": // Admin
-                    Menu.MainMenu.menuScreenAdmin();
+                    MainMenu.menuScreenAdmin();
                     switch (userInput.nextLine()){
                         case "1":
                             //Method for adding members
@@ -205,7 +116,7 @@ public class MainSystem {
                             Member.editPaymentStatus();
                             break;
                         case "5":
-                            Menu.MainMenu.menuScreenTrainer();
+                            mainSystem.trainerMenu(userInput);
                             break;
                         case "6":
                             //Method for resetting payment status and updating membertype for all members
@@ -217,8 +128,8 @@ public class MainSystem {
                             endProgram = true;
                             break;
                         default:
-                            Menu.MainMenu.errorMessage();
-                            Menu.MainMenu.menuScreenAdmin();
+                            MainMenu.errorMessage();
+                            MainMenu.menuScreenAdmin();
                     } break;
 
                 case "9": // End Program
@@ -226,8 +137,132 @@ public class MainSystem {
                     break;
 
                 default:
-                    Menu.MainMenu.errorMessage();
-                    Menu.MainMenu.loginScreen();
+                    MainMenu.errorMessage();
+                    MainMenu.loginScreen();
+            }
+
+        }
+    }
+    public void trainerMenu (Scanner userInput){
+
+        //Adding data to ArrayList containing Members
+        Members.Member.readMembersFromFileAndAddToArray();
+        TopFive topFive = new TopFive();
+        topFive.fileReader();
+        MainMenu.menuScreenTrainer();
+
+        boolean stayTrainerMenu = true;
+        while (stayTrainerMenu) {
+            switch (userInput.nextLine()) {
+                case "1":
+                    //Method for adding new result
+                    Results.Result.addNewCSVFile();
+                    break;
+                case "2":
+                    MainMenu.trainerTopFiveScreen1();
+                    boolean stayMemberTypeSelectionMenu = true;
+                    while (stayMemberTypeSelectionMenu) {
+                        switch (userInput.nextLine()) {
+                            case "1":
+                                MainMenu.trainerTopFiveScreen2Senior();
+                                boolean stayTopFiveSeniorMenu = true;
+                                while (stayTopFiveSeniorMenu) {
+                                    switch (userInput.nextLine()) {
+
+                                        case "1":
+                                            topFive.topFiveSeniorBreaststroke();
+                                            System.out.print("\n");
+                                            MainMenu.trainerTopFiveScreen2Senior();
+                                            break;
+
+                                        case "2":
+                                            topFive.topFiveSeniorButterfly();
+                                            System.out.print("\n");
+                                            MainMenu.trainerTopFiveScreen2Senior();
+                                            break;
+
+                                        case "3":
+                                            topFive.topFiveSeniorCrawl();
+                                            System.out.print("\n");
+                                            MainMenu.trainerTopFiveScreen2Senior();
+                                            break;
+
+                                        case "4":
+                                            topFive.topFiveSeniorRygcrawl();
+                                            System.out.print("\n");
+                                            MainMenu.trainerTopFiveScreen2Senior();
+                                            break;
+
+                                        case "9":
+                                            MainMenu.trainerTopFiveScreen1();
+                                            stayTopFiveSeniorMenu = false;
+                                            break;
+
+                                        default:
+                                            MainMenu.errorMessage();
+                                    }
+                                }
+                                break;
+
+                            case "2":
+                                boolean stayTopFiveJuniorMenu = true;
+                                while (stayTopFiveJuniorMenu) {
+                                    MainMenu.trainerTopFiveScreen2Junior();
+                                    switch (userInput.nextLine()) {
+                                        case "1":
+                                            topFive.topFiveJuniorBreaststroke();
+                                            System.out.print("\n");
+                                            MainMenu.trainerTopFiveScreen2Junior();
+                                            break;
+
+                                        case "2":
+                                            topFive.topFiveJuniorButterfly();
+                                            System.out.print("\n");
+                                            MainMenu.trainerTopFiveScreen2Junior();
+                                            break;
+
+                                        case "3":
+                                            topFive.topFiveJuniorCrawl();
+                                            System.out.print("\n");
+                                            MainMenu.trainerTopFiveScreen2Junior();
+                                            break;
+
+                                        case "4":
+                                            topFive.topFiveJuniorRygcrawl();
+                                            System.out.print("\n");
+                                            MainMenu.trainerTopFiveScreen2Junior();
+                                            break;
+
+                                        case "9":
+                                            MainMenu.trainerTopFiveScreen1();
+                                            stayTopFiveJuniorMenu = false;
+                                            break;
+
+                                        default:
+                                            MainMenu.errorMessage();
+                                    }
+                                }
+                                break;
+
+                            case "9":
+                                MainMenu.menuScreenTrainer();
+                                stayMemberTypeSelectionMenu = false;
+                                break;
+                            default:
+                                MainMenu.errorMessage();
+                                MainMenu.trainerTopFiveScreen1();
+                        }
+                    }
+                    break;
+
+                case "9":
+                    stayTrainerMenu = false;
+                    MainMenu.loginScreen();
+                    break;
+
+                default:
+                    MainMenu.errorMessage();
+                    MainMenu.menuScreenTrainer();
             }
 
         }

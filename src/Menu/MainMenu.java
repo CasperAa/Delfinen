@@ -53,34 +53,34 @@ public class MainMenu {
     public static void menuScreenTrainer(){
         System.out.println("Tryk 1: Indtast nyt resultat");
         System.out.println("Tryk 2: Se top 5");
-        System.out.println("Tryk 9: Afslut program");
+        System.out.println("Tryk 9: Tilbage");
     }
 
     public static void trainerTopFiveScreen1(){
-        System.out.println("Top 5 - Vælg målgruppe \n");
-        System.out.println("Tryk 1: Senior");
-        System.out.println("Tryk 2: Junior");
-        System.out.println("Tryk 9: Tilbage");
+        System.out.println("Top 5 - Vælg målgruppe");
+        System.out.println("    Tryk 1: Senior");
+        System.out.println("    Tryk 2: Junior");
+        System.out.println("    Tryk 9: Tilbage");
 
     }
 
     public static void trainerTopFiveScreen2Junior(){
-        System.out.println("Top 5 Junior - Vælg Svømmedisciplin  \n");
-        System.out.println("Tryk 1: Brystsvømning");
-        System.out.println("Tryk 2: Butterfly");
-        System.out.println("Tryk 3: Crawl");
-        System.out.println("Tryk 4: Rygcrawl");
-        System.out.println("Tryk 9: Tilbage");
+        System.out.println("Top 5 Junior - Vælg Svømmedisciplin");
+        System.out.println("    Tryk 1: Brystsvømning");
+        System.out.println("    Tryk 2: Butterfly");
+        System.out.println("    Tryk 3: Crawl");
+        System.out.println("    Tryk 4: Rygcrawl");
+        System.out.println("    Tryk 9: Tilbage");
 
     }
 
     public static void trainerTopFiveScreen2Senior(){
-        System.out.println("Top 5 Senior- Vælg Svømmedisciplin \n");
-        System.out.println("Tryk 1: Brystsvømning");
-        System.out.println("Tryk 2: Butterfly");
-        System.out.println("Tryk 3: Crawl");
-        System.out.println("Tryk 4: Rygcrawl");
-        System.out.println("Tryk 9: Tilbage");
+        System.out.println("Top 5 Senior - Vælg Svømmedisciplin");
+        System.out.println("    Tryk 1: Brystsvømning");
+        System.out.println("    Tryk 2: Butterfly");
+        System.out.println("    Tryk 3: Crawl");
+        System.out.println("    Tryk 4: Rygcrawl");
+        System.out.println("    Tryk 9: Tilbage");
 
     }
 
