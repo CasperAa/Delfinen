@@ -435,8 +435,6 @@ public class Member {
     }
 
 
-
-
     //Denne metode bruges ved starten af en ny sæson: Betalingsstatus for alle medlemmer nulstilles til
     // ikke-betalt (false), og alle medlemmers alder undersøges, så medlemstypen kan fastsættes på baggrund af denne.
     public static void startNewSeason() {
@@ -516,7 +514,7 @@ public class Member {
                 System.out.println("Navnet er blevet tilføjet.");
                 end = true;
             } else {
-                System.out.println("Input ikke forstået. Prøv igen.");
+                System.out.println("Ugyldigt navn. Prøv igen.");
                 name = input.nextLine();
             }
         }
@@ -650,7 +648,6 @@ public class Member {
             } else {
 
                 //Tjekker om telefonnummeret allerede eksisterer i databasen
-                boolean alreadyExists = false;
                 File membersFile = new File("src/Files/MembersList");
                 int index = 6;
 
@@ -737,13 +734,42 @@ public class Member {
         String tempEmail = input.nextLine();
         boolean end = false;
         while (!end) {
-            if (isValidEmail(tempEmail)) {
-                System.out.println("E-mailen er blevet tilføjet.");
-                email = tempEmail;
-                end = true;
-            } else {
+            if (!isValidEmail(tempEmail)) {
                 System.out.println("Ugyldig e-mail. Prøv igen:");
                 tempEmail = input.nextLine();
+            } else {
+                //Tjekker om emailen allerede eksisterer i databasen
+                File membersFile = new File("src/Files/MembersList");
+                int index = 7;
+
+                if (!alreadyExistsInFile(tempEmail, membersFile, index)) {
+                    System.out.println("E-mailen er blevet tilføjet.");
+                    email = tempEmail;
+                    end = true;
+                } else {
+                    boolean end2 = false;
+                    System.out.println("E-mailen eksisterer allerede i databasen. Vil du tilføje den alligevel? " +
+                            "1: Ja 2: Nej");
+                    String userInput = input.nextLine();
+                    while (!end2) {
+                        switch (userInput) {
+                            case "1":
+                                System.out.println("E-mailen er blevet tilføjet.");
+                                end = true;
+                                end2 = true;
+                                break;
+                            case "2":
+                                System.out.println("Indtast ny e-mail:");
+                                tempEmail = input.nextLine();
+                                end2 = true;
+                                break;
+                            default:
+                                System.out.println("Input ikke forstået. Prøv igen.");
+                                break;
+
+                        }
+                    }
+                }
             }
         }
         return email;

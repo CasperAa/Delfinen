@@ -8,8 +8,8 @@ public class Revenue {
 
 
     public static void yearlyRevenue (){
-        final double junior = 1000.00;
-        final double senior = 1600.00;
+        final double juniorRate = 1000.00;
+        final double seniorRate = 1600.00;
         final double seniorDiscount = 0.25;
         final double passive = 500.00;
         final int sixty = 60;
@@ -25,13 +25,13 @@ public class Revenue {
                 yearlyIncome += passive;
                 passiveMembers++;
             } else if (member.getMemberType().equals("junior")){
-                yearlyIncome += junior;
+                yearlyIncome += juniorRate;
                 juniorMembers++;
             } else if (member.getMemberType().equals("senior") && currentYear - Integer.parseInt(member.getBirthdate().substring(member.getBirthdate().length()-4)) < sixty){
-                yearlyIncome += senior;
+                yearlyIncome += seniorRate;
                 seniorMembers++;
             } else{
-                yearlyIncome += senior - (seniorDiscount * senior);
+                yearlyIncome += seniorRate - (seniorDiscount * seniorRate);
                 seniorMembersOverSixty++;
             }
         }
@@ -43,4 +43,5 @@ public class Revenue {
         System.out.println("     Antal passive medlemmer   " +passiveMembers);
 
     }
+
 }
