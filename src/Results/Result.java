@@ -80,7 +80,7 @@ public class Result {
         if (resultypeUserInput.equals("1")){
             TrainingResults.addResultTraining(fileLocation);
         } else if (resultypeUserInput.equals("2")){
-            CompetitionResults.addResultCompetition(fileLocation);
+            CompetitionResult.addResultCompetition(fileLocation);
         } else {
             MainMenu.errorMessage();
             userInput.nextLine();

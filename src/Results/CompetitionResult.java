@@ -7,10 +7,10 @@ import java.util.Scanner;
 import Menu.MainMenu;
 //@Casper
 
-public class CompetitionResults extends Result {
+public class CompetitionResult extends Result {
 
 
-    public CompetitionResults(double resultTime, String date, String swimType, String resultType, String competitionName, String placement) {
+    public CompetitionResult(double resultTime, String date, String swimType, String resultType, String competitionName, String placement) {
         super(resultTime, date, swimType, resultType, competitionName, placement);
     }
 
