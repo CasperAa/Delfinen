@@ -392,7 +392,7 @@ public class Member {
                 }
 
                 //Brugeren får mulighed for at afslutte ændringen af medlemmet eller ændre endnu en attribut.
-                System.out.println("Er du færdig med at redigere medlemmer? 1: Ja 2: Nej");
+                System.out.println("Er du færdig med at redigere medlemmet? 1: Ja 2: Nej");
                 String userInput2 = input.nextLine();
                 boolean end2 = false;
                 while (!end2) {

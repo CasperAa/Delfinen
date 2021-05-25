@@ -1,2 +1,6 @@
 name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDate;hasPayed
-Steve Jobs;0001;24021955;passive;trainer;trainer;11111111;stevejobs@apple.com;21052021;false
+Steve No Jobs;0001;24021955;passive;trainer;senior;26453523;stevejobs@apple.com;21052021;false;rygcrawl
+Joakim von And;0002;12031951;active;trainer;senior;29482023;joakim@penge.com;21052021;false;crawl
+Elizabeth Bennet;0003;20091950;active;trainer;junior;58492942;ebennet@janeausten.co.uk;21052021;false;butterfly
+Lone Karlsson;0004;10121983;active;trainer;junior;13141222;loneK@delfinen.dk;22052021;false;crawl
+Emma Sofusen;0005;09092000;active;trainer;junior;79138291;EmmaS@delfinen.dk;22052021;false;brystsvømning

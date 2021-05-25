@@ -387,12 +387,13 @@ public class Member {
                         hasPayed = addPaymentStatus();
                         break;
                     default:
-                        System.out.println("Input ikke forstået.");
+                        System.out.println("Input ikke forstået. Prøv igen.");
+                        userInput = input.nextLine();
                         break;
                 }
 
                 //Brugeren får mulighed for at afslutte ændringen af medlemmet eller ændre endnu en attribut.
-                System.out.println("Er du færdig med at redigere medlemmer? 1: Ja 2: Nej");
+                System.out.println("Er du færdig med at redigere medlemmet? 1: Ja 2: Nej");
                 String userInput2 = input.nextLine();
                 boolean end2 = false;
                 while (!end2) {
@@ -405,6 +406,9 @@ public class Member {
                             end2 = true;
                             break;
                         default:
+                            System.out.println("Input ikke forstået. Prøv igen.");
+                            userInput2 = input.nextLine();
+                            break;
                     }
                 }
             }
@@ -675,6 +679,7 @@ public class Member {
                                 break;
                             default:
                                 System.out.println("Input ikke forstået. Prøv igen.");
+                                userInput = input.nextLine();
                                 break;
 
                         }
@@ -767,6 +772,7 @@ public class Member {
                                 break;
                             default:
                                 System.out.println("Input ikke forstået. Prøv igen.");
+                                userInput = input.nextLine();
                                 break;
 
                         }

@@ -81,6 +81,8 @@ public class Trainer extends Member {
     //Hvorfor i alverden har jeg to næsten identiske metoder???
     //Denne metode scanner filen TrainerList og tilføjer alle trænere som et trainer-objekt til arrayListen trainerList
     public static void readTrainersFromFileAndAddToArray() {
+        trainerList.clear();
+
         try {
             File membersFile = new File("src/Files/TrainerList");
             Scanner sc = new Scanner(membersFile);
@@ -656,8 +658,12 @@ public class Trainer extends Member {
 
                             end = true;
                             break;
+                        case "3":
+                            end = true;
+                            break;
                         default:
                             System.out.println("Input ikke forstået. Prøv igen.");
+                            userInput = sc.nextLine();
                             break;
                     }
                 }
