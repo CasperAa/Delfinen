@@ -14,6 +14,7 @@ import static java.lang.Long.parseLong;
 
 
 //@Amanda
+
 public class Member {
 
     protected String name;
@@ -836,6 +837,143 @@ public class Member {
             }
         }
         return hasPayed;
+    }
+
+    //Denne metode bruges til at ændre attributten hasPayed, der fortæller, om et medlem har betalt kontingent.
+    public static void editPaymentStatus() {
+        readMembersFromFileAndAddToArray();
+        try {
+            Scanner input = new Scanner(System.in);
+            System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn 3: Afslut");
+            String userInput = input.nextLine();
+            boolean matchFound = false;
+            int lineNumber = 0;
+            boolean end = false;
+            while (!end) {
+                switch (userInput) {
+                    case "1":
+                        System.out.println("Hvad er ID-nummeret på det medlem, du vil redigere?");
+                        String inputID = input.nextLine();
+                        int lineCounter = 0;
+                        for (Member currentMember : memberList) {
+                            String currentID = currentMember.getID();
+                            if (currentID.equals(inputID)) {
+                                System.out.println("Vil du ændre følgende medlem?\n" + currentMember.getID() + ", " +
+                                        currentMember.getName() + "\nBetalingsstatus: " + currentMember.hasPayed +
+                                        "\n1: Ja 2: Nej");
+                                userInput = input.nextLine();
+                                boolean end2 = false;
+                                boolean newHasPayed = false;
+                                while (!end2) {
+                                    switch (userInput) {
+                                        case "1":
+                                            System.out.println("Hvad skal betalingsstatus være? 1: Betalt 2: Ikke betalt");
+                                            userInput = input.nextLine();
+                                            switch (userInput) {
+                                                case "1":
+                                                    newHasPayed = true;
+                                                    break;
+                                                case "2":
+                                                    newHasPayed = false;
+                                                    break;
+                                            }
+                                            Member updatedMember = new Member(currentMember.name, currentMember.ID,
+                                                    currentMember.birthdate, currentMember.memberStatus,
+                                                    currentMember.memberGroup, currentMember.memberType,
+                                                    currentMember.telephoneNo, currentMember.email,
+                                                    currentMember.startDate, newHasPayed);
+                                            lineNumber = lineCounter;
+                                            memberList.set(lineNumber, updatedMember);
+                                            end = true;
+                                            end2 = true;
+                                            break;
+                                        case "2":
+                                            end = true;
+                                            end2 = true;
+                                            break;
+                                    }
+                                }
+                                matchFound = true;
+                            }
+                            lineCounter++;
+                        }
+                        if (!matchFound) {
+                            System.out.println("Der blev ikke fundet et match for ID'et. Prøv igen.");
+                        }
+                        break;
+                    case "2":
+                        System.out.println("Hvad er navnet på det medlem, du vil redigere?");
+                        String inputName = input.nextLine();
+                        lineCounter = 0;
+                        for (Member currentMember : memberList) {
+                            if (currentMember.getName().toLowerCase().contains(inputName.toLowerCase())) {
+                                System.out.println("Vil du ændre følgende medlem?\n" + currentMember.getID() + ", " +
+                                        currentMember.getName() + "\nBetalingsstatus: " + currentMember.hasPayed +
+                                        "\n1: Ja 2: Nej");
+                                userInput = input.nextLine();
+                                boolean end2 = false;
+                                boolean newHasPayed = false;
+                                while (!end2) {
+                                    switch (userInput) {
+                                        case "1":
+                                            System.out.println("Hvad skal betalingsstatus være? 1: Betalt 2: Ikke betalt");
+                                            userInput = input.nextLine();
+                                            switch (userInput) {
+                                                case "1":
+                                                    newHasPayed = true;
+                                                    break;
+                                                case "2":
+                                                    newHasPayed = false;
+                                                    break;
+                                            }
+                                            Member updatedMember = new Member(currentMember.name, currentMember.ID,
+                                                    currentMember.birthdate, currentMember.memberStatus,
+                                                    currentMember.memberGroup, currentMember.memberType,
+                                                    currentMember.telephoneNo, currentMember.email,
+                                                    currentMember.startDate, newHasPayed);
+                                            lineNumber = lineCounter;
+                                            memberList.set(lineNumber, updatedMember);
+                                            end = true;
+                                            end2 = true;
+                                            break;
+                                        case "2":
+                                            end = true;
+                                            end2 = true;
+                                            break;
+                                    }
+                                }
+                                matchFound = false;
+                            }
+                            lineCounter++;
+                        }
+                        if (!matchFound) {
+                            System.out.println("Der blev ikke fundet et match for navnet. Prøv igen.");
+                        }
+                    case "3":
+                        end = true;
+                        break;
+                    default:
+                        System.out.println("Input ikke forstået. Prøv igen.\nVil du søge efter ID eller navn? 1: ID 2: Navn");
+                        userInput = input.nextLine();
+                        break;
+                }
+            }
+            File membersFile = new File("src/Files/MembersList");
+            FileWriter fw = new FileWriter(membersFile, true);
+            BufferedWriter bw = new BufferedWriter(fw);
+            PrintWriter pw = new PrintWriter(membersFile);
+            pw.write("name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDate;hasPayed");
+            for (Member currentMember : memberList) {
+                pw.write("\n" + currentMember.name + ";" + currentMember.ID + ";" + currentMember.birthdate + ";" +
+                        currentMember.memberStatus + ";" + currentMember.memberGroup + ";" + currentMember.memberType +
+                        ";" + currentMember.telephoneNo + ";" + currentMember.email + ";" + currentMember.startDate + ";"
+                        + currentMember.hasPayed);   //Medlemmet skal tilføjes til filen
+            }
+            pw.close();
+            System.out.println("Proces er afsluttet.");
+        } catch (IOException e){
+            System.out.println("Fejl.");
+        }
     }
 
 
