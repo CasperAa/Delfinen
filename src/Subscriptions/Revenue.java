@@ -43,4 +43,5 @@ public class Revenue {
         System.out.println("     Antal passive medlemmer   " +passiveMembers);
 
     }
+
 }

@@ -1,5 +1,6 @@
 package System;
 import Members.Member;
+import Members.Trainer;
 import Subscriptions.Revenue;
 import Subscriptions.UnpaidSubscriptions;
 import Results.TopFive;
@@ -39,13 +40,13 @@ public class MainSystem {
                             Member.editMemberInfo();//Method for editing existing members
                             break;
                         case "3":
-                            Member.writeNewTrainer(); //Method for adding trainers
+                            Trainer.writeNewTrainer(); //Method for adding trainers
                             break;
                         case "4":
-                            Member.editTrainerInfo(); //Method for editing existing trainers
+                            Trainer.editTrainerInfo(); //Method for editing existing trainers
                             break;
                         case "5":
-                            Member.editTrainerTeams(); //Method for editing teams
+                            Trainer.editTrainerTeams(); //Method for editing teams
                             break;
                         case "9":
                             endProgram = true;
@@ -200,7 +201,7 @@ public class MainSystem {
                             //Method for resetting payment status and updating membertype for all members
                             Member.startNewSeason();
                         case "9":
-                            Member.editTrainerTeams(); //Method for editing teams
+                            Trainer.editTrainerTeams(); //Method for editing teams
                             break;
                         case "10":
                             endProgram = true;
