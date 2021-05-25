@@ -91,7 +91,7 @@ public class MainSystem {
                     switch (userInput.nextLine()){
                         case "1":
                             //Method for adding new result
-                            TrainigResults.addNewCSVFile();
+                            Results.Result.addNewCSVFile();
                             break;
                         case "2":
                             Menu.MainMenu.trainerTopFiveScreen1();
@@ -166,7 +166,6 @@ public class MainSystem {
                                     Menu.MainMenu.errorMessage();
                                     Menu.MainMenu.trainerTopFiveScreen1();
                             }
-
                             break;
                         case "9":
                             endProgram = true;
