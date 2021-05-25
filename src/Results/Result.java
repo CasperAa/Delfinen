@@ -49,7 +49,7 @@ public class Result {
             switch (userID.nextLine()){
                 case "ja":
                     String fileLocation = "src/Files/membersResults/";
-                    TrainigResults.generateCsvFile(fileLocation+memberID);
+                    TrainingResults.generateCsvFile(fileLocation+memberID);
 
                     System.out.println("Registrer resultat? ja/nej");
                     switch (userID.nextLine()){
@@ -78,7 +78,7 @@ public class Result {
         Scanner userInput = new Scanner(System.in);
         String resultypeUserInput = userInput.nextLine();
         if (resultypeUserInput.equals("1")){
-            TrainigResults.addResultTraining(fileLocation);
+            TrainingResults.addResultTraining(fileLocation);
         } else if (resultypeUserInput.equals("2")){
             CompetitionResults.addResultCompetition(fileLocation);
         } else {

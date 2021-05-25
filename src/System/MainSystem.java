@@ -1,6 +1,5 @@
 package System;
 import Members.Member;
-import Results.TrainigResults;
 import Subscriptions.Revenue;
 import Subscriptions.UnpaidSubscriptions;
 import Results.TopFive;

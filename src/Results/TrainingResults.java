@@ -9,9 +9,9 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
 
-public class TrainigResults extends Result {
+public class TrainingResults extends Result {
 
-    public TrainigResults(double resultTime, String date, String swimType, String resultType, String competitionName, String placement){
+    public TrainingResults(double resultTime, String date, String swimType, String resultType, String competitionName, String placement){
         super(resultTime, date, swimType, resultType, competitionName, placement);
     }
 
