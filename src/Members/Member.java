@@ -48,6 +48,7 @@ public class Member {
 
     //Denne metode scanner filen MembersList og tilføjer alle medlemmer som et member-objekt til arrayListen memberList.
     public static void readMembersFromFileAndAddToArray() {
+        memberList.clear();
 
         try {
             File membersFile = new File("src/Files/MembersList");
@@ -258,7 +259,6 @@ public class Member {
     public static void editMemberInfo() {
 
         //Her kaldes metoden, der læser MemberList og tilføjer medlemsobjekterne til arrayListen memberList.
-        memberList.clear();
         readMembersFromFileAndAddToArray();
         try {
 
@@ -439,7 +439,6 @@ public class Member {
     //Denne metode bruges ved starten af en ny sæson: Betalingsstatus for alle medlemmer nulstilles til
     // ikke-betalt (false), og alle medlemmers alder undersøges, så medlemstypen kan fastsættes på baggrund af denne.
     public static void startNewSeason() {
-        memberList.clear();
         readMembersFromFileAndAddToArray();
 
         try {
@@ -870,6 +869,7 @@ public class Member {
 
     //Denne metode bruges til at ændre attributten hasPayed, der fortæller, om et medlem har betalt kontingent.
     public static void editPaymentStatus() {
+        readMembersFromFileAndAddToArray();
         try {
             Scanner input = new Scanner(System.in);
             System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn 3: Afslut");
