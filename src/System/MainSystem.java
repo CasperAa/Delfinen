@@ -10,9 +10,10 @@ import java.util.Scanner;
 
 //@Casper
 public class MainSystem {
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args){
         //Adding new instance of Top 5 class
         TopFive topFive = new TopFive();
+        //Sorting data for top 5 lists
         topFive.fileReader();
 
 
@@ -108,29 +109,37 @@ public class MainSystem {
                             switch (userInput.nextLine()){
                                 case "1":
                                     Menu.MainMenu.trainerTopFiveScreen2Senior();
-                                    switch (userInput.nextLine()){
-                                        case "1":
-                                            System.out.print("\n");
-                                            topFive.topFiveSeniorBreaststroke();
-                                            break;
-                                        case "2":
-                                            System.out.print("\n");
-                                            topFive.topFiveSeniorButterfly();
-                                            break;
-                                        case "3":
-                                            System.out.print("\n");
-                                            topFive.topFiveSeniorCrawl();
-                                            break;
-                                        case "4":
-                                            System.out.print("\n");
-                                            topFive.topFiveSeniorRygcrawl();
-                                            break;
-                                        case "9":
-                                            Menu.MainMenu.loginScreen();
-                                            break;
-                                        default:
-                                            Menu.MainMenu.errorMessage();
-                                            Menu.MainMenu.trainerTopFiveScreen2Senior();
+                                    boolean stay = true;
+                                    while (stay) {
+                                        switch (userInput.nextLine()) {
+                                            case "1":
+                                                topFive.topFiveSeniorBreaststroke();
+                                                System.out.print("\n");
+                                                Menu.MainMenu.trainerTopFiveScreen2Senior();
+                                                break;
+                                            case "2":
+                                                topFive.topFiveSeniorButterfly();
+                                                System.out.print("\n");
+                                                Menu.MainMenu.trainerTopFiveScreen2Senior();
+                                                break;
+                                            case "3":
+                                                topFive.topFiveSeniorCrawl();
+                                                System.out.print("\n");
+                                                Menu.MainMenu.trainerTopFiveScreen2Senior();
+                                                break;
+                                            case "4":
+                                                topFive.topFiveSeniorRygcrawl();
+                                                System.out.print("\n");
+                                                Menu.MainMenu.trainerTopFiveScreen2Senior();
+                                                break;
+                                            case "9":
+                                                Menu.MainMenu.loginScreen();
+                                                stay = false;
+                                                break;
+                                            default:
+                                                Menu.MainMenu.errorMessage();
+                                                Menu.MainMenu.trainerTopFiveScreen2Senior();
+                                        }
                                     }
                                     Menu.MainMenu.loginScreen();
                                     break;

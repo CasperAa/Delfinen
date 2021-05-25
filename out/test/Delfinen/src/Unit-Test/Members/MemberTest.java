@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +22,6 @@ class MemberTest {
                 null,null,null,null,false);
 
         //Act
-
 
         //Opfylder alle krav
         boolean trueResult1 = member.isValidBirthdate("03042000");
@@ -46,11 +47,18 @@ class MemberTest {
         //Måned er 00
         boolean falseResult7 = member.isValidBirthdate("03002000");
 
-        //Årstal er for højt (over 2015)
-        boolean falseResult8 = member.isValidBirthdate("03042016");
+        //Årstal er for højt (alderen er under 5)
+        DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("ddMMyyyy");
+        String date = LocalDateTime.now().minusYears(5).format(formatTime);
+        boolean falseResult8 = member.isValidBirthdate(date);
 
-        //Årstal er for lavt (under 1900)
-        boolean falseResult9 = member.isValidBirthdate("03041899");
+        //Årstal er for lavt (alderen er over 140)
+        date = LocalDateTime.now().minusYears(141).format(formatTime);
+        boolean falseResult9 = member.isValidBirthdate(date);
+
+        //Alderen opfylder kravene (alderen er 15)
+        date = LocalDateTime.now().minusYears(15).format(formatTime);
+        boolean trueResult2= member.isValidBirthdate(date);
 
         //Assert
         assertTrue(trueResult1);
@@ -63,6 +71,7 @@ class MemberTest {
         assertFalse(falseResult7);
         assertFalse(falseResult8);
         assertFalse(falseResult9);
+        assertTrue(trueResult2);
 
     }
 
@@ -114,7 +123,7 @@ class MemberTest {
         //Indeholder ikke @
         boolean falseResult1 = member.isValidEmail("eksempeleksempel.dk");
 
-        //Indeholder ikke .com/.net/.co.uk/.gov
+        //Indeholder ikke .dk/.com/.net/.co.uk/.gov
         boolean falseResult2 = member.isValidEmail("eksempel@eksempel");
 
         //Assert
@@ -217,6 +226,29 @@ class MemberTest {
         assertTrue(trueResult1);
         assertFalse(falseResult1);
         assertFalse(falseResult2);
+    }
+
+    @Test
+
+    void alreadyExistsInFile() throws FileNotFoundException {
+        //Arrange
+        Member member = new Member(null,null,null,null,null,
+                null,null,null,null,false);
+
+        //Act
+
+        File membersFile = new File("src/Files/MembersList");
+
+        //True
+        boolean trueResult1 = member.alreadyExistsInFile("70121416", membersFile, 6);
+
+        //False
+        boolean falseResult1 = member.alreadyExistsInFile("12345678", membersFile, 6);
+
+
+        //Assert
+        assertTrue(trueResult1);
+        assertFalse(falseResult1);
     }
 
 
