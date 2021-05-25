@@ -258,6 +258,7 @@ public class Member {
     public static void editMemberInfo() {
 
         //Her kaldes metoden, der læser MemberList og tilføjer medlemsobjekterne til arrayListen memberList.
+        memberList.clear();
         readMembersFromFileAndAddToArray();
         try {
 
@@ -438,14 +439,14 @@ public class Member {
     //Denne metode bruges ved starten af en ny sæson: Betalingsstatus for alle medlemmer nulstilles til
     // ikke-betalt (false), og alle medlemmers alder undersøges, så medlemstypen kan fastsættes på baggrund af denne.
     public static void startNewSeason() {
+        memberList.clear();
         readMembersFromFileAndAddToArray();
+
         try {
             Scanner input = new Scanner(System.in);
-            Member memberToEdit = null;
             System.out.println("Er du sikker på, at du vil starte en ny sæson (dette vil resette alle medlemmers " +
                     "betalingsstatus samt opdatere medlemstypen.\n1: Ja 2: Nej");
             String userInput = input.nextLine();
-            int lineNumber = 0;
             boolean end = false;
             while (!end) {
 
@@ -869,7 +870,6 @@ public class Member {
 
     //Denne metode bruges til at ændre attributten hasPayed, der fortæller, om et medlem har betalt kontingent.
     public static void editPaymentStatus() {
-        readMembersFromFileAndAddToArray();
         try {
             Scanner input = new Scanner(System.in);
             System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn 3: Afslut");
@@ -1006,7 +1006,6 @@ public class Member {
 
 
     public static void main (String[]args) {
-            ;
     }
 
     public String getBirthdate () {
@@ -1064,7 +1063,7 @@ public class Member {
             return "Telefon: " + getTelephoneNo() + " ID: " + getID();
     }
 
-    public void setHasPayed ( boolean hasPayed){
+    public void setHasPayed(boolean hasPayed){
             this.hasPayed = hasPayed;
     }
 
