@@ -26,7 +26,7 @@ public class Member {
     protected String email;
     protected final String startDate;
     protected boolean hasPayed;
-    static ArrayList<Member> memberList = new ArrayList<Member>();
+    static ArrayList<Member> memberList = new ArrayList<>();
     private static ArrayList<Integer> IDListe;
 
     //Constructor
