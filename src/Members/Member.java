@@ -1224,7 +1224,7 @@ public class Member {
         if (startDate.length() != 8 || !isNumeric(startDate) || parseInt(startDate.substring(0, 2)) > 31
                 || parseInt(startDate.substring(2, 4)) > 12
                 || parseInt(startDate.substring(0, 2)) == 00 || parseInt(startDate.substring(2, 4)) == 00
-                || parseInt(startDate.substring(4, 8)) > 2021 || parseInt(startDate.substring(4, 8)) < 2005) {
+                || parseInt(startDate.substring(4, 8)) < 2005) {
             return false;
         } else {
             return true;
