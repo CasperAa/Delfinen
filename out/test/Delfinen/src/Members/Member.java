@@ -514,7 +514,8 @@ public class Member {
                 System.out.println("Navnet er blevet tilføjet.");
                 end = true;
             } else {
-                System.out.println("Ugyldigt navn. Prøv igen.");
+                System.out.println("Ugyldigt navn. Prøv igen.\n" +
+                        "Navne må kun indeholde bogstaver, mellemrum, punktum og bindestreg.");
                 name = input.nextLine();
             }
         }
@@ -643,7 +644,8 @@ public class Member {
         boolean end = false;
         while (!end) {
             if (!isValidPhoneNo(telephoneNo)) {
-                System.out.println("Ugyldigt telefonnummer. Prøv igen:");
+                System.out.println("Ugyldigt telefonnummer. Prøv igen.\n" +
+                        "Telefonnummeret skal være på 8 cifre.");
                 telephoneNo = input.nextLine();
             } else {
 
