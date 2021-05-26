@@ -8,7 +8,6 @@ import java.util.Scanner;
 import static Results.Result.generateCsvFile;
 
 public class Trainer extends Member {
-    protected String discipline;
     static ArrayList<Trainer> trainerList = new ArrayList<>();
     static ArrayList<Member> currentTrainerList = new ArrayList<>();
 
@@ -83,8 +82,6 @@ public class Trainer extends Member {
 
         String startDate = addStartDate();
 
-        String discipline = addDiscipline();
-
         //Her tilføjes en linje med disse den nye træner til filen TrainerList
         try {
             //Filen redigeres
@@ -93,7 +90,7 @@ public class Trainer extends Member {
 
             bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + "trainer" + ";"
                     + memberType +
-                    ";" + telephoneNo + ";" + email + ";" + startDate + ";" + false + ";" + discipline);   //Træneren skal tilføjes til filen
+                    ";" + telephoneNo + ";" + email + ";" + startDate + ";" + false);   //Træneren skal tilføjes til filen
             bw.close();     //Handlingen sker rent faktisk
             System.out.println("Medlem blev tilføjet");
         } catch (Exception e) {
@@ -194,7 +191,6 @@ public class Trainer extends Member {
         String telephoneNo = memberToEdit.telephoneNo;
         String email = memberToEdit.email;
         String startDate = memberToEdit.startDate;
-        String discipline = memberToEdit.discipline;
 
         //Brugeren får mulighed for at vælge, hvilken attribut, der skal ændres, og metoden,
         // der tilføjer denne attribut, kaldes.
@@ -202,7 +198,7 @@ public class Trainer extends Member {
         end = false;
         while (!end) {
             System.out.println("Hvad vil du ændre?\n1: Navn\n2: Fødselsdato\n3: Aktivitetsstatus" +
-                    "\n4: Telefonnummer\n5: e-mail\n6: Startdato\n7: Disciplin");
+                    "\n4: Telefonnummer\n5: e-mail\n6: Startdato");
             userInput = input.nextLine();
             switch (userInput) {
                 case "1":
@@ -222,9 +218,6 @@ public class Trainer extends Member {
                     break;
                 case "6":
                     startDate = addStartDate();
-                    break;
-                case "7":
-                    discipline = addDiscipline();
                     break;
                 default:
                     System.out.println("Input ikke forstået.");
@@ -426,7 +419,6 @@ public class Trainer extends Member {
     public static Member addMemberToTeam(Trainer trainerWithTeam) {
         Scanner input = new Scanner(System.in);
         Member memberToAdd = null;
-        int lineCounter = 0;
         System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
         String userInput = input.nextLine();
         boolean matchFound = false;
@@ -437,7 +429,6 @@ public class Trainer extends Member {
                 case "1":
                     System.out.println("Hvad er ID-nummeret på det medlem, du vil tilføje?");
                     String inputID = input.nextLine();
-                    lineCounter = 0;
 
                     for (Member currentMember : memberList) {
                         String currentID = currentMember.getID();
@@ -462,7 +453,6 @@ public class Trainer extends Member {
                                     + ", denne svømmer er " + currentMember.getMemberType() + ". " +
                                     "Prøv igen.\nHvad er ID-nummeret på det medlem, du vil tilføje?");
                         }
-                        lineCounter++;
                     }
                     if (!matchFound) {
                         System.out.println("Der blev ikke fundet et match for ID'et. Prøv igen.");
@@ -471,7 +461,6 @@ public class Trainer extends Member {
                 case "2":
                     System.out.println("Hvad er navnet på det medlem, du vil tilføje?");
                     String inputName = input.nextLine();
-                    lineCounter = 0;
                     for (Member currentMember : memberList) {
                         if (currentMember.getName().toLowerCase().contains(inputName.toLowerCase())
                                 && trainerWithTeam.getMemberType().equals(currentMember.
@@ -498,7 +487,6 @@ public class Trainer extends Member {
                                     + ", denne svømmer er " + currentMember.getMemberType() + ". " +
                                     "Prøv igen\nHvad er navnet på det medlem, du vil tilføje?");
                         }
-                        lineCounter++;
                     }
                     if (!matchFound) {
                         System.out.println("Der blev ikke fundet et match for navnet. Prøv igen.");
