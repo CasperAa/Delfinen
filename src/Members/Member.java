@@ -27,7 +27,6 @@ public class Member {
     protected final String startDate;
     protected boolean hasPayed;
     static ArrayList<Member> memberList = new ArrayList<>();
-    private static ArrayList<Integer> IDListe;
 
     //Constructor
     public Member(String name, String ID, String birthdate, String memberStatus, String memberGroup, String memberType,
@@ -50,7 +49,7 @@ public class Member {
         memberList.clear();
 
         File membersFile = new File("src/Files/MembersList");
-        Scanner sc = null;
+        Scanner sc;
 
         try {
 
@@ -104,8 +103,6 @@ public class Member {
     // definerer nogle af dem autromatisk.
     // Til sidst tilføjes medlemmet til filen MemberList.
     public static void addNewMember(){
-        Scanner sc = new Scanner(System.in);
-
         File membersFile = new File("src/Files/MembersList");
 
         String name = addName();
@@ -147,8 +144,6 @@ public class Member {
     //Denne metode overrider en fil med oplysninger fra et array af medlemmer
     public static void overrideFileWithArrayList(File file, ArrayList<Member> arrayList){
         try{
-            FileWriter fw = new FileWriter(file, true);
-            BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(file);
             pw.write("name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDate;hasPayed");
             for (Member currentMember : arrayList) {
@@ -172,8 +167,7 @@ public class Member {
 
             Scanner sc = new Scanner(file);
 
-            IDListe = new ArrayList<>();
-            IDListe.clear();
+            ArrayList<Integer> IDListe = new ArrayList<>();
             //Skipper metadata linjen
             sc.nextLine();
 
@@ -204,7 +198,7 @@ public class Member {
     //Metoden tager et medlems fødselsdag som input og returnerer enten junior eller senior afhængig af medlemmets alder.
     public static String decideMemberType(String birthdate){
 
-        String memberType = null;
+        String memberType;
 
         int year = parseInt(birthdate.substring(birthdate.length() - 4));
         int month = parseInt(birthdate.substring(2, 4));
@@ -353,7 +347,6 @@ public class Member {
                     break;
                 default:
                     System.out.println("Input ikke forstået. Prøv igen.");
-                    userInput = input.nextLine();
                     break;
             }
 
@@ -472,7 +465,7 @@ public class Member {
 
         System.out.println("Indtast medlemmets fødseldsdag (ddMMyyyy):");
         boolean end = false;
-        String birthdate = null;
+        String birthdate;
         birthdate = input.nextLine();
 
         while (!end) {
@@ -500,11 +493,7 @@ public class Member {
             int date = parseInt(birthdate.substring(0, 2));
             Period period = Period.between(LocalDate.of(year, month, date), LocalDate.now());
             int age = period.getYears();
-            if (age >= 6 && age <= 140){
-                return true;
-            }else{
-                return false;
-            }
+            return age >= 6 && age <= 140;
         } else {
             return false;
         }
@@ -624,11 +613,7 @@ public class Member {
 
     //Denne metode tjekker, om en String opfylder de krav, som et telefonnummer i systemet skal opfylde.
     public static boolean isValidPhoneNo(String telephoneNo) {
-        if (telephoneNo.length() != 8 || !isNumeric(telephoneNo)) {
-            return false;
-        } else {
-            return true;
-        }
+        return telephoneNo.length() == 8 && isNumeric(telephoneNo);
     }
 
     //Denne metode tjekker, om en String allerede findes i en fil, idet filen laves til en arrayList, og der scannes
@@ -716,12 +701,8 @@ public class Member {
 
     //Denne metode tjekker, om en String opfylder de krav, som en e-mail i systemet skal opfylde.
     public static boolean isValidEmail(String tempEmail) {
-        if (tempEmail.contains("@") && tempEmail.contains(".dk") || tempEmail.contains(".com") || tempEmail.contains(".net")
-                || tempEmail.contains(".co.uk") || tempEmail.contains(".gov")) {
-            return true;
-        } else {
-            return false;
-        }
+        return tempEmail.contains("@") && tempEmail.contains(".dk") || tempEmail.contains(".com") || tempEmail.contains(".net")
+                || tempEmail.contains(".co.uk") || tempEmail.contains(".gov");
     }
 
     //Denne metode giver brugeren mulighed for enten at vælge dags dato eller manuelt indtaste en dato,
@@ -772,14 +753,10 @@ public class Member {
     //Denne metode tjekker, om en String opfylder de krav, som en startdato i systemet skal opfylde.
     // Det antages, at Delfinen startede i 2005
     public static boolean isValidStartDate(String startDate) {
-        if (startDate.length() != 8 || !isNumeric(startDate) || parseInt(startDate.substring(0, 2)) > 31
-                || parseInt(startDate.substring(2, 4)) > 12
-                || parseInt(startDate.substring(0, 2)) == 00 || parseInt(startDate.substring(2, 4)) == 00
-                || parseInt(startDate.substring(4, 8)) < 2005) {
-            return false;
-        } else {
-            return true;
-        }
+        return startDate.length() == 8 && isNumeric(startDate) && parseInt(startDate.substring(0, 2)) <= 31
+                && parseInt(startDate.substring(2, 4)) <= 12
+                && parseInt(startDate.substring(0, 2)) != 00 && parseInt(startDate.substring(2, 4)) != 00
+                && parseInt(startDate.substring(4, 8)) >= 2005;
     }
 
     //Denne metode prompter brugeren til at vælge, om medlemmet har betalt kontingent, og outputtet er en boolean enten
@@ -818,7 +795,7 @@ public class Member {
         System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn 3: Afslut");
         String userInput = input.nextLine();
         boolean matchFound = false;
-        int lineNumber = 0;
+        int lineNumber;
         boolean end = false;
         while (!end) {
             switch (userInput) {
@@ -913,7 +890,7 @@ public class Member {
                                         break;
                                 }
                             }
-                            matchFound = false;
+                            matchFound = true;
                         }
                         lineCounter++;
                     }
@@ -996,4 +973,5 @@ public class Member {
     public void setMemberType (String memberType){
             this.memberType = memberType;
     }
+
 }

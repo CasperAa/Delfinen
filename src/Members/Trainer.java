@@ -221,7 +221,6 @@ public class Trainer extends Member {
                     break;
                 default:
                     System.out.println("Input ikke forstået.");
-                    userInput = input.nextLine();
                     break;
             }
 
@@ -338,7 +337,6 @@ public class Trainer extends Member {
                 default:
                     System.out.println("Input ikke forstået. Prøv igen.\nHvad ønsker du at gøre?\n1: Tilføj medlem " +
                             "2: Slet medlem 3: Exit");
-                    userInput = sc.nextLine();
                     break;
             }
 
@@ -415,7 +413,7 @@ public class Trainer extends Member {
         return trainerWithTeam;
     }
 
-    //Herunder er kode, hvor brugeren søger efter medlemmet, der skal tilføjes, vha. navn eller ID. Medlemmet returneres.
+    //Metoden her får brugeren til at søge efter medlemmet, der skal tilføjes, vha. navn eller ID. Medlemmet returneres.
     public static Member addMemberToTeam(Trainer trainerWithTeam) {
         Scanner input = new Scanner(System.in);
         Member memberToAdd = null;
@@ -465,7 +463,8 @@ public class Trainer extends Member {
                         if (currentMember.getName().toLowerCase().contains(inputName.toLowerCase())
                                 && trainerWithTeam.getMemberType().equals(currentMember.
                                 getMemberType())) {
-                            System.out.println("Vil du tilføje følgende medlem?\n\n---ID: " + currentMember.getID() + "; Navn: " +
+                            System.out.println("Vil du tilføje følgende medlem?\n\n---ID: " + currentMember.getID() +
+                                    "; Navn: " +
                                     currentMember.getName() + "---\n\n1: Ja 2: Nej");
                             userInput = input.nextLine();
                             switch (userInput) {
@@ -511,7 +510,7 @@ public class Trainer extends Member {
         String userInput = input.nextLine();
         boolean matchFound = false;
         int lineOfMemberInArray = 0;
-        int lineCounter = 0;
+        int lineCounter;
         boolean end = false;
         while (!end) {
 
@@ -610,8 +609,6 @@ public class Trainer extends Member {
     //Denne metode overrider en inputtet fil med oplysninger fra et inputtet array af trænere
     public static void overrideTrainerFileWithArrayList(File file, ArrayList<Trainer> arrayList){
         try{
-            FileWriter fw = new FileWriter(file, true);
-            BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(file);
             pw.write("name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDate;hasPayed");
             for (Member currentMember : arrayList) {

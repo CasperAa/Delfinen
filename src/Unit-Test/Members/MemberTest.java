@@ -283,10 +283,10 @@ class MemberTest {
         File testFile = new File("src/Unit-Test/Members/TestFile");
         File testFileEmpty = new File("src/Unit-Test/Members/TestFileEmpty");
 
-        //String-output er 0003
+        //String-output er 0003, da det højeste ID i filen er 0002
         String result1 = member.decideIDNumber(testFile);
 
-        //String-output er 0001
+        //String-output er 0001, da der ikke findes nogen ID i filen
         String result2 = member.decideIDNumber(testFileEmpty);
 
         //Assert
