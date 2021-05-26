@@ -49,10 +49,12 @@ public class Member {
     public static void readMembersFromFileAndAddToArray() {
         memberList.clear();
 
-        try {
-            File membersFile = new File("src/Files/MembersList");
-            Scanner sc = new Scanner(membersFile);
+        File membersFile = new File("src/Files/MembersList");
+        Scanner sc = null;
 
+        try {
+
+        sc = new Scanner(membersFile);
 
         //Skipper metadatalinjen
         sc.nextLine();

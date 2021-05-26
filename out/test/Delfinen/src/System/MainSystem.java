@@ -49,7 +49,7 @@ public class MainSystem {
                                 MainMenu.menuScreenManager();
                                 break;
                             case "5":
-                                Trainer.editTrainerTeams(); //Method for editing teams
+                                Trainer.editTrainerTeam(); //Method for editing teams
                                 MainMenu.menuScreenManager();
                                 break;
                             case "9":
@@ -129,7 +129,7 @@ public class MainSystem {
                                 //Method for resetting payment status and updating membertype for all members
                                 Member.startNewSeason();
                             case "9":
-                                Trainer.editTrainerTeams(); //Method for editing teams
+                                Trainer.editTrainerTeam(); //Method for editing teams
                                 break;
                             case "10":
                                 adminMainMenu = false;

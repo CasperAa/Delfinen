@@ -326,39 +326,17 @@ public class Trainer extends Member {
         }
     }
 
-    public static void editTrainerTeams() {
-        Scanner sc = new Scanner(System.in);
-        int lineCounter = 0;
-        int lineNumber = 0;
-        readMembersFromFileAndAddToArray();
-        readTrainersFromFileAndAddToArray();
-        System.out.println("Her er en liste over alle trænere:\n");
-        for (Trainer trainer : trainerList) {
-            System.out.println("ID: " + trainer.getID() + " navn: " + trainer.getName());
-        }
-        boolean end = false;
-        while (!end) {
-            System.out.println("\nIndtast ID'et på den træners hold, du vil redigere.");
-            String inputID = sc.nextLine();
-            boolean matchFound = false;
-            lineNumber = 0;
-            lineCounter = 0;
-            for (Trainer currenTrainer : trainerList) {
-                String currentID = currenTrainer.getID();
-                if (currentID.equals(inputID)) {
-                    matchFound = true;
-                    lineNumber = lineCounter;
-                }
-                lineCounter++;
-            }
-            if (!matchFound) {
-                System.out.println("Der blev ikke fundet et match for ID'et. Prøv igen.");
-            } else {
-                end = true;
-            }
-        }
 
-        String trainerID = trainerList.get(lineNumber).getID();
+
+    //Denne metode bruges til at redigere en træners hold
+    public static void editTrainerTeam() {
+        Scanner sc = new Scanner(System.in);
+
+        //Først findes den træner, hvis hold, der skal redigeres
+        Trainer trainerWithTeam = searchForTrainer();
+
+        //Derefter oprettes en fil, hvis der ikke allerede findes én
+        String trainerID = trainerWithTeam.getID();
         makeNewTrainerCSVFile(trainerID);
         File file = new File("src/TrainerFiles/" + trainerID);
 
@@ -374,238 +352,262 @@ public class Trainer extends Member {
             System.out.println("Listen er tom.");
         }
 
-        boolean end4 = false;
-        while (!end4) {
-            System.out.println("Hvad ønsker du at gøre?\n1: Tilføj medlem 2: Slet medlem 3: Exit");
-            String userInput = sc.nextLine();
-            end = false;
-            readMembersFromFileAndAddToArray();
-            while (!end) {
+        //Brugeren skal så vælge, om han/hun vil tilføje eller slette et medlem
+        System.out.println("Hvad ønsker du at gøre?\n1: Tilføj medlem 2: Slet medlem 3: Exit");
+        String userInput = sc.nextLine();
+        boolean end = false;
+        readMembersFromFileAndAddToArray();
+        while (!end) {
+            switch (userInput) {
+                case "1":
+                    Member memberToAdd = addMemberToTeam(trainerWithTeam);
+                    currentTrainerList.add(memberToAdd);
+                    break;
+                case "2":
+                    int number = lineNumberOfmemberToDelete();
+                    currentTrainerList.remove(number);
+                    break;
+                case "3":
+                    end = true;
+                    break;
+                default:
+                    System.out.println("Input ikke forstået. Prøv igen.\nHvad ønsker du at gøre?\n1: Tilføj medlem " +
+                            "2: Slet medlem 3: Exit");
+                    userInput = sc.nextLine();
+                    break;
+            }
+
+            System.out.println("Er du færdig med at redigere? 1: Ja 2: Nej");
+            userInput = sc.nextLine();
+            boolean end2 = false;
+            while (!end2) {
                 switch (userInput) {
                     case "1":
-                        //Herunder er kode, hvor brugeren søger efter medlemmet, der skal tilføjes, vha. navn eller ID.
-                        // Derefter tilføjes medlemmet til arraylisten, og brugeren får mulighed for at fortsætte med at
-                        // redigere listen. Til sidst overkrives alt i filen med det opdaterede array.
-                        Scanner input = new Scanner(System.in);
-                        Member memberToAdd = null;
-                        System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
-                        userInput = input.nextLine();
-                        boolean matchFound = false;
-                        lineNumber = 0;
-                        boolean end2 = false;
-                        while (!end2) {
-
-                            switch (userInput) {
-                                case "1":
-                                    System.out.println("Hvad er ID-nummeret på det medlem, du vil tilføje?");
-                                    String inputID = input.nextLine();
-                                    lineCounter = 0;
-
-                                    for (Member currentMember : memberList) {
-                                        String currentID = currentMember.getID();
-                                        if (currentID.equals(inputID) && trainerList.get(lineNumber).getMemberType().equals(currentMember.getMemberType())) {
-                                            System.out.println("Vil du tilføje følgende medlem?\n" + currentMember.getID() + ", " +
-                                                    currentMember.getName() + "\n1: Ja 2: Nej");
-                                            userInput = input.nextLine();
-                                            switch (userInput) {
-                                                case "1":
-                                                    memberToAdd = currentMember;
-                                                    lineNumber = lineCounter;
-                                                    end2 = true;
-                                                    break;
-                                                case "2":
-                                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
-                                                    break;
-                                            }
-                                            matchFound = true;
-                                        } else if (currentID.equals(inputID) && !trainerList.get(lineNumber).
-                                                getMemberType().equals(currentMember.getMemberType())) {
-                                            System.out.println("Træneren træner ikke svømmere i denne aldersgruppe. " +
-                                                    "Træneren træner " + trainerList.get(lineNumber).getMemberType()
-                                                    + ", denne svømmer er " + currentMember.getMemberType() + ". " +
-                                                    "Prøv igen.\nHvad er ID-nummeret på det medlem, du vil tilføje?");
-                                        }
-                                        lineCounter++;
-                                    }
-                                    if (!matchFound) {
-                                        System.out.println("Der blev ikke fundet et match for ID'et. Prøv igen.");
-                                    }
-                                    break;
-                                case "2":
-                                    System.out.println("Hvad er navnet på det medlem, du vil tilføje?");
-                                    String inputName = input.nextLine();
-                                    lineCounter = 0;
-                                    for (Member currentMember : memberList) {
-                                        if (currentMember.getName().toLowerCase().contains(inputName.toLowerCase())
-                                                && trainerList.get(lineNumber).getMemberType().equals(currentMember.
-                                                getMemberType())) {
-                                            System.out.println("Vil du tilføje følgende medlem?\n\n---ID: " + currentMember.getID() + "; Navn: " +
-                                                    currentMember.getName() + "---\n\n1: Ja 2: Nej");
-                                            userInput = input.nextLine();
-                                            switch (userInput) {
-                                                case "1":
-                                                    memberToAdd = currentMember;
-                                                    lineNumber = lineCounter;
-                                                    end2 = true;
-                                                    break;
-                                                case "2":
-                                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
-                                                    break;
-                                            }
-                                            matchFound = true;
-                                        } else if (currentMember.getName().toLowerCase().contains(inputName.
-                                                toLowerCase()) && !trainerList.get(lineNumber).
-                                                getMemberType().equals(currentMember.getMemberType())) {
-                                            System.out.println("Træneren træner ikke svømmere i denne aldersgruppe. " +
-                                                    "Træneren træner " + trainerList.get(lineNumber).getMemberType()
-                                                    + ", denne svømmer er " + currentMember.getMemberType() + ". " +
-                                                    "Prøv igen\nHvad er navnet på det medlem, du vil tilføje?");
-                                        }
-                                        lineCounter++;
-                                    }
-                                    if (!matchFound) {
-                                        System.out.println("Der blev ikke fundet et match for navnet. Prøv igen.");
-                                    }
-                                    break;
-                                default:
-                                    System.out.println("Input ikke forstået. Prøv igen.\nVil du søge efter ID eller navn? 1: ID 2: Navn");
-                                    userInput = input.nextLine();
-                                    break;
-                            }
-                        }
-
-                        currentTrainerList.add(memberToAdd);
-
-                        System.out.println("Er du færdig med at redigere? 1: Ja 2: Nej");
-                        userInput = input.nextLine();
-                        boolean end3 = false;
-                        while (!end3) {
-                            switch (userInput) {
-                                case "1":
-                                    overrideFileWithArrayList(file, currentTrainerList);
-                                    end3 = true;
-                                    end4 = true;
-                                    break;
-                                case "2":
-                                    end3 = true;
-                                    break;
-                                default:
-                                    System.out.println("Input ikke forstået. Prøv igen.\nEr du færdig med at redigere? 1: Ja 2: Nej");
-                                    userInput = input.nextLine();
-                                    break;
-                            }
-                        }
-
-
+                        overrideFileWithArrayList(file, currentTrainerList);
                         end = true;
+                        end2 = true;
                         break;
                     case "2":
-                        //Herunder er kode, hvor brugeren søger efter medlemmet, der skal slettes, vha. navn eller ID.
-                        // Derefter slettes medlemmet fra arraylisten, og brugeren får mulighed for at fortsætte med at
-                        // redigere listen. Til sidst overkrives alt i filen med det opdaterede array.
-                        input = new Scanner(System.in);
-                        System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
-                        userInput = input.nextLine();
-                        matchFound = false;
-                        lineNumber = 0;
-                        end2 = false;
-                        while (!end2) {
-
-                            switch (userInput) {
-                                case "1":
-                                    System.out.println("Hvad er ID-nummeret på det medlem, du vil slette?");
-                                    String inputID = input.nextLine();
-                                    lineCounter = 0;
-
-                                    for (Member currentMember : currentTrainerList) {
-                                        String currentID = currentMember.getID();
-                                        if (currentID.equals(inputID)) {
-                                            System.out.println("Vil du slette følgende medlem?\n" + currentMember.getID() + ", " +
-                                                    currentMember.getName() + "\n1: Ja 2: Nej");
-                                            userInput = input.nextLine();
-                                            switch (userInput) {
-                                                case "1":
-                                                    lineNumber = lineCounter;
-                                                    end2 = true;
-                                                    break;
-                                                case "2":
-                                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
-                                                    break;
-                                            }
-                                            matchFound = true;
-                                        }
-                                        lineCounter++;
-                                    }
-                                    if (!matchFound) {
-                                        System.out.println("Der blev ikke fundet et match for ID'et. Prøv igen.");
-                                    }
-                                    break;
-                                case "2":
-                                    System.out.println("Hvad er navnet på det medlem, du vil slette?");
-                                    String inputName = input.nextLine();
-                                    lineCounter = 0;
-                                    for (Member currentMember : currentTrainerList) {
-                                        if (currentMember.getName().toLowerCase().contains(inputName.toLowerCase())) {
-                                            System.out.println("Vil du slette følgende medlem?\n\n---ID: " + currentMember.getID() + "; Navn: " +
-                                                    currentMember.getName() + "---\n\n1: Ja 2: Nej");
-                                            userInput = input.nextLine();
-                                            switch (userInput) {
-                                                case "1":
-                                                    lineNumber = lineCounter;
-                                                    end2 = true;
-                                                    break;
-                                                case "2":
-                                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
-                                                    break;
-                                            }
-                                            matchFound = true;
-                                        }
-                                        lineCounter++;
-                                    }
-                                    if (!matchFound) {
-                                        System.out.println("Der blev ikke fundet et match for navnet. Prøv igen.");
-                                    }
-                                    break;
-                                default:
-                                    System.out.println("Input ikke forstået. Prøv igen.\nVil du søge efter ID eller navn? 1: ID 2: Navn");
-                                    userInput = input.nextLine();
-                                    break;
-                            }
-                        }
-
-                        //Her slettes medlemmet
-                        currentTrainerList.remove(lineNumber);
-
-                        System.out.println("Er du færdig med at redigere? 1: Ja 2: Nej");
-                        userInput = input.nextLine();
-                        end3 = false;
-                        while (!end3) {
-                            switch (userInput) {
-                                case "1":
-                                    overrideFileWithArrayList(file, currentTrainerList);
-                                    end3 = true;
-                                    end4 = true;
-                                    break;
-                                case "2":
-                                    end3 = true;
-                                default:
-                                    System.out.println("Input ikke forstået. Prøv igen.\nEr du færdig med at tilføje? 1: Ja 2: Nej");
-                            }
-                        }
-
-                        end = true;
-                        break;
-                    case "3":
-                        end = true;
+                        System.out.println("Hvad ønsker du at gøre?\n1: Tilføj medlem 2: Slet medlem 3: Exit");
+                        userInput = sc.nextLine();
+                        end2 = true;
                         break;
                     default:
-                        System.out.println("Input ikke forstået. Prøv igen.");
+                        System.out.println("Input ikke forstået. Prøv igen.\nEr du færdig med at redigere? 1: Ja 2: Nej");
                         userInput = sc.nextLine();
                         break;
                 }
             }
 
         }
+    }
+
+
+
+    public static Trainer searchForTrainer() {
+        Scanner sc = new Scanner(System.in);
+        Trainer trainerWithTeam = null;
+        readMembersFromFileAndAddToArray();
+        readTrainersFromFileAndAddToArray();
+        System.out.println("Her er en liste over alle trænere:\n");
+        for (Trainer trainer : trainerList) {
+            System.out.println("ID: " + trainer.getID() + " navn: " + trainer.getName());
+        }
+        boolean end = false;
+        while (!end) {
+            System.out.println("\nIndtast ID'et på den træners hold, du vil redigere.");
+            String inputID = sc.nextLine();
+            boolean matchFound = false;
+            for (Trainer currentTrainer : trainerList) {
+                String currentID = currentTrainer.getID();
+                if (currentID.equals(inputID)) {
+                    matchFound = true;
+                    trainerWithTeam = currentTrainer;
+
+                }
+            }
+            if (!matchFound) {
+                System.out.println("Der blev ikke fundet et match for ID'et. Prøv igen.");
+            } else {
+                end = true;
+            }
+        }
+
+        return trainerWithTeam;
+    }
+
+    public static Member addMemberToTeam(Trainer trainerWithTeam) {
+        //Herunder er kode, hvor brugeren søger efter medlemmet, der skal tilføjes, vha. navn eller ID.
+        // Derefter tilføjes medlemmet til arraylisten, og brugeren får mulighed for at fortsætte med at
+        // redigere listen. Til sidst overkrives alt i filen med det opdaterede array.
+        Scanner input = new Scanner(System.in);
+        Member memberToAdd = null;
+        int lineCounter = 0;
+        System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+        String userInput = input.nextLine();
+        boolean matchFound = false;
+        boolean end2 = false;
+        while (!end2) {
+
+            switch (userInput) {
+                case "1":
+                    System.out.println("Hvad er ID-nummeret på det medlem, du vil tilføje?");
+                    String inputID = input.nextLine();
+                    lineCounter = 0;
+
+                    for (Member currentMember : memberList) {
+                        String currentID = currentMember.getID();
+                        if (currentID.equals(inputID) && trainerWithTeam.getMemberType().equals(currentMember.getMemberType())) {
+                            System.out.println("Vil du tilføje følgende medlem?\n" + currentMember.getID() + ", " +
+                                    currentMember.getName() + "\n1: Ja 2: Nej");
+                            userInput = input.nextLine();
+                            switch (userInput) {
+                                case "1":
+                                    memberToAdd = currentMember;
+                                    end2 = true;
+                                    matchFound = true;
+                                    break;
+                                case "2":
+                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+                                    break;
+                            }
+                        } else if (currentID.equals(inputID) && !trainerWithTeam.getMemberType()
+                                .equals(currentMember.getMemberType())) {
+                            System.out.println("Træneren træner ikke svømmere i denne aldersgruppe. " +
+                                    "Træneren træner " + trainerWithTeam.getMemberType()
+                                    + ", denne svømmer er " + currentMember.getMemberType() + ". " +
+                                    "Prøv igen.\nHvad er ID-nummeret på det medlem, du vil tilføje?");
+                        }
+                        lineCounter++;
+                    }
+                    if (!matchFound) {
+                        System.out.println("Der blev ikke fundet et match for ID'et. Prøv igen.");
+                    }
+                    break;
+                case "2":
+                    System.out.println("Hvad er navnet på det medlem, du vil tilføje?");
+                    String inputName = input.nextLine();
+                    lineCounter = 0;
+                    for (Member currentMember : memberList) {
+                        if (currentMember.getName().toLowerCase().contains(inputName.toLowerCase())
+                                && trainerWithTeam.getMemberType().equals(currentMember.
+                                getMemberType())) {
+                            System.out.println("Vil du tilføje følgende medlem?\n\n---ID: " + currentMember.getID() + "; Navn: " +
+                                    currentMember.getName() + "---\n\n1: Ja 2: Nej");
+                            userInput = input.nextLine();
+                            switch (userInput) {
+                                case "1":
+                                    memberToAdd = currentMember;
+                                    end2 = true;
+                                    break;
+                                case "2":
+                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+                                    userInput = input.nextLine();
+                                    break;
+                            }
+                            matchFound = true;
+                        } else if (currentMember.getName().toLowerCase().contains(inputName.
+                                toLowerCase()) && !trainerWithTeam.getMemberType()
+                                .equals(currentMember.getMemberType())) {
+                            System.out.println("Træneren træner ikke svømmere i denne aldersgruppe. " +
+                                    "Træneren træner " + trainerWithTeam.getMemberType()
+                                    + ", denne svømmer er " + currentMember.getMemberType() + ". " +
+                                    "Prøv igen\nHvad er navnet på det medlem, du vil tilføje?");
+                        }
+                        lineCounter++;
+                    }
+                    if (!matchFound) {
+                        System.out.println("Der blev ikke fundet et match for navnet. Prøv igen.");
+                    }
+                    break;
+                default:
+                    System.out.println("Input ikke forstået. Prøv igen.\nVil du søge efter ID eller navn? 1: ID 2: Navn");
+                    userInput = input.nextLine();
+                    break;
+            }
+        }
+
+        return memberToAdd;
+    }
+
+
+    public static int lineNumberOfmemberToDelete(){
+        //Herunder er kode, hvor brugeren søger efter medlemmet, der skal slettes, vha. navn eller ID.
+        // Derefter slettes medlemmet fra arraylisten, og brugeren får mulighed for at fortsætte med at
+        // redigere listen. Til sidst overkrives alt i filen med det opdaterede array.
+        Scanner input = new Scanner(System.in);
+        System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+        String userInput = input.nextLine();
+        boolean matchFound = false;
+        int lineOfMemberInArray = 0;
+        int lineCounter = 0;
+        boolean end = false;
+        while (!end) {
+
+            switch (userInput) {
+                case "1":
+                    System.out.println("Hvad er ID-nummeret på det medlem, du vil slette?");
+                    String inputID = input.nextLine();
+                    lineCounter = 0;
+
+                    for (Member currentMember : currentTrainerList) {
+                        String currentID = currentMember.getID();
+                        if (currentID.equals(inputID)) {
+                            System.out.println("Vil du slette følgende medlem?\n" + currentMember.getID() + ", " +
+                                    currentMember.getName() + "\n1: Ja 2: Nej");
+                            userInput = input.nextLine();
+                            switch (userInput) {
+                                case "1":
+                                    lineOfMemberInArray = lineCounter;
+                                    end = true;
+                                    break;
+                                case "2":
+                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+                                    userInput = input.nextLine();
+                                    break;
+                            }
+                            matchFound = true;
+                        }
+                        lineCounter++;
+                    }
+                    if (!matchFound) {
+                        System.out.println("Der blev ikke fundet et match for ID'et. Prøv igen.");
+                    }
+                    break;
+                case "2":
+                    System.out.println("Hvad er navnet på det medlem, du vil slette?");
+                    String inputName = input.nextLine();
+                    lineCounter = 0;
+                    for (Member currentMember : currentTrainerList) {
+                        if (currentMember.getName().toLowerCase().contains(inputName.toLowerCase())) {
+                            System.out.println("Vil du slette følgende medlem?\n\n---ID: " + currentMember.getID() + "; Navn: " +
+                                    currentMember.getName() + "---\n\n1: Ja 2: Nej");
+                            userInput = input.nextLine();
+                            switch (userInput) {
+                                case "1":
+                                    lineOfMemberInArray = lineCounter;
+                                    end = true;
+                                    break;
+                                case "2":
+                                    System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
+                                    break;
+                            }
+                            matchFound = true;
+                        }
+                        lineCounter++;
+                    }
+                    if (!matchFound) {
+                        System.out.println("Der blev ikke fundet et match for navnet. Prøv igen.");
+                    }
+                    break;
+                default:
+                    System.out.println("Input ikke forstået. Prøv igen.\nVil du søge efter ID eller navn? 1: ID 2: Navn");
+                    userInput = input.nextLine();
+                    break;
+            }
+        }
+
+        return lineOfMemberInArray;
     }
 
     //Denne metode beder brugeren om at vælge mellem senior og junior og returnerer dette som et String-output.
