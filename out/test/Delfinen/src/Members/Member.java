@@ -486,8 +486,8 @@ public class Member {
     public static boolean isValidBirthdate(String birthdate) {
 
         if (birthdate.length() == 8 && isNumeric(birthdate) && parseInt(birthdate.substring(0, 2)) <= 31 &&
-                parseInt(birthdate.substring(2, 4)) <= 12 && parseInt(birthdate.substring(0, 2)) != 00 &&
-                parseInt(birthdate.substring(2, 4)) != 00) {
+                parseInt(birthdate.substring(2, 4)) <= 12 && parseInt(birthdate.substring(0, 2)) != 0 &&
+                parseInt(birthdate.substring(2, 4)) != 0) {
             int year = parseInt(birthdate.substring(birthdate.length() - 4));
             int month = parseInt(birthdate.substring(2, 4));
             int date = parseInt(birthdate.substring(0, 2));
@@ -755,7 +755,7 @@ public class Member {
     public static boolean isValidStartDate(String startDate) {
         return startDate.length() == 8 && isNumeric(startDate) && parseInt(startDate.substring(0, 2)) <= 31
                 && parseInt(startDate.substring(2, 4)) <= 12
-                && parseInt(startDate.substring(0, 2)) != 00 && parseInt(startDate.substring(2, 4)) != 00
+                && parseInt(startDate.substring(0, 2)) != 0 && parseInt(startDate.substring(2, 4)) != 0
                 && parseInt(startDate.substring(4, 8)) >= 2005;
     }
 

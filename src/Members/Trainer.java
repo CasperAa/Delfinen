@@ -18,7 +18,6 @@ public class Trainer extends Member {
                 telephoneNo, email, startDate, hasPayed);
     }
 
-
     //Denne metode scanner filen TrainerList og tilføjer alle trænere som et trainer-objekt til arrayListen trainerList
     public static void readTrainersFromFileAndAddToArray() {
         trainerList.clear();
@@ -97,7 +96,6 @@ public class Trainer extends Member {
             System.out.println("Der skete en fejl. Medlemmet blev ikke tilføjet.");
         }
     }
-
 
     //Denne metode får brugeren til at vælge en eksisterende træner og gør det muligt for denne at ændre trænerens
     // attributter. Filen TrainerList opdateres med de nye oplysninger, idet hele filen overrides.
@@ -255,7 +253,6 @@ public class Trainer extends Member {
         overrideTrainerFileWithArrayList(trainersFile, trainerList);
     }
 
-
     //Denne metode bruges til at læse en fil med en træners hold og oprette et array med alle
     // konkurrencemedlemmer på holdet.
     public static void readTrainerListAndMakeArray(File trainerFile) {
@@ -289,8 +286,6 @@ public class Trainer extends Member {
             System.out.println("Fejl.");
         }
     }
-
-
 
     //Denne metode bruges til at redigere en træners hold
     public static void editTrainerTeam() {
@@ -500,7 +495,6 @@ public class Trainer extends Member {
 
         return memberToAdd;
     }
-
 
     //Herunder er kode, hvor brugeren søger efter medlemmet, der skal slettes, vha. navn eller ID.
     // Indexet for den linje, medlemmet står på i arrayListen, returneres.

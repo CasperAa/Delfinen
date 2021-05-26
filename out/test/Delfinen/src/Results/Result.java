@@ -39,7 +39,7 @@ public class Result {
         String memberID = userID.nextLine();
 
         //Verifying input from user, needs to be a length of four chars
-        if(memberID.length() != 4){
+        if(memberID.length() != 4 ){
             MainMenu.errorMessage();
             userID.nextLine();
         }
@@ -49,12 +49,12 @@ public class Result {
         //test to see if a file exists, asking user before adding new file, if file doesn't exist
         boolean exists = file.exists();
         if (exists) {
-            System.out.println("Denne fil eksisterer - Tilhøre: " + returnMemberName(memberID));
+            System.out.println("Denne fil eksisterer - ID: " + returnMemberName(memberID));
             String fileLocation = "src/Files/membersResults/";
             resultType(fileLocation+memberID);
 
         } else {
-            System.out.println("Denne fil eksisterer ikke\n");
+            System.out.println("Denne fil eksisterer ikke: ID: " + returnMemberName(memberID));
             System.out.println("Vil du oprette en ny fil for dette ID?  ja/nej");
 
             switch (userID.nextLine()){
