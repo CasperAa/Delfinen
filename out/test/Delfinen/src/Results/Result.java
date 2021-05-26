@@ -44,7 +44,7 @@ public class Result {
         boolean exists = file.exists();
         if (exists) {
 
-            
+
 
             System.out.println("Denne fil eksitere - Tilhøre: " + returnMemberName(memberID));
             String fileLocation = "src/Files/membersResults/";
@@ -105,7 +105,7 @@ public class Result {
         String date = null;
         while (!dateIsValid) {
             date = userInput.nextLine();
-            if (!dateValidation(date)) {
+            if (!dateFormatValidator(date)) {
                 date = null;
                 MainMenu.errorMessage();
             } else {
@@ -229,7 +229,7 @@ public class Result {
         }
     }
 
-    public static boolean dateValidation(String date) {
+    public static boolean dateFormatValidator(String date) {
         boolean status = false;
         if (checkDate(date)) {
             DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");

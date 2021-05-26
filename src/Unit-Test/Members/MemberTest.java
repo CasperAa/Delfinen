@@ -47,7 +47,7 @@ class MemberTest {
         //Måned er 00
         boolean falseResult7 = member.isValidBirthdate("03002000");
 
-        //Årstal er for højt (alderen er under 5)
+        //Årstal er for højt (alderen er under 6)
         DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("ddMMyyyy");
         String date = LocalDateTime.now().minusYears(5).format(formatTime);
         boolean falseResult8 = member.isValidBirthdate(date);
@@ -77,7 +77,6 @@ class MemberTest {
 
     @Test
     void isValidPhoneNo() {
-        //telephoneNo.length() != 8 || !isNumeric(telephoneNo)
 
         //Arrange
         Member member = new Member(null,null,null,null,null,
@@ -164,11 +163,8 @@ class MemberTest {
         //Måned er 00
         boolean falseResult7 = member.isValidStartDate("10002020");
 
-        //Årstal er for højt (over 2021)
-        boolean falseResult8 = member.isValidStartDate("10022022");
-
         //Årstal er for lavt (under 2005)
-        boolean falseResult9 = member.isValidStartDate("10022004");
+        boolean falseResult8 = member.isValidStartDate("10022004");
 
         //Assert
         assertTrue(trueResult1);
@@ -180,7 +176,6 @@ class MemberTest {
         assertFalse(falseResult6);
         assertFalse(falseResult7);
         assertFalse(falseResult8);
-        assertFalse(falseResult9);
     }
 
     @Test
@@ -231,9 +226,10 @@ class MemberTest {
     @Test
 
     void alreadyExistsInFile() throws FileNotFoundException {
+
         //Arrange
-        Member member = new Member(null,null,null,null,null,
-                null,null,null,null,false);
+        Member member = new Member(null, null, null, null, null,
+                null, null, null, null, false);
 
         //Act
 
@@ -251,5 +247,29 @@ class MemberTest {
         assertFalse(falseResult1);
     }
 
+    @Test
+
+    void decideMemberType() {
+        //Arrange
+        Member member = new Member(null,null,null,null,null,
+                null,null,null,null,false);
+
+        //Act
+
+        DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("ddMMyyyy");
+
+        //Giver junior som output (alder = 17 år)
+        String birthdate = LocalDateTime.now().minusYears(17).format(formatTime);
+        String juniorResult = member.decideMemberType(birthdate);
+
+        //Giver senior som output (alder = 18 år)
+        birthdate = LocalDateTime.now().minusYears(18).format(formatTime);
+        String seniorResult = member.decideMemberType(birthdate);
+
+
+        //Assert
+        assertEquals("junior", juniorResult);
+        assertEquals("senior", seniorResult);
+    }
 
 }

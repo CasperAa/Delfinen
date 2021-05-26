@@ -7,7 +7,6 @@ import java.time.Period;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import static Results.Result.generateCsvFile;
 import static com.sun.org.apache.xml.internal.utils.XMLCharacterRecognizer.isWhiteSpace;
 import static java.lang.Integer.parseInt;
 import static java.lang.Long.parseLong;
@@ -105,13 +104,19 @@ public class Member {
     public static void writeNewMember(){
         Scanner sc = new Scanner(System.in);
 
+        File membersFile = new File("src/Files/MembersList");
+
         String name = addName();
+
+        String ID = decideIDNumber(membersFile);
 
         String birthdate = addBirthdate();
 
         String memberStatus = addActivityStatus();
 
-        String memberType = addMemberGroup();
+        String memberGroup = addMemberGroup();
+
+        String memberType = decideMemberType(birthdate);
 
         String telephoneNo = addPhoneNo();
 
@@ -121,21 +126,42 @@ public class Member {
 
         boolean hasPayed = addPaymentStatus();
 
-        addMemberToFile(name, birthdate, memberStatus, memberType, telephoneNo, email, startDate, hasPayed);
+        addMemberToFile(name, ID, birthdate, memberStatus, memberGroup, memberType, telephoneNo, email, startDate, hasPayed);
     }
 
     //Denne metode får som input et medlemmers definerede attributter og tilføjer en linje med disse til filen
     // MembersList
-    public static void addMemberToFile(String name, String birthdate, String memberStatus, String memberGroup,
-                                       String telephoneNo, String email, String startDate, boolean hasPayed){
+    public static void addMemberToFile(String name, String ID, String birthdate, String memberStatus,
+                                       String memberGroup, String memberType, String telephoneNo,
+                                       String email, String startDate, boolean hasPayed){
+            File membersFile = new File("src/Files/MembersList");
+
+            try {
+                //Filen redigeres
+                FileWriter fw = new FileWriter(membersFile, true);   //Filen bliver ikke overwritten.
+                BufferedWriter bw = new BufferedWriter(fw);
+                //PrintWriter pw = new PrintWriter(membersFile);
+
+                bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";"
+                        + memberType +
+                        ";" + telephoneNo + ";" + email + ";" + startDate + ";" + hasPayed);   //Medlemmet skal tilføjes til filen
+                bw.close();     //Handlingen sker rent faktisk
+                System.out.println("Medlem blev tilføjet");
+            } catch (IOException e){
+                System.out.println("Fejl.");
+            }
+
+    }
+
+    public static String decideIDNumber(File file){
+        String ID = null;
         try {
             //Nedenstående tildeler et ID-nummer, der er én højere end det hidtil højeste ID.
-            String ID;
 
-            File membersFile = new File("src/Files/MembersList");
-            Scanner sc = new Scanner(membersFile);
+            Scanner sc = new Scanner(file);
 
-            IDListe = new ArrayList<Integer>();
+            IDListe = new ArrayList<>();
+            IDListe.clear();
             //Skipper metadata linjen
             sc.nextLine();
 
@@ -157,63 +183,26 @@ public class Member {
                 ID = "0001";
             }
             //ID-metoden er slut
-
-            //Nedenstående afgør, om medlemmet er junior eller senior
-
-            String memberType = null;
-
-            int year = parseInt(birthdate.substring(birthdate.length() - 4));
-            int month = parseInt(birthdate.substring(2, 4));
-            int date = parseInt(birthdate.substring(0, 2));
-            Period period = Period.between(LocalDate.of(year, month, date), LocalDate.now());
-            int age = period.getYears();
-            if (age >= 18) {
-                memberType = "senior";
-            } else {
-                memberType = "junior";
-            }
-
-            //Filen redigeres
-            FileWriter fw = new FileWriter(membersFile, true);   //Filen bliver ikke overwritten.
-            BufferedWriter bw = new BufferedWriter(fw);
-            //PrintWriter pw = new PrintWriter(membersFile);
-
-            bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";"
-                    + memberType +
-                    ";" + telephoneNo + ";" + email + ";" + startDate + ";" + hasPayed);   //Medlemmet skal tilføjes til filen
-            bw.close();     //Handlingen sker rent faktisk
-            System.out.println("Medlem blev tilføjet");
-        } catch (Exception e) {
-            System.out.println("Der skete en fejl. Medlemmet blev ikke tilføjet.");
+        } catch (FileNotFoundException e){
+            System.out.println("Filen eksisterer ikke.");
         }
-
+        return ID;
     }
 
+    public static String decideMemberType(String birthdate){
+        //Nedenstående afgør, om medlemmet er junior eller senior
 
-
-
-    //Denne metode beder brugeren om at vælge mellem senior og junior og giver dette som e String-output.
-    public static String addMemberType(){
-        Scanner input = new Scanner(System.in);
-        System.out.println("Hvilken aldersgruppe skal træneren træne? 1: Senior 2: Junior");
         String memberType = null;
-        String userInput = input.nextLine();
-        boolean end = false;
-        while (!end) {
-            switch (userInput) {
-                case "1":
-                    memberType = "senior";
-                    end = true;
-                    break;
-                case "2":
-                    memberType = "junior";
-                    end = true;
-                    break;
-                default:
-                    System.out.println("Input ikke forstået. Prøv igen.\nHvilken aldersgruppe skal træneren træne? 1: Senior 2: Junior");
-                    userInput = input.nextLine();
-                    break;
-            }
+
+        int year = parseInt(birthdate.substring(birthdate.length() - 4));
+        int month = parseInt(birthdate.substring(2, 4));
+        int date = parseInt(birthdate.substring(0, 2));
+        Period period = Period.between(LocalDate.of(year, month, date), LocalDate.now());
+        int age = period.getYears();
+        if (age >= 18) {
+            memberType = "senior";
+        } else {
+            memberType = "junior";
         }
         return memberType;
     }
@@ -456,20 +445,13 @@ public class Member {
                 switch (userInput) {
                     case "1":
                         for (Member currentMember : memberList) {
-                            currentMember.setHasPayed(false); //Sætter betalingsstatusen til ikke-betalt
+                            //Sætter betalingsstatusen til ikke-betalt
+                            currentMember.setHasPayed(false);
 
                             //Ændrer senior/junior-status, hvis dette er aktuelt
-                            int year = parseInt(currentMember.birthdate.substring(currentMember.birthdate.length() - 4));
-                            int month = parseInt(currentMember.birthdate.substring(2, 4));
-                            int date = parseInt(currentMember.birthdate.substring(0, 2));
-                            Period period = Period.between(LocalDate.of(year, month, date), LocalDate.now());
-                            int age = period.getYears();
-                            if (age >= 18) {
-                                currentMember.setMemberType("senior");
-                            } else {
-                                currentMember.setMemberType("junior");
-                            }
+                            currentMember.setMemberType(decideMemberType(currentMember.getBirthdate()));
                         }
+
                         System.out.println("Listen er blevet opdateret.");
                         end = true;
                         break;
@@ -486,7 +468,7 @@ public class Member {
                 }
             }
 
-            //Alle de opdaterede medlemmer tilføjes filen MemerList, idet den overrides.
+            //Alle de opdaterede medlemmer tilføjes filen MemberList, idet den overrides.
             File membersFile = new File("src/Files/MembersList");
             FileWriter fw = new FileWriter(membersFile, true);
             BufferedWriter bw = new BufferedWriter(fw);
@@ -528,14 +510,14 @@ public class Member {
 
     //Denne metode tjekker, om en String opfylder de krav, som et navn i systemet skal opfylde.
     public static boolean isValidName(String name) {
-        boolean onlyLetters = true;
+        boolean isValid = true;
         char[] chars = name.toCharArray();
         for (char c : chars) {
             if (!Character.isLetter(c) && !isWhiteSpace(c) && c != '-' && c != '.') {
-                onlyLetters = false;
+                isValid = false;
             }
         }
-        return onlyLetters;
+        return isValid;
     }
 
     //Denne metode prompter brugeren til at skrive en fødselsdato, og den giver denne som et String-output.

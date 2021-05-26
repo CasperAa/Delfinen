@@ -3,7 +3,6 @@ package Members;
 
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.Scanner;
 
 import static Results.Result.generateCsvFile;
@@ -26,44 +25,6 @@ public class Trainer extends Member {
 
     }
 
-    //Hvorfor i alverden har jeg to næsten identiske metoder???
-    public static void readTrainersFromFileAndAddToArray(File trainerFile) {
-        try {
-            Scanner sc = new Scanner(trainerFile);
-
-            currentTrainerList.clear();
-
-            //Skipper metadatalinjen
-            sc.nextLine();
-
-            //While-loop, så alle linjer læses
-            while (sc.hasNext()) {
-
-                //En variabel, som indeholder den nuværende linje
-                String currentMember = sc.nextLine();
-
-                String[] lineAsArray = currentMember.split(";");
-
-                String name = lineAsArray[0].trim();
-                String ID = lineAsArray[1].trim();
-                String birthdate = lineAsArray[2].trim();
-                String memberStatus = lineAsArray[3].trim();
-                String memberGroup = lineAsArray[4].trim();
-                String memberType = lineAsArray[5].trim();
-                String telephoneNo = lineAsArray[6].trim();
-                String email = lineAsArray[7].trim();
-                String startDate = lineAsArray[8].trim();
-                boolean hasPayed = Boolean.parseBoolean(lineAsArray[9].trim());
-
-                CompetitionMember newMember = new CompetitionMember(name, ID, birthdate, memberStatus, memberGroup,
-                        memberType, telephoneNo, email, startDate, hasPayed);
-                currentTrainerList.add(newMember);
-            }
-        } catch (FileNotFoundException e){
-            System.out.println("Fejl.");
-        }
-    }
-
     //@Amanda med udgangspunkt i Caspers arbejde
     public static void makeNewTrainerCSVFile (String trainerID){
         // test to see if a file exists
@@ -78,7 +39,7 @@ public class Trainer extends Member {
         }
     }
 
-    //Hvorfor i alverden har jeg to næsten identiske metoder???
+
     //Denne metode scanner filen TrainerList og tilføjer alle trænere som et trainer-objekt til arrayListen trainerList
     public static void readTrainersFromFileAndAddToArray() {
         trainerList.clear();
@@ -127,11 +88,15 @@ public class Trainer extends Member {
     public static void writeNewTrainer() {
         String name = addName();
 
+        File trainersFile = new File("src/Files/TrainerList");
+
+        String ID = decideIDNumber(trainersFile);
+
         String birthdate = addBirthdate();
 
         String memberStatus = addActivityStatus();
 
-        String memberType = addMemberType();
+        String memberType = addTrainerMemberType();
 
         String telephoneNo = addPhoneNo();
 
@@ -142,48 +107,21 @@ public class Trainer extends Member {
         String discipline = addDiscipline();
 
 
-        addTrainerToFile(name, birthdate, memberStatus, memberType, telephoneNo, email, startDate, discipline);
+        addTrainerToFile(name, ID, birthdate, memberStatus, memberType, telephoneNo, email, startDate, discipline);
     }
 
 
     //Denne metode får som input en træners definerede attributter og tilføjer en linje med disse til filen
     // TrainerList
-    public static void addTrainerToFile(String name, String birthdate, String memberStatus, String memberType,
+    public static void addTrainerToFile(String name, String ID, String birthdate, String memberStatus, String memberType,
                                         String telephoneNo, String email, String startDate, String discipline) {
 
         try {
-            //Nedenstående tildeler et ID-nummer, der er én højere end det hidtil højeste ID.
-            String ID;
-
             File trainersFile = new File("src/Files/TrainerList");
-            Scanner sc = new Scanner(trainersFile);
-
-            IDListeTrainer = new ArrayList<Integer>();
-            //Skipper metadata linjen
-            sc.nextLine();
-
-            //while loop for alle linjer
-            while (sc.hasNext()) {
-
-                String currentTrainer = sc.nextLine();
-
-                String[] lineAsArray = currentTrainer.split(";");
-                int currentID = parseInt(lineAsArray[1].trim());
-
-                IDListeTrainer.add(currentID);
-            }
-            if (IDListeTrainer.size() != 0) {
-                String tempID = "000" + (Collections.max(IDListeTrainer) + 1);
-                ID = tempID.substring(tempID.length() - 4);
-            } else {
-                ID = "0001";
-            }
-            //ID-metoden er slut
 
             //Filen redigeres
             FileWriter fw = new FileWriter(trainersFile, true);   //Filen bliver ikke overwritten.
             BufferedWriter bw = new BufferedWriter(fw);
-            //PrintWriter pw = new PrintWriter(membersFile);
 
             bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + "trainer" + ";"
                     + memberType +
@@ -409,7 +347,7 @@ public class Trainer extends Member {
             makeNewTrainerCSVFile(trainerID);
             File file = new File("src/TrainerFiles/" + trainerID);
 
-            readTrainersFromFileAndAddToArray(file);
+            readTrainersFromFileAndAddToArray();
 
             if (currentTrainerList.size() != 0) {
                 System.out.println("Nuværende liste");
@@ -680,6 +618,32 @@ public class Trainer extends Member {
         }catch (IOException e){
             System.out.println("Fejl");
         }
+    }
+
+    //Denne metode beder brugeren om at vælge mellem senior og junior og giver dette som et String-output.
+    public static String addTrainerMemberType(){
+        Scanner input = new Scanner(System.in);
+        System.out.println("Hvilken aldersgruppe skal træneren træne? 1: Senior 2: Junior");
+        String memberType = null;
+        String userInput = input.nextLine();
+        boolean end = false;
+        while (!end) {
+            switch (userInput) {
+                case "1":
+                    memberType = "senior";
+                    end = true;
+                    break;
+                case "2":
+                    memberType = "junior";
+                    end = true;
+                    break;
+                default:
+                    System.out.println("Input ikke forstået. Prøv igen.\nHvilken aldersgruppe skal træneren træne? 1: Senior 2: Junior");
+                    userInput = input.nextLine();
+                    break;
+            }
+        }
+        return memberType;
     }
 
 }
