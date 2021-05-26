@@ -220,41 +220,6 @@ public class Member {
     }
 
 
-    //Denne metode beder brugeren om at vælge en disciplin og returnerer dette som et String-output.
-    public static String addDiscipline(){
-        Scanner input = new Scanner(System.in);
-        System.out.println("Hvilken disciplin skal tilknyttes træneren? 1: Butterfly 2: Crawl 3: Rygcrawl 4: Brystsvømning");
-        String discipline = null;
-        String userInput = input.nextLine();
-        boolean end = false;
-        while (!end) {
-            switch (userInput) {
-                case "1":
-                    discipline = "butterfly";
-                    end = true;
-                    break;
-                case "2":
-                    discipline = "crawl";
-                    end = true;
-                    break;
-                case "3":
-                    discipline = "rygcrawl";
-                    end = true;
-                    break;
-                case "4":
-                    discipline = "brystsvømning";
-                    end = true;
-                    break;
-                default:
-                    System.out.println("Input ikke forstået. Prøv igen.\nHvilken disciplin skal tilknyttes træneren? 1: Butterfly 2: Crawl 3: Rygcrawl 4: Brystsvømning");
-                    userInput = input.nextLine();
-                    break;
-            }
-        }
-        return discipline;
-    }
-
-
     //Denne metode får brugeren til at vælge et eksisterende medlem og gør det muligt for denne at ændre medlemmets
     // attributter. Filen MembersList opdateres med de nye oplysninger, idet hele filen overrides.
     public static void editMemberInfo() {
