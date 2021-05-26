@@ -9,14 +9,8 @@ import java.util.*;
 
 public class TopFive{
 
-    private ArrayList<DataReader> seniorCrawl;
-    private ArrayList<DataReader> seniorBreaststroke;
-    private ArrayList<DataReader> seniorButterfly;
-    private ArrayList<DataReader> seniorRygcrawl;
-    private ArrayList<DataReader> juniorCrawl;
-    private ArrayList<DataReader> juniorBreaststroke;
-    private ArrayList<DataReader> juniorButterfly;
-    private ArrayList<DataReader> juniorRygcrawl;
+    //Creating ArrayLists
+    private ArrayList<DataReader> seniorCrawl,seniorBreaststroke, seniorButterfly, seniorRygcrawl, juniorCrawl, juniorBreaststroke,juniorButterfly, juniorRygcrawl;
 
     public static void main(String[] args) {
         TopFive topFive = new TopFive();
@@ -25,9 +19,11 @@ public class TopFive{
         topFive.topFiveSeniorRygcrawl();
     }
 
+    //Method for adding objects to arraylist from Files
     public void fileReader(){
 
-        Member.readMembersFromFileAndAddToArray();
+
+        //Member.readMembersFromFileAndAddToArray();
 
         try{
 

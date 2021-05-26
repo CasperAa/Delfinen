@@ -5,9 +5,10 @@ public class MainMenu {
 
     // Welcome Screen (Is prompted at the start of the program)
     public static void welcomeScreen (){
-        System.out.println("Åbner Delfinens administrationssystem \n");
+        System.out.println("Welkommen tilbage \nDelfinens administrationssystem \n");
     }
 
+    //Main login menu (choose role)
     public static void loginScreen(){
         System.out.println("Vælg rolle!");
         System.out.println("Tryk 1: Formand");
@@ -57,6 +58,7 @@ public class MainMenu {
         System.out.println("Tryk 9: Tilbage");
     }
 
+    // Top five result screen for Trainer
     public static void trainerTopFiveScreen1(){
         System.out.println("Top 5 - Vælg målgruppe");
         System.out.println("    Tryk 1: Senior");
@@ -65,6 +67,7 @@ public class MainMenu {
 
     }
 
+    //2nd Top five (junior) result screen for Trainer
     public static void trainerTopFiveScreen2Junior(){
         System.out.println("Top 5 Junior - Vælg Svømmedisciplin");
         System.out.println("    Tryk 1: Brystsvømning");
@@ -75,6 +78,7 @@ public class MainMenu {
 
     }
 
+    //2nd Top five (senior) result screen for Trainer
     public static void trainerTopFiveScreen2Senior(){
         System.out.println("Top 5 Senior - Vælg Svømmedisciplin");
         System.out.println("    Tryk 1: Brystsvømning");

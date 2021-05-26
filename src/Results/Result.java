@@ -49,12 +49,12 @@ public class Result {
         //test to see if a file exists, asking user before adding new file, if file doesn't exist
         boolean exists = file.exists();
         if (exists) {
-            System.out.println("Denne fil eksitere - Tilhøre: " + returnMemberName(memberID));
+            System.out.println("Denne fil eksisterer - Tilhøre: " + returnMemberName(memberID));
             String fileLocation = "src/Files/membersResults/";
             resultType(fileLocation+memberID);
 
         } else {
-            System.out.println("Denne fil eksitere ikke\n");
+            System.out.println("Denne fil eksisterer ikke\n");
             System.out.println("Vil du oprette en ny fil for dette ID?  ja/nej");
 
             switch (userID.nextLine()){
