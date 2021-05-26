@@ -14,11 +14,9 @@ public class Trainer extends Member {
 
     //Constructor
     public Trainer(String name, String ID, String birthdate, String memberStatus, String memberGroup, String memberType,
-                             String telephoneNo, String email, String startDate, boolean hasPayed, String discipline) {
+                             String telephoneNo, String email, String startDate, boolean hasPayed) {
         super(name, ID, birthdate, memberStatus, memberGroup, memberType,
                 telephoneNo, email, startDate, hasPayed);
-
-        this.discipline = discipline;
     }
 
 
@@ -53,10 +51,9 @@ public class Trainer extends Member {
                 String email = lineAsArray[7].trim();
                 String startDate = lineAsArray[8].trim();
                 boolean hasPayed = Boolean.parseBoolean(lineAsArray[9].trim());
-                String discipline = lineAsArray[10].trim();
 
                 Trainer newMember = new Trainer(name, ID, birthdate, memberStatus, memberGroup,
-                        memberType, telephoneNo, email, startDate, hasPayed, discipline);
+                        memberType, telephoneNo, email, startDate, hasPayed);
                 trainerList.add(newMember);
             }
         } catch (FileNotFoundException e) {
@@ -258,7 +255,7 @@ public class Trainer extends Member {
 
         //Træneren defineres med de evt. ændrede attributter
         Trainer updatedTrainer = new Trainer(name, ID, birthdate, memberStatus, "trainer", "trainer",
-                telephoneNo, email, startDate, false, discipline);
+                telephoneNo, email, startDate, false);
         trainerList.set(lineNumber, updatedTrainer);
 
         //Filen TrainerFile overrides med oplysninger fra trainerList, deriblandt er den netop opdaterede træner.
