@@ -2,7 +2,6 @@ package Results;
 
 import Members.Member;
 import Menu.MainMenu;
-
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -10,6 +9,8 @@ import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Scanner;
+
+//@Casper
 
 public class Result {
 
@@ -20,6 +21,7 @@ public class Result {
     String competitionName;
     String placement;
 
+    //Constructor
     public Result(double resultTime, String date, String swimType, String resultType, String competitionName, String placement){
         this.resultTime = resultTime;
         this.date = date;
@@ -29,30 +31,34 @@ public class Result {
         this.placement = placement;
     }
 
+    //Method for adding a new CSV file
     public static void addNewCSVFile(){
+        //Asking for input - UserID to compare with exiting files in membersResult package
         Scanner userID = new Scanner(System.in);
         System.out.println("user ID");
         String memberID = userID.nextLine();
 
+        //Verifying input from user, needs to be a length of four chars
         if(memberID.length() != 4){
             MainMenu.errorMessage();
             userID.nextLine();
         }
 
-        // test to see if a file exists
         File file = new File("src/Files/membersResults/" + memberID);
+
+        //test to see if a file exists, asking user before adding new file, if file doesn't exist
         boolean exists = file.exists();
         if (exists) {
-
-
-
-            System.out.println("Denne fil eksisterer - Tilhører: " + returnMemberName(memberID));
+            System.out.println("Denne fil eksitere - Tilhøre: " + returnMemberName(memberID));
             String fileLocation = "src/Files/membersResults/";
             resultType(fileLocation+memberID);
+
         } else {
-            System.out.println("Denne fil eksisterer ikke\n");
+            System.out.println("Denne fil eksitere ikke\n");
             System.out.println("Vil du oprette en ny fil for dette ID?  ja/nej");
+
             switch (userID.nextLine()){
+                //Adding new file
                 case "ja":
                     String fileLocation = "src/Files/membersResults/";
                     Result.generateCsvFile(fileLocation+memberID);
@@ -69,6 +75,7 @@ public class Result {
                             userID.nextLine();
                     }
                     break;
+                //Not adding a new file
                 case "nej":
                     MainMenu.loginScreen();
                     break;
@@ -79,6 +86,8 @@ public class Result {
             }
         }
     }
+
+    //Setting result type
     public static void resultType (String fileLocation) {
         System.out.println("Resultat Type:\n"  + "     Tryk 1: Træning\n" + "     Tryk 2: Konkurrence");
         Scanner userInput = new Scanner(System.in);
@@ -93,13 +102,15 @@ public class Result {
         }
     }
 
+    //Adding values to the remaining attributes of the object
     public static void addResult(String fileLocation, String resultType) {
-        // first create file object for file placed at location
-        // specified by filepath
+
+        //Create object in file placed at location
         File file = new File(fileLocation);
 
         Scanner userInput = new Scanner(System.in);
 
+        //Adding date value and checking input for validity
         System.out.println("Dato: (DD/MM/ÅÅÅÅ)");
         boolean dateIsValid = false;
         String date = null;
@@ -113,6 +124,7 @@ public class Result {
             }
         }
 
+        //Adding swim discipline value and checking input for validity
         System.out.println("Svømmedisciplin:\n" + "     Tryk 1: Butterfly\n" + "     Tryk 2: Crawl\n" + "     Tryk 3: Rygcrawl\n" + "     Tryk 4: Brystsvømning");
         String method = userInput.nextLine();
         String swimMethod = null;
@@ -134,6 +146,7 @@ public class Result {
                 userInput.nextLine();
         }
 
+        //Adding swim time value and checking input for validity
         System.out.println("Tid: (i sekunder - 62.23)");
         boolean timeIsValid = false;
         String time = null;
@@ -148,6 +161,7 @@ public class Result {
             }
         }
 
+        //Adding competition name and placement values, if the result is from a competition and checking input for validity
         String competition;
         String placement;
         if(resultType.equals("Konkurrence")) {
@@ -163,23 +177,25 @@ public class Result {
                 MainMenu.errorMessage();
                 userInput.nextLine();
             }
+        //Giving competition name and placement empty values, if result is from training
         } else {
-            competition = "N/A";
+            competition = "";
             placement = "0";
         }
 
         try {
-            // create FileWriter object with file as parameter
+            //Create FileWriter object with file as parameter
             FileWriter fWriter = new FileWriter(file, true);
             BufferedWriter bWriter = new BufferedWriter(fWriter);
 
-            // add data to csv
-
+            //Creating String with all values from above
             String data = "\n" + resultType + ";" + date + ";" + time + ";" + swimMethod + ";" + competition + ";" + placement;
             bWriter.write(data);
-            bWriter.close();     //Handlingen sker rent faktisk
+            bWriter.close();
+
             System.out.println("Resultat blev tilføjet til fil: " + fileLocation.substring(fileLocation.length() - 4));
 
+            //asking if user want's to add more results
             System.out.println("Opret flere resultater? ja/nej");
             switch (userInput.nextLine()) {
                 case "ja":
@@ -194,7 +210,7 @@ public class Result {
                     break;
             }
 
-            // closing writer connection
+            //Catching IOException
         } catch (IOException e) {
             System.out.println("Der skete en fejl - Resultatet blev ikke tilføjet");
             e.printStackTrace();
@@ -202,7 +218,7 @@ public class Result {
     }
 
 
-
+    //Method for creating CSV files
     public static void generateCsvFile(String fileLocation) {
 
         FileWriter fWriter;
@@ -212,8 +228,11 @@ public class Result {
 
             fWriter = new FileWriter(fileLocation);
             bWriter = new BufferedWriter(fWriter);
+
+            //Adding metadata to row one
             bWriter.write("Resultat Type" + ";" + "Dato" + ";" + "Tid" + ";" + "Svømnings Metode" + ";" + "Konkurrence Navn" + ";" + "Placering");
 
+            //Confirming file has been created
             System.out.println("Filen \""+fileLocation.substring(fileLocation.length() - 4)+"\" er oprettet... ");
 
         } catch (IOException e) {
@@ -229,6 +248,7 @@ public class Result {
         }
     }
 
+    //Date format validator
     public static boolean dateFormatValidator(String date) {
         boolean status = false;
         if (checkDate(date)) {
@@ -244,6 +264,7 @@ public class Result {
         return status;
     }
 
+    //Valid date validator
     static boolean checkDate(String date) {
         String pattern = "(0?[1-9]|[12][0-9]|3[01])(0?[1-9]|1[0-2])([0-9]{4})";
         boolean flag = false;
@@ -253,6 +274,7 @@ public class Result {
         return flag;
     }
 
+    //Returning member name based on their ID
     public static String returnMemberName(String memberID){
         String name = null;
         for (Member members : Member.getMemberList()){

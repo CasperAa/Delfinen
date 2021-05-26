@@ -9,14 +9,8 @@ import java.util.*;
 
 public class TopFive{
 
-    private ArrayList<DataReader> seniorCrawl;
-    private ArrayList<DataReader> seniorBreaststroke;
-    private ArrayList<DataReader> seniorButterfly;
-    private ArrayList<DataReader> seniorRygcrawl;
-    private ArrayList<DataReader> juniorCrawl;
-    private ArrayList<DataReader> juniorBreaststroke;
-    private ArrayList<DataReader> juniorButterfly;
-    private ArrayList<DataReader> juniorRygcrawl;
+    //Creating ArrayLists
+    private ArrayList<DataReader> seniorCrawl,seniorBreaststroke, seniorButterfly, seniorRygcrawl, juniorCrawl, juniorBreaststroke,juniorButterfly, juniorRygcrawl;
 
     public static void main(String[] args) {
         TopFive topFive = new TopFive();
@@ -25,37 +19,38 @@ public class TopFive{
         topFive.topFiveSeniorRygcrawl();
     }
 
+    //Method for adding objects to arraylist from Files
     public void fileReader(){
-
-        Member.readMembersFromFileAndAddToArray();
-
         try{
 
-            File[] memberFiles = new File("src/Files/membersResults").listFiles();
+        //File array with all files in pathname
+        File[] memberFiles = new File("src/Files/membersResults").listFiles();
 
+        //Temporary ArrayList
         ArrayList<DataReader> tempListGeneral = new ArrayList<>();
         ArrayList<DataReader> tempResultList = new ArrayList<>();
-
         ArrayList<DataReader> crawlList = new ArrayList<>();
         ArrayList<DataReader> butterflyList = new ArrayList<>();
         ArrayList<DataReader> breaststrokeList = new ArrayList<>();
         ArrayList<DataReader> rygcrawlList = new ArrayList<>();
 
+        //String to avoid errors with equals method
         final String crawl = "Crawl";
         final String butterfly = "Butterfly";
         final String breaststroke = "Brystsvømning";
         final String rygcrawl = "Rygcrawl";
 
+        //Checking if file is empty
         assert memberFiles != null;
+        //for loop for each file in package
         for (File currentFile : memberFiles) {
-
 
             Scanner scanCurrentFile = new Scanner(currentFile);
 
-            //Skips metadata line
+            //Skipping metadata line
             scanCurrentFile.nextLine();
 
-            //While-loop til file doesn't have a next row
+            //While-loop for all rows in file
             while (scanCurrentFile.hasNext()) {
 
                 //A string which has all contents of the current row
@@ -73,13 +68,16 @@ public class TopFive{
                 String competitionName = checkForValue(lineAsArray[4].trim());
                 String placement = lineAsArray[5].trim();
 
-                //Using the constructor create a new object and adding the object to the arraylist
+                //Using the constructor create a new object and adding the object to the temporary arraylist
                 DataReader currentCompetitionResult = new DataReader(id, time, date, method, type, competitionName, placement);
                 tempResultList.add(currentCompetitionResult);
             }
 
+            //This arraylist only has Objects from one member
+            //Sorting all objects after time, fastest first
             Collections.sort(tempResultList);
 
+            //Dividing objects after swim discipline to a temporary arraylist
             for (DataReader dataReader : tempResultList){
                 switch (dataReader.swimType) {
                     case rygcrawl:
@@ -97,8 +95,10 @@ public class TopFive{
                 }
             }
 
+            //Removing all objects from Arraylist so only one members time results is on the temporary ArrayList
             tempResultList.clear();
 
+            //Getting the top result for each swim discipline and adding that to a general temporary Arraylist with all members best results
             if(!rygcrawlList.isEmpty()) {
                 tempListGeneral.add(rygcrawlList.get(0));
                 rygcrawlList.clear();
@@ -117,7 +117,8 @@ public class TopFive{
             }
         }
 
-        sortDataBySwimMethod(tempListGeneral);
+        //Call method to sort member type and swim discipline
+        sortBySwimMethodAndMemberType(tempListGeneral);
     }
         catch(FileNotFoundException e){
             System.out.println("Kan ikke finde fil lokation!");
@@ -125,8 +126,7 @@ public class TopFive{
     }
 
 
-    public void sortDataBySwimMethod(ArrayList <DataReader> listWithTopResultForEachMember) {
-
+    public void sortBySwimMethodAndMemberType(ArrayList <DataReader> listWithTopResultForEachMember) {
 
         seniorBreaststroke = new ArrayList<>();
         seniorCrawl = new ArrayList<>();
@@ -137,44 +137,49 @@ public class TopFive{
         juniorButterfly = new ArrayList<>();
         juniorRygcrawl = new ArrayList<>();
 
+        //Getting all members to a new ArrayList
         ArrayList<Member> allMembers = Member.getMemberList();
 
         try {
-            for (DataReader currentDataRow : listWithTopResultForEachMember) {
+            //for loop for all objects in result ArrayList
+            for (DataReader currentResult : listWithTopResultForEachMember) {
+                //for loop for all Members in membersList
                 for (Member currentMember : allMembers) {
-                    if (currentDataRow.getId().equals(currentMember.getID())) {
+                    //Matching currentResult and currentMember with ID
+                    if (currentResult.getId().equals(currentMember.getID())) {
+                        //Adding currentResult object to it's designated ArrayList
                         switch (currentMember.getMemberType()) {
                             case "senior":
-                                switch (currentDataRow.swimType) {
+                                switch (currentResult.swimType) {
                                     case "Brystsvømning":
-                                        seniorBreaststroke.add(currentDataRow);
+                                        seniorBreaststroke.add(currentResult);
                                         break;
                                     case "Crawl":
-                                        seniorCrawl.add(currentDataRow);
+                                        seniorCrawl.add(currentResult);
                                         break;
                                     case "Butterfly":
-                                        seniorButterfly.add(currentDataRow);
+                                        seniorButterfly.add(currentResult);
                                         break;
                                     case "Rygcrawl":
-                                        seniorRygcrawl.add(currentDataRow);
+                                        seniorRygcrawl.add(currentResult);
                                         break;
                                 }
                                 break;
                             case "junior":
-                                switch (currentDataRow.swimType) {
+                                switch (currentResult.swimType) {
                                     case "Brystsvømning":
-                                        juniorBreaststroke.add(currentDataRow);
+                                        juniorBreaststroke.add(currentResult);
                                         break;
                                     case "Crawl":
-                                        juniorCrawl.add(currentDataRow);
+                                        juniorCrawl.add(currentResult);
                                         break;
 
                                     case "Butterfly":
-                                        juniorButterfly.add(currentDataRow);
+                                        juniorButterfly.add(currentResult);
                                         break;
 
                                     case "Rygcrawl":
-                                        juniorRygcrawl.add(currentDataRow);
+                                        juniorRygcrawl.add(currentResult);
                                         break;
                                 }
                                 break;
@@ -183,7 +188,7 @@ public class TopFive{
                 }
             }
 
-
+            //Sorting all ArrayList after result time
             Collections.sort(juniorButterfly);
             Collections.sort(juniorBreaststroke);
             Collections.sort(juniorCrawl);
@@ -195,10 +200,9 @@ public class TopFive{
 
 
         } catch (NullPointerException e) {
-            System.out.println("something went wrong");
+            System.out.println("Et medlem har forkert data i sin resultat fil!");
         }
     }
-
 
     public void topFiveJuniorBreaststroke(){
         System.out.println("Top 5 - Junior Brystsvømning");

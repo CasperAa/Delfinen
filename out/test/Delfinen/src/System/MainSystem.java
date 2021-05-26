@@ -69,7 +69,7 @@ public class MainSystem {
                         switch (userInput.nextLine()) {
                             case "1":
                                 //Method for overview of yearly revenue
-                                Revenue.yearlyRevenue();
+                                System.out.println(Revenue.yearlyRevenue());
                                 MainMenu.menuScreenCashier();
                                 break;
                             case "2":
