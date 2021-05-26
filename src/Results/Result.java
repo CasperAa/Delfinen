@@ -46,11 +46,11 @@ public class Result {
 
 
 
-            System.out.println("Denne fil eksitere - Tilhøre: " + returnMemberName(memberID));
+            System.out.println("Denne fil eksisterer - Tilhører: " + returnMemberName(memberID));
             String fileLocation = "src/Files/membersResults/";
             resultType(fileLocation+memberID);
         } else {
-            System.out.println("Denne fil eksitere ikke\n");
+            System.out.println("Denne fil eksisterer ikke\n");
             System.out.println("Vil du oprette en ny fil for dette ID?  ja/nej");
             switch (userID.nextLine()){
                 case "ja":
