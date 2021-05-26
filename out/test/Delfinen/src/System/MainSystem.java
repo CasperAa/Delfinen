@@ -12,13 +12,12 @@ public class MainSystem {
     public static void main(String[] args){
 
         //Adding data to ArrayList containing Members
-        Members.Member.readMembersFromFileAndAddToArray();
+        Member.readMembersFromFileAndAddToArray();
 
         //Printing welcome screen and main menu
         MainMenu.welcomeScreen();
         MainMenu.loginScreen();
         MainSystem mainSystem = new MainSystem();
-
 
         Scanner userInput = new Scanner(System.in);
         boolean endProgram = false;
@@ -80,11 +79,13 @@ public class MainSystem {
                             case "3":
                                 //Method for editing members payment status
                                 Member.editPaymentStatus();
+                                MainMenu.menuScreenCashier();
                                 break;
 
                             case "4":
                                 //Method for resetting payment status and updating membertype for all members
                                 Member.startNewSeason();
+                                MainMenu.menuScreenCashier();
                                 break;
                             case "9":
                                 cashierMainMenu = false;
@@ -109,27 +110,34 @@ public class MainSystem {
                             case "1":
                                 //Method for adding members
                                 Member.addNewMember();
+                                MainMenu.menuScreenAdmin();
                                 break;
                             case "2":
                                 //Method for editing existing members
                                 Member.editMemberInfo();
+                                MainMenu.menuScreenAdmin();
                                 break;
                             case "3":
                                 //Method for overview of yearly revenue
                                 Revenue.yearlyRevenue();
+                                MainMenu.menuScreenAdmin();
                                 break;
                             case "4":
                                 //Method for editing members payment status
                                 Member.editPaymentStatus();
+                                MainMenu.menuScreenAdmin();
                                 break;
                             case "5":
                                 mainSystem.trainerMenu(userInput);
+                                MainMenu.menuScreenAdmin();
                                 break;
                             case "6":
                                 //Method for resetting payment status and updating membertype for all members
                                 Member.startNewSeason();
+                                MainMenu.menuScreenAdmin();
                             case "9":
                                 Trainer.editTrainerTeam(); //Method for editing teams
+                                MainMenu.menuScreenAdmin();
                                 break;
                             case "10":
                                 adminMainMenu = false;

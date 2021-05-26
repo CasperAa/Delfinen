@@ -12,13 +12,12 @@ public class MainSystem {
     public static void main(String[] args){
 
         //Adding data to ArrayList containing Members
-        Members.Member.readMembersFromFileAndAddToArray();
+        Member.readMembersFromFileAndAddToArray();
 
         //Printing welcome screen and main menu
         MainMenu.welcomeScreen();
         MainMenu.loginScreen();
         MainSystem mainSystem = new MainSystem();
-
 
         Scanner userInput = new Scanner(System.in);
         boolean endProgram = false;
