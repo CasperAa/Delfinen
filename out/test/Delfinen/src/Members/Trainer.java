@@ -470,7 +470,7 @@ public class Trainer extends Member {
                                                 System.out.println("Træneren træner ikke svømmere i denne aldersgruppe. " +
                                                         "Træneren træner " + trainerList.get(lineNumber).getMemberType()
                                                         + ", denne svømmer er " + currentMember.getMemberType() + ". " +
-                                                        "Prøv igen\nHvad er ID-nummeret på det medlem, du vil tilføje?");
+                                                        "Prøv igen.\nHvad er ID-nummeret på det medlem, du vil tilføje?");
                                             }
                                             lineCounter++;
                                         }

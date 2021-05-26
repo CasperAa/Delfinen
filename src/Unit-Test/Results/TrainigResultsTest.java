@@ -8,27 +8,27 @@ import static org.junit.jupiter.api.Assertions.*;
 class TrainigResultsTest {
 
     @Test
-    void addResultTraining() {
+    void addResult() {
 
         //Arrange
-        TrainingResults trainigResults = new TrainingResults(0, null, null, null, null, null);
+        Result result = new Result(0, null, null, null, null, null);
 
         //Act
 
             //Correct Date
-            boolean trueResult1 = trainigResults.dateValidation("03/04/2020");
+            boolean trueResult1 = result.dateFormatValidator("03/04/2020");
 
             //Wrong symbol
-            boolean falseResult1 = trainigResults.dateValidation("03/04:2020");
+            boolean falseResult1 = result.dateFormatValidator("03/04:2020");
 
             //Year is after current year)
-            boolean falseResult2 = trainigResults.dateValidation("03/04/20223");
+            boolean falseResult2 = result.dateFormatValidator("03/04/20223");
 
             //Day above max day
-            boolean falseResult3 = trainigResults.dateValidation("45/04/2020");
+            boolean falseResult3 = result.dateFormatValidator("45/04/2020");
 
             //month above 12
-            boolean falseResult4 = trainigResults.dateValidation("03/16/2020");
+            boolean falseResult4 = result.dateFormatValidator("03/16/2020");
 
         //Assert
         assertTrue(trueResult1);
