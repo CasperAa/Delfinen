@@ -6,13 +6,11 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 import static Results.Result.generateCsvFile;
-import static java.lang.Integer.parseInt;
 
 public class Trainer extends Member {
     protected String discipline;
-    static ArrayList<Trainer> trainerList = new ArrayList<Trainer>();
-    static ArrayList<Member> currentTrainerList = new ArrayList<Member>();
-    private static ArrayList<Integer> IDListeTrainer;
+    static ArrayList<Trainer> trainerList = new ArrayList<>();
+    static ArrayList<Member> currentTrainerList = new ArrayList<>();
 
     //Constructor
     public Trainer(String name, String ID, String birthdate, String memberStatus, String memberGroup, String memberType,
@@ -24,6 +22,7 @@ public class Trainer extends Member {
     }
 
 
+    //Denne metode undersøger, om der allerede findes en fil for en træner, og hvis ikke, oprettes der én
     public static void makeNewTrainerCSVFile (String trainerID){
         // test to see if a file exists
         File file = new File("src/TrainerFiles/" + trainerID);
@@ -135,8 +134,10 @@ public class Trainer extends Member {
     //Denne metode får brugeren til at vælge en eksisterende træner og gør det muligt for denne at ændre trænerens
     // attributter. Filen TrainerList opdateres med de nye oplysninger, idet hele filen overrides.
     public static void editTrainerInfo() {
+
         //Her kaldes metoden, der læser TrainerList og tilføjer trænerobjekterne til arrayListen trainerList.
         readTrainersFromFileAndAddToArray();
+
         // Brugeren får mulighed for at søge efter træneren i arrayListen trainerList enten vha. ID eller navn.
         Scanner input = new Scanner(System.in);
         Trainer memberToEdit = null;
@@ -503,7 +504,6 @@ public class Trainer extends Member {
                         // Derefter slettes medlemmet fra arraylisten, og brugeren får mulighed for at fortsætte med at
                         // redigere listen. Til sidst overkrives alt i filen med det opdaterede array.
                         input = new Scanner(System.in);
-                        Member memberToDelete = null;
                         System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
                         userInput = input.nextLine();
                         matchFound = false;
@@ -525,7 +525,6 @@ public class Trainer extends Member {
                                             userInput = input.nextLine();
                                             switch (userInput) {
                                                 case "1":
-                                                    memberToDelete = currentMember;
                                                     lineNumber = lineCounter;
                                                     end2 = true;
                                                     break;
@@ -552,7 +551,6 @@ public class Trainer extends Member {
                                             userInput = input.nextLine();
                                             switch (userInput) {
                                                 case "1":
-                                                    memberToDelete = currentMember;
                                                     lineNumber = lineCounter;
                                                     end2 = true;
                                                     break;
@@ -607,11 +605,10 @@ public class Trainer extends Member {
                 }
             }
 
-
         }
     }
 
-    //Denne metode beder brugeren om at vælge mellem senior og junior og giver dette som et String-output.
+    //Denne metode beder brugeren om at vælge mellem senior og junior og returnerer dette som et String-output.
     public static String addTrainerMemberType(){
         Scanner input = new Scanner(System.in);
         System.out.println("Hvilken aldersgruppe skal træneren træne? 1: Senior 2: Junior");
@@ -637,7 +634,7 @@ public class Trainer extends Member {
         return memberType;
     }
 
-    //Denne metode overrider en fil med oplysninger fra et array af trænere
+    //Denne metode overrider en inputtet fil med oplysninger fra et inputtet array af trænere
     public static void overrideTrainerFileWithArrayList(File file, ArrayList<Trainer> arrayList){
         try{
             FileWriter fw = new FileWriter(file, true);
@@ -655,5 +652,4 @@ public class Trainer extends Member {
             System.out.println("Der skete en fejl.");
         }
     }
-
 }

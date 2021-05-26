@@ -33,7 +33,7 @@ public class MainSystem {
                     while(!endManager){
                         switch (userInput.nextLine()){
                             case "1":
-                                Member.writeNewMember();//Method for adding members
+                                Member.addNewMember();//Method for adding members
                                 MainMenu.menuScreenManager();
                                 break;
                             case "2":
@@ -108,7 +108,7 @@ public class MainSystem {
                         switch (userInput.nextLine()) {
                             case "1":
                                 //Method for adding members
-                                Member.writeNewMember();
+                                Member.addNewMember();
                                 break;
                             case "2":
                                 //Method for editing existing members

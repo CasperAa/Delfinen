@@ -49,10 +49,12 @@ public class Member {
     public static void readMembersFromFileAndAddToArray() {
         memberList.clear();
 
-        try {
-            File membersFile = new File("src/Files/MembersList");
-            Scanner sc = new Scanner(membersFile);
+        File membersFile = new File("src/Files/MembersList");
+        Scanner sc = null;
 
+        try {
+
+        sc = new Scanner(membersFile);
 
         //Skipper metadatalinjen
         sc.nextLine();
@@ -98,11 +100,10 @@ public class Member {
     }
 
 
-
-    //Denne metode kalder andre metoder, der beder brugeren om at definere et nyt medlems attributter eller
-    // definerer dem autromatisk.
-    // Til sidst kaldes en metode, der tilføjer medlemmet til filen MemberList.
-    public static void writeNewMember(){
+    //Denne metode kalder andre metoder, der beder brugeren om at definere dele af et nyt medlems attributter, samt
+    // definerer nogle af dem autromatisk.
+    // Til sidst tilføjes medlemmet til filen MemberList.
+    public static void addNewMember(){
         Scanner sc = new Scanner(System.in);
 
         File membersFile = new File("src/Files/MembersList");
@@ -127,29 +128,19 @@ public class Member {
 
         boolean hasPayed = addPaymentStatus();
 
-        addMemberToFile(name, ID, birthdate, memberStatus, memberGroup, memberType, telephoneNo, email, startDate, hasPayed);
-    }
+        try {
+            //Filen redigeres
+            FileWriter fw = new FileWriter(membersFile, true);   //Filen bliver ikke overwritten.
+            BufferedWriter bw = new BufferedWriter(fw);
 
-    //Denne metode får som input et medlems definerede attributter og tilføjer en linje med disse til filen
-    // MembersList
-    public static void addMemberToFile(String name, String ID, String birthdate, String memberStatus,
-                                       String memberGroup, String memberType, String telephoneNo,
-                                       String email, String startDate, boolean hasPayed){
-            File membersFile = new File("src/Files/MembersList");
-
-            try {
-                //Filen redigeres
-                FileWriter fw = new FileWriter(membersFile, true);   //Filen bliver ikke overwritten.
-                BufferedWriter bw = new BufferedWriter(fw);
-
-                bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";"
-                        + memberType +
-                        ";" + telephoneNo + ";" + email + ";" + startDate + ";" + hasPayed);   //Medlemmet skal tilføjes til filen
-                bw.close();     //Handlingen sker rent faktisk
-                System.out.println("Medlem blev tilføjet");
-            } catch (IOException e){
-                System.out.println("Fejl.");
-            }
+            bw.write("\n" + name + ";" + ID + ";" + birthdate + ";" + memberStatus + ";" + memberGroup + ";"
+                    + memberType +
+                    ";" + telephoneNo + ";" + email + ";" + startDate + ";" + hasPayed);   //Medlemmet skal tilføjes til filen
+            bw.close();     //Handlingen sker rent faktisk
+            System.out.println("Medlem blev tilføjet");
+        } catch (IOException e){
+            System.out.println("Fejl.");
+        }
 
     }
 
@@ -979,20 +970,13 @@ public class Member {
         System.out.println("Proces er afsluttet.");
     }
 
-
-    public static void main (String[]args) {
-    }
-
+    //Herunder er 9 getters
     public String getBirthdate () {
             return birthdate;
     }
 
     public String getMemberStatus () {
             return memberStatus;
-    }
-
-    public String getMemberGroup () {
-            return memberGroup;
     }
 
     public String getMemberType () {
@@ -1023,7 +1007,7 @@ public class Member {
             return memberList;
     }
 
-    //Denne metode undersøger, om et String-input udelukkende består af tal.
+    //Denne metode undersøger, om et String-input udelukkende består af tal
     public static boolean isNumeric (String str){
             try {
                 parseLong(str);
@@ -1033,11 +1017,13 @@ public class Member {
             }
     }
 
+    //Herunder overrides toString, så vi får et tilpasset print
     @Override
     public String toString () {
             return "Telefon: " + getTelephoneNo() + " ID: " + getID();
     }
 
+    //Herunder er to setters
     public void setHasPayed(boolean hasPayed){
             this.hasPayed = hasPayed;
     }
