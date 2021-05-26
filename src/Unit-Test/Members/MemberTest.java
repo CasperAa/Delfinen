@@ -233,13 +233,13 @@ class MemberTest {
 
         //Act
 
-        File membersFile = new File("src/Files/MembersList");
+        File testFile = new File("src/Unit-Test/Members/TestFile");
 
         //True
-        boolean trueResult1 = member.alreadyExistsInFile("70121416", membersFile, 6);
+        boolean trueResult1 = member.alreadyExistsInFile("0001", testFile, 1);
 
         //False
-        boolean falseResult1 = member.alreadyExistsInFile("12345678", membersFile, 6);
+        boolean falseResult1 = member.alreadyExistsInFile("0003", testFile, 1);
 
 
         //Assert
@@ -270,6 +270,28 @@ class MemberTest {
         //Assert
         assertEquals("junior", juniorResult);
         assertEquals("senior", seniorResult);
+    }
+
+    @Test
+
+    void decideIDNumber() {
+        //Arrange
+        Member member = new Member(null,null,null,null,null,
+                null,null,null,null,false);
+
+        //Act
+        File testFile = new File("src/Unit-Test/Members/TestFile");
+        File testFileEmpty = new File("src/Unit-Test/Members/TestFileEmpty");
+
+        //String-output er 0003
+        String result1 = member.decideIDNumber(testFile);
+
+        //String-output er 0001
+        String result2 = member.decideIDNumber(testFileEmpty);
+
+        //Assert
+        assertEquals("0003", result1);
+        assertEquals("0001", result2);
     }
 
 }
