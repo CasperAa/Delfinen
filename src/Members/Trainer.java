@@ -22,21 +22,6 @@ public class Trainer extends Member {
     }
 
 
-    //Denne metode undersøger, om der allerede findes en fil for en træner, og hvis ikke, oprettes der én
-    public static void makeNewTrainerCSVFile (String trainerID){
-        // test to see if a file exists
-        File file = new File("src/TrainerFiles/" + trainerID);
-        boolean exists = file.exists();
-        if (exists) {
-            System.out.println("Der eksisterer allerede en fil for denne træner.");
-        } else {
-            String fileLocation = "src/TrainerFiles/";
-            generateCsvFile(fileLocation + trainerID);
-            System.out.println("En ny fil er blevet oprettet for denne træner.");
-        }
-    }
-
-
     //Denne metode scanner filen TrainerList og tilføjer alle trænere som et trainer-objekt til arrayListen trainerList
     public static void readTrainersFromFileAndAddToArray() {
         trainerList.clear();
@@ -82,7 +67,7 @@ public class Trainer extends Member {
 
     //Denne metode kalder andre metoder, der beder brugeren om at definere en ny træners attributter.
     // Til sidst kaldes en metode, der tilføjer træneren til filen TrainerList.
-    public static void writeNewTrainer() {
+    public static void addNewTrainer() {
         String name = addName();
 
         File trainersFile = new File("src/Files/TrainerList");
@@ -103,19 +88,8 @@ public class Trainer extends Member {
 
         String discipline = addDiscipline();
 
-
-        addTrainerToFile(name, ID, birthdate, memberStatus, memberType, telephoneNo, email, startDate, discipline);
-    }
-
-
-    //Denne metode får som input en træners definerede attributter og tilføjer en linje med disse til filen
-    // TrainerList
-    public static void addTrainerToFile(String name, String ID, String birthdate, String memberStatus, String memberType,
-                                        String telephoneNo, String email, String startDate, String discipline) {
-
+        //Her tilføjes en linje med disse den nye træner til filen TrainerList
         try {
-            File trainersFile = new File("src/Files/TrainerList");
-
             //Filen redigeres
             FileWriter fw = new FileWriter(trainersFile, true);   //Filen bliver ikke overwritten.
             BufferedWriter bw = new BufferedWriter(fw);
@@ -128,8 +102,8 @@ public class Trainer extends Member {
         } catch (Exception e) {
             System.out.println("Der skete en fejl. Medlemmet blev ikke tilføjet.");
         }
-
     }
+
 
     //Denne metode får brugeren til at vælge en eksisterende træner og gør det muligt for denne at ændre trænerens
     // attributter. Filen TrainerList opdateres med de nye oplysninger, idet hele filen overrides.
@@ -292,6 +266,7 @@ public class Trainer extends Member {
         overrideTrainerFileWithArrayList(trainersFile, trainerList);
     }
 
+
     //Denne metode bruges til at læse en fil med en træners hold og oprette et array med alle
     // konkurrencemedlemmer på holdet.
     public static void readTrainerListAndMakeArray(File trainerFile) {
@@ -377,6 +352,7 @@ public class Trainer extends Member {
                     break;
             }
 
+            //Brugeren får mulighed for at afslutte eller fortsætte redigeringen
             System.out.println("Er du færdig med at redigere? 1: Ja 2: Nej");
             userInput = sc.nextLine();
             boolean end2 = false;
@@ -402,8 +378,21 @@ public class Trainer extends Member {
         }
     }
 
+    //Denne metode undersøger, om der allerede findes en fil for en træner, og hvis ikke, oprettes der én
+    public static void makeNewTrainerCSVFile (String trainerID){
+        // test to see if a file exists
+        File file = new File("src/TrainerFiles/" + trainerID);
+        boolean exists = file.exists();
+        if (exists) {
+            System.out.println("Der eksisterer allerede en fil for denne træner.");
+        } else {
+            String fileLocation = "src/TrainerFiles/";
+            generateCsvFile(fileLocation + trainerID);
+            System.out.println("En ny fil er blevet oprettet for denne træner.");
+        }
+    }
 
-
+    //Denne metode gør det muligt for brugeren at finde en bestemt træner fra filen TrainerList
     public static Trainer searchForTrainer() {
         Scanner sc = new Scanner(System.in);
         Trainer trainerWithTeam = null;
@@ -436,10 +425,8 @@ public class Trainer extends Member {
         return trainerWithTeam;
     }
 
+    //Herunder er kode, hvor brugeren søger efter medlemmet, der skal tilføjes, vha. navn eller ID. Medlemmet returneres.
     public static Member addMemberToTeam(Trainer trainerWithTeam) {
-        //Herunder er kode, hvor brugeren søger efter medlemmet, der skal tilføjes, vha. navn eller ID.
-        // Derefter tilføjes medlemmet til arraylisten, og brugeren får mulighed for at fortsætte med at
-        // redigere listen. Til sidst overkrives alt i filen med det opdaterede array.
         Scanner input = new Scanner(System.in);
         Member memberToAdd = null;
         int lineCounter = 0;
@@ -531,10 +518,9 @@ public class Trainer extends Member {
     }
 
 
+    //Herunder er kode, hvor brugeren søger efter medlemmet, der skal slettes, vha. navn eller ID.
+    // Indexet for den linje, medlemmet står på i arrayListen, returneres.
     public static int lineNumberOfmemberToDelete(){
-        //Herunder er kode, hvor brugeren søger efter medlemmet, der skal slettes, vha. navn eller ID.
-        // Derefter slettes medlemmet fra arraylisten, og brugeren får mulighed for at fortsætte med at
-        // redigere listen. Til sidst overkrives alt i filen med det opdaterede array.
         Scanner input = new Scanner(System.in);
         System.out.println("Vil du søge efter ID eller navn? 1: ID 2: Navn");
         String userInput = input.nextLine();

@@ -41,7 +41,7 @@ public class MainSystem {
                                 MainMenu.menuScreenManager();
                                 break;
                             case "3":
-                                Trainer.writeNewTrainer(); //Method for adding trainers
+                                Trainer.addNewTrainer(); //Method for adding trainers
                                 MainMenu.menuScreenManager();
                                 break;
                             case "4":

@@ -1,4 +1,4 @@
 name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDate;hasPayed
 Adam Karlsson;0002;14032000;active;konkurrence;senior;88888888;adam@delfinen.dk;01012020;true
-Amanda Tolstrup Laursen;0001;10011994;active;motionist;senior;70121416;amanda@delfinen.dk;01012020;true
 William Sigfred Andersen;0011;17081987;active;konkurrence;senior;34920202;williams@delfinen.dk;01012020;true
+Karl Johannes Rikardt Alber;0005;09011973;passive;motionist;senior;10592932;karl_johannes@delfinen.dk;01012020;true
