@@ -1,0 +1,4 @@
+name;ID;birthdate;memberStatus;memberGroup;memberType;telephoneNo;email;startDate;hasPayed
+Frode Karl Andersen;0007;22022006;active;konkurrence;junior;04192910;frodeandersen@svoemning.dk;01012020;false
+Annie Mouritzen;0009;01032005;active;konkurrence;junior;44551929;mouritzen@delfinen.dk;01012020;true
+Arne Andersen;0010;12102009;active;konkurrence;junior;80291182;karlandersen@godmail.dk;01012020;true
