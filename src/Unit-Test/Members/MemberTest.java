@@ -235,10 +235,10 @@ class MemberTest {
 
         File testFile = new File("src/Unit-Test/Members/TestFile");
 
-        //True
+        //Denne String eksisterer i filen på det givne index
         boolean trueResult1 = member.alreadyExistsInFile("0001", testFile, 1);
 
-        //False
+        //Denne String eksisterer ikke i filen på det givne index
         boolean falseResult1 = member.alreadyExistsInFile("0003", testFile, 1);
 
 
@@ -286,7 +286,7 @@ class MemberTest {
         //String-output er 0003, da det højeste ID i filen er 0002
         String result1 = member.decideIDNumber(testFile);
 
-        //String-output er 0001, da der ikke findes nogen ID i filen
+        //String-output er 0001, da der ikke findes noget ID i filen
         String result2 = member.decideIDNumber(testFileEmpty);
 
         //Assert
