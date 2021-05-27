@@ -18,6 +18,7 @@ public class Trainer extends Member {
                 telephoneNo, email, startDate, hasPayed);
     }
 
+
     //Denne metode scanner filen TrainerList og tilføjer alle trænere som et trainer-objekt til arrayListen trainerList
     public static void readTrainersFromFileAndAddToArray() {
         trainerList.clear();
@@ -60,8 +61,10 @@ public class Trainer extends Member {
 
     }
 
-    //Denne metode kalder andre metoder, der beder brugeren om at definere en ny træners attributter.
-    // Til sidst kaldes en metode, der tilføjer træneren til filen TrainerList.
+
+    //Denne metode kalder andre metoder, der beder brugeren om at definere nogle af en ny træners attributter, samt
+    // definerer resten af dem autromatisk.
+    // Til sidst tilføjes træneren til filen TrainerList.
     public static void addNewTrainer() {
         String name = addName();
 
@@ -96,6 +99,7 @@ public class Trainer extends Member {
             System.out.println("Der skete en fejl. Medlemmet blev ikke tilføjet.");
         }
     }
+
 
     //Denne metode får brugeren til at vælge en eksisterende træner og gør det muligt for denne at ændre trænerens
     // attributter. Filen TrainerList opdateres med de nye oplysninger, idet hele filen overrides.
@@ -253,6 +257,7 @@ public class Trainer extends Member {
         overrideTrainerFileWithArrayList(trainersFile, trainerList);
     }
 
+
     //Denne metode bruges til at læse en fil med en træners hold og oprette et array med alle
     // konkurrencemedlemmer på holdet.
     public static void readTrainerListAndMakeArray(File trainerFile) {
@@ -286,6 +291,7 @@ public class Trainer extends Member {
             System.out.println("Fejl.");
         }
     }
+
 
     //Denne metode bruges til at redigere en træners hold
     public static void editTrainerTeam() {
@@ -361,6 +367,7 @@ public class Trainer extends Member {
         }
     }
 
+
     //Denne metode undersøger, om der allerede findes en fil for en træner, og hvis ikke, oprettes der én
     public static void makeNewTrainerCSVFile (String trainerID){
         // test to see if a file exists
@@ -375,7 +382,8 @@ public class Trainer extends Member {
         }
     }
 
-    //Denne metode gør det muligt for brugeren at finde en bestemt træner fra filen TrainerList
+
+    //Denne metode gør det muligt for brugeren at finde en bestemt træner fra filen TrainerList. Træneren returneres.
     public static Trainer searchForTrainer() {
         Scanner sc = new Scanner(System.in);
         Trainer trainerWithTeam = null;
@@ -408,7 +416,8 @@ public class Trainer extends Member {
         return trainerWithTeam;
     }
 
-    //Metoden her får brugeren til at søge efter medlemmet, der skal tilføjes, vha. navn eller ID. Medlemmet returneres.
+
+    //Denne metode får brugeren til at søge efter et medlem, der skal tilføjes, vha. navn eller ID. Medlemmet returneres.
     public static Member addMemberToTeam(Trainer trainerWithTeam) {
         Scanner input = new Scanner(System.in);
         Member memberToAdd = null;
@@ -496,7 +505,8 @@ public class Trainer extends Member {
         return memberToAdd;
     }
 
-    //Herunder er kode, hvor brugeren søger efter medlemmet, der skal slettes, vha. navn eller ID.
+
+    //Denne metode får brugeren til at søge efter et medlem, der skal slettes, vha. navn eller ID.
     // Indexet for den linje, medlemmet står på i arrayListen, returneres.
     public static int lineNumberOfmemberToDelete(){
         Scanner input = new Scanner(System.in);
@@ -574,7 +584,8 @@ public class Trainer extends Member {
         return lineOfMemberInArray;
     }
 
-    //Denne metode beder brugeren om at vælge mellem senior og junior og returnerer dette som et String-output.
+
+    //Denne metode beder brugeren om at vælge mellem senior og junior og returnerer valget som et String-output.
     public static String addTrainerMemberType(){
         Scanner input = new Scanner(System.in);
         System.out.println("Hvilken aldersgruppe skal træneren træne? 1: Senior 2: Junior");
@@ -599,6 +610,7 @@ public class Trainer extends Member {
         }
         return memberType;
     }
+
 
     //Denne metode overrider en inputtet fil med oplysninger fra et inputtet array af trænere
     public static void overrideTrainerFileWithArrayList(File file, ArrayList<Trainer> arrayList){

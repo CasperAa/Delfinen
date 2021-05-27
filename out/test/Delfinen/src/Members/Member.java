@@ -44,6 +44,7 @@ public class Member {
 
     }
 
+
     //Denne metode scanner filen MembersList og tilføjer alle medlemmer som et member-objekt til arrayListen memberList.
     public static void readMembersFromFileAndAddToArray() {
         memberList.clear();
@@ -99,9 +100,9 @@ public class Member {
     }
 
 
-    //Denne metode kalder andre metoder, der beder brugeren om at definere dele af et nyt medlems attributter, samt
-    // definerer nogle af dem autromatisk.
-    // Til sidst tilføjes medlemmet til filen MemberList.
+    //Denne metode kalder andre metoder, der beder brugeren om at definere nogle af et nyt medlems attributter, samt
+    // definerer resten af dem autromatisk.
+    // Til sidst tilføjes medlemmet til filen MembersList.
     public static void addNewMember(){
         File membersFile = new File("src/Files/MembersList");
 
@@ -141,6 +142,7 @@ public class Member {
 
     }
 
+
     //Denne metode overrider en fil med oplysninger fra et array af medlemmer
     public static void overrideFileWithArrayList(File file, ArrayList<Member> arrayList){
         try{
@@ -160,7 +162,7 @@ public class Member {
 
 
     //Metoden returnerer et ID-nummer, der er én højere end det hidtil højeste ID i input-filen.
-    // Hvis der ikke findes nogen ID-numre i filen resturneres ID=0001.
+    // Hvis der ikke findes nogen ID-numre i filen, resturneres Id-nummeret 0001.
     public static String decideIDNumber(File file){
         String ID = null;
         try {
@@ -195,6 +197,7 @@ public class Member {
         return ID;
     }
 
+
     //Metoden tager et medlems fødselsdag som input og returnerer enten junior eller senior afhængig af medlemmets alder.
     public static String decideMemberType(String birthdate){
 
@@ -214,11 +217,11 @@ public class Member {
     }
 
 
-    //Denne metode får brugeren til at vælge et eksisterende medlem og gør det muligt for denne at ændre medlemmets
+    //Denne metode får brugeren til at vælge et eksisterende medlem og gør det muligt at ændre medlemmets
     // attributter. Filen MembersList opdateres med de nye oplysninger, idet hele filen overrides.
     public static void editMemberInfo() {
 
-        //Her kaldes metoden, der læser MemberList og tilføjer medlemsobjekterne til arrayListen memberList.
+        //Her kaldes metoden, der læser MembersList og tilføjer medlemsobjekterne til arrayListen memberList.
         readMembersFromFileAndAddToArray();
 
         //Brugeren får mulighed for at søge efter medlemmet i arrayListen memberList enten vha. ID eller navn.
@@ -447,6 +450,7 @@ public class Member {
         return name;
     }
 
+
     //Denne metode tjekker, om en String opfylder de krav, som et navn i systemet skal opfylde.
     public static boolean isValidName(String name) {
         boolean isValid = true;
@@ -458,6 +462,7 @@ public class Member {
         }
         return isValid;
     }
+
 
     //Denne metode prompter brugeren til at skrive en fødselsdato, og den returnerer denne som et String-output.
     public static String addBirthdate() {
@@ -482,6 +487,7 @@ public class Member {
         return birthdate;
     }
 
+
     //Denne metode tjekker, om en String opfylder de krav, som en førdselsdato i systemet skal opfylde.
     public static boolean isValidBirthdate(String birthdate) {
 
@@ -498,6 +504,7 @@ public class Member {
             return false;
         }
     }
+
 
     //Denne metode prompter brugeren til at vælge, hvorvidt medlemmet er aktivt, og outputtet er en string enten
     // lig "active" eller "passive".
@@ -527,6 +534,7 @@ public class Member {
         return memberStatus;
     }
 
+
     //Denne metode prompter brugeren til at vælge, hvilken medlemstype, medlemmet er, og outputtet er en string enten
     // lig "motionist" eller "konkurrencesvømmer".
     public static String addMemberGroup() {
@@ -554,6 +562,7 @@ public class Member {
         }
         return memberGroup;
     }
+
 
     //Denne metode prompter brugeren til at skrive en telefonnummer, og den returnerer dette som et String-output.
     public static String addPhoneNo() {
@@ -611,10 +620,12 @@ public class Member {
         return telephoneNo;
     }
 
+
     //Denne metode tjekker, om en String opfylder de krav, som et telefonnummer i systemet skal opfylde.
     public static boolean isValidPhoneNo(String telephoneNo) {
         return telephoneNo.length() == 8 && isNumeric(telephoneNo);
     }
+
 
     //Denne metode tjekker, om en String allerede findes i en fil, idet filen laves til en arrayList, og der scannes
     // i et bestemt index.
@@ -699,14 +710,16 @@ public class Member {
         return email;
     }
 
+
     //Denne metode tjekker, om en String opfylder de krav, som en e-mail i systemet skal opfylde.
     public static boolean isValidEmail(String tempEmail) {
         return tempEmail.contains("@") && tempEmail.contains(".dk") || tempEmail.contains(".com") || tempEmail.contains(".net")
                 || tempEmail.contains(".co.uk") || tempEmail.contains(".gov");
     }
 
-    //Denne metode giver brugeren mulighed for enten at vælge dags dato eller manuelt indtaste en dato,
-    // og denne returneres som et String-output.
+
+    //Denne metode giver brugeren mulighed for enten at vælge dags dato eller manuelt indtaste en dato.
+    // Datoen returneres som et String-output.
     public static String addStartDate() {
         Scanner input = new Scanner(System.in);
 
@@ -750,6 +763,7 @@ public class Member {
         return startDate;
     }
 
+
     //Denne metode tjekker, om en String opfylder de krav, som en startdato i systemet skal opfylde.
     // Det antages, at Delfinen startede i 2005
     public static boolean isValidStartDate(String startDate) {
@@ -759,8 +773,8 @@ public class Member {
                 && parseInt(startDate.substring(4, 8)) >= 2005;
     }
 
-    //Denne metode prompter brugeren til at vælge, om medlemmet har betalt kontingent, og outputtet er en boolean enten
-    // lig false eller true.
+
+    //Denne metode prompter brugeren til at vælge, om medlemmet har betalt kontingent, og outputtet er en boolean.
     public static boolean addPaymentStatus() {
         Scanner input = new Scanner(System.in);
 
@@ -787,6 +801,7 @@ public class Member {
         }
         return hasPayed;
     }
+
 
     //Denne metode bruges til at ændre attributten hasPayed, der fortæller, om et medlem har betalt kontingent.
     public static void editPaymentStatus() {
@@ -912,6 +927,18 @@ public class Member {
         System.out.println("Proces er afsluttet.");
     }
 
+
+    //Denne metode undersøger, om et String-input udelukkende består af tal
+    public static boolean isNumeric (String str){
+        try {
+            parseLong(str);
+            return true;
+        } catch (NumberFormatException e) {
+            return false;
+        }
+    }
+
+
     //Herunder er 9 getters
     public String getBirthdate () {
             return birthdate;
@@ -949,21 +976,13 @@ public class Member {
             return memberList;
     }
 
-    //Denne metode undersøger, om et String-input udelukkende består af tal
-    public static boolean isNumeric (String str){
-            try {
-                parseLong(str);
-                return true;
-            } catch (NumberFormatException e) {
-                return false;
-            }
-    }
 
-    //Herunder overrides toString, så vi får et tilpasset print
+    //Herunder overrides toString, så der opnås et tilpasset print
     @Override
     public String toString () {
             return "Telefon: " + getTelephoneNo() + " ID: " + getID();
     }
+
 
     //Herunder er to setters
     public void setHasPayed(boolean hasPayed){
