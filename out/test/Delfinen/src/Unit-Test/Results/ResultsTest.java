@@ -21,14 +21,14 @@ class ResultsTest {
             //Wrong symbol
             boolean falseResult1 = result.dateFormatValidator("03/04:2020");
 
-            //Year is after current year)
+            //Year doesn't correlate with it set four characters format
             boolean falseResult2 = result.dateFormatValidator("03/04/20223");
 
             //Day above max day
-            boolean falseResult3 = result.dateFormatValidator("45/04/2020");
+            boolean falseResult3 = result.dateFormatValidator("32/04/2020");
 
             //month above 12
-            boolean falseResult4 = result.dateFormatValidator("03/16/2020");
+            boolean falseResult4 = result.dateFormatValidator("03/13/2020");
 
         //Assert
         assertTrue(trueResult1);
