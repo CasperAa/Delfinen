@@ -12,12 +12,6 @@ public class TopFive{
     //Creating ArrayLists
     private ArrayList<DataReader> seniorCrawl,seniorBreaststroke, seniorButterfly, seniorRygcrawl, juniorCrawl, juniorBreaststroke,juniorButterfly, juniorRygcrawl;
 
-    public static void main(String[] args) {
-        TopFive topFive = new TopFive();
-        topFive.fileReader();
-
-        topFive.topFiveSeniorRygcrawl();
-    }
 
     //Method for adding objects to arraylist from Files
     public void fileReader(){
