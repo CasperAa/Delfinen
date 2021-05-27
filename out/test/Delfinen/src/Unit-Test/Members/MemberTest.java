@@ -4,6 +4,8 @@ import org.junit.jupiter.api.Test;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -20,7 +22,6 @@ class MemberTest {
                 null,null,null,null,false);
 
         //Act
-
 
         //Opfylder alle krav
         boolean trueResult1 = member.isValidBirthdate("03042000");
@@ -46,11 +47,18 @@ class MemberTest {
         //Måned er 00
         boolean falseResult7 = member.isValidBirthdate("03002000");
 
-        //Årstal er for højt (over 2015)
-        boolean falseResult8 = member.isValidBirthdate("03042016");
+        //Årstal er for højt (alderen er under 6)
+        DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("ddMMyyyy");
+        String date = LocalDateTime.now().minusYears(5).format(formatTime);
+        boolean falseResult8 = member.isValidBirthdate(date);
 
-        //Årstal er for lavt (under 1900)
-        boolean falseResult9 = member.isValidBirthdate("03041899");
+        //Årstal er for lavt (alderen er over 140)
+        date = LocalDateTime.now().minusYears(141).format(formatTime);
+        boolean falseResult9 = member.isValidBirthdate(date);
+
+        //Alderen opfylder kravene (alderen er 15)
+        date = LocalDateTime.now().minusYears(15).format(formatTime);
+        boolean trueResult2= member.isValidBirthdate(date);
 
         //Assert
         assertTrue(trueResult1);
@@ -63,12 +71,12 @@ class MemberTest {
         assertFalse(falseResult7);
         assertFalse(falseResult8);
         assertFalse(falseResult9);
+        assertTrue(trueResult2);
 
     }
 
     @Test
     void isValidPhoneNo() {
-        //telephoneNo.length() != 8 || !isNumeric(telephoneNo)
 
         //Arrange
         Member member = new Member(null,null,null,null,null,
@@ -114,7 +122,7 @@ class MemberTest {
         //Indeholder ikke @
         boolean falseResult1 = member.isValidEmail("eksempeleksempel.dk");
 
-        //Indeholder ikke .com/.net/.co.uk/.gov
+        //Indeholder ikke .dk/.com/.net/.co.uk/.gov
         boolean falseResult2 = member.isValidEmail("eksempel@eksempel");
 
         //Assert
@@ -155,11 +163,8 @@ class MemberTest {
         //Måned er 00
         boolean falseResult7 = member.isValidStartDate("10002020");
 
-        //Årstal er for højt (over 2021)
-        boolean falseResult8 = member.isValidStartDate("10022022");
-
         //Årstal er for lavt (under 2005)
-        boolean falseResult9 = member.isValidStartDate("10022004");
+        boolean falseResult8 = member.isValidStartDate("10022004");
 
         //Assert
         assertTrue(trueResult1);
@@ -171,7 +176,6 @@ class MemberTest {
         assertFalse(falseResult6);
         assertFalse(falseResult7);
         assertFalse(falseResult8);
-        assertFalse(falseResult9);
     }
 
     @Test
@@ -219,5 +223,75 @@ class MemberTest {
         assertFalse(falseResult2);
     }
 
+    @Test
+
+    void alreadyExistsInFile() throws FileNotFoundException {
+
+        //Arrange
+        Member member = new Member(null, null, null, null, null,
+                null, null, null, null, false);
+
+        //Act
+
+        File testFile = new File("src/Unit-Test/Members/TestFile");
+
+        //True
+        boolean trueResult1 = member.alreadyExistsInFile("0001", testFile, 1);
+
+        //False
+        boolean falseResult1 = member.alreadyExistsInFile("0003", testFile, 1);
+
+
+        //Assert
+        assertTrue(trueResult1);
+        assertFalse(falseResult1);
+    }
+
+    @Test
+
+    void decideMemberType() {
+        //Arrange
+        Member member = new Member(null,null,null,null,null,
+                null,null,null,null,false);
+
+        //Act
+
+        DateTimeFormatter formatTime = DateTimeFormatter.ofPattern("ddMMyyyy");
+
+        //Giver junior som output (alder = 17 år)
+        String birthdate = LocalDateTime.now().minusYears(17).format(formatTime);
+        String juniorResult = member.decideMemberType(birthdate);
+
+        //Giver senior som output (alder = 18 år)
+        birthdate = LocalDateTime.now().minusYears(18).format(formatTime);
+        String seniorResult = member.decideMemberType(birthdate);
+
+
+        //Assert
+        assertEquals("junior", juniorResult);
+        assertEquals("senior", seniorResult);
+    }
+
+    @Test
+
+    void decideIDNumber() {
+        //Arrange
+        Member member = new Member(null,null,null,null,null,
+                null,null,null,null,false);
+
+        //Act
+        File testFile = new File("src/Unit-Test/Members/TestFile");
+        File testFileEmpty = new File("src/Unit-Test/Members/TestFileEmpty");
+
+        //String-output er 0003, da det højeste ID i filen er 0002
+        String result1 = member.decideIDNumber(testFile);
+
+        //String-output er 0001, da der ikke findes nogen ID i filen
+        String result2 = member.decideIDNumber(testFileEmpty);
+
+        //Assert
+        assertEquals("0003", result1);
+        assertEquals("0001", result2);
+    }
 
 }

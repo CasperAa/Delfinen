@@ -5,21 +5,23 @@ public class MainMenu {
 
     // Welcome Screen (Is prompted at the start of the program)
     public static void welcomeScreen (){
-        System.out.println("Åbner Delfinens administrationssystem \n");
+        System.out.println("Welkommen tilbage \nDelfinens administrationssystem \n");
     }
 
+    //Main login menu (choose role)
     public static void loginScreen(){
         System.out.println("Vælg rolle!");
         System.out.println("Tryk 1: Formand");
         System.out.println("Tryk 2: Kasserer");
         System.out.println("Tryk 3: Træner");
         System.out.println("Tryk 4: Admin");
+        System.out.println("Tryk 9: Afslut program");
     }
 
     // Main menu screen for Admin
     public static void menuScreenAdmin (){
         System.out.println("Tryk 1: Tilføj nyt medlem");
-        System.out.println("Tryk 2: Rediger eksisterende medlemmer");
+        System.out.println("Tryk 2: Rediger eksisterende medlem");
         System.out.println("Tryk 3: Årlig indtjening");
         System.out.println("Tryk 4: Se medlemmer, der i restance");
         System.out.println("Tryk 5: Svømmeresultater");
@@ -27,7 +29,7 @@ public class MainMenu {
         System.out.println("Tryk 7: Tilføj ny træner");
         System.out.println("Tryk 8: Rediger eksisterende træner");
         System.out.println("Tryk 9: Rediger hold");
-        System.out.println("Tryk 10: Afslut program");
+        System.out.println("Tryk 10: Tilbage");
     }
 
     // Main menu screen for Manager
@@ -37,7 +39,7 @@ public class MainMenu {
         System.out.println("Tryk 3: Tilføj ny træner");
         System.out.println("Tryk 4: Rediger eksisterende træner");
         System.out.println("Tryk 5: Rediger hold");
-        System.out.println("Tryk 9: Afslut program");
+        System.out.println("Tryk 9: Tilbage");
     }
 
     // Main menu screen for Cashier
@@ -46,41 +48,44 @@ public class MainMenu {
         System.out.println("Tryk 2: Se medlemmer, der i restance");
         System.out.println("Tryk 3: Rediger medlems betalingsstatus");
         System.out.println("Tryk 4: Start ny sæson");
-        System.out.println("Tryk 9: Afslut program");
+        System.out.println("Tryk 9: Tilbage");
     }
 
     // Main result screen for Trainer
     public static void menuScreenTrainer(){
         System.out.println("Tryk 1: Indtast nyt resultat");
         System.out.println("Tryk 2: Se top 5");
-        System.out.println("Tryk 9: Afslut program");
+        System.out.println("Tryk 9: Tilbage");
     }
 
+    // Top five result screen for Trainer
     public static void trainerTopFiveScreen1(){
-        System.out.println("Top 5 - Vælg målgruppe \n");
-        System.out.println("Tryk 1: Senior");
-        System.out.println("Tryk 2: Junior");
-        System.out.println("Tryk 9: Tilbage");
+        System.out.println("Top 5 - Vælg målgruppe");
+        System.out.println("    Tryk 1: Senior");
+        System.out.println("    Tryk 2: Junior");
+        System.out.println("    Tryk 9: Tilbage");
 
     }
 
+    //2nd Top five (junior) result screen for Trainer
     public static void trainerTopFiveScreen2Junior(){
-        System.out.println("Top 5 Junior - Vælg Svømmedisciplin  \n");
-        System.out.println("Tryk 1: Brystsvømning");
-        System.out.println("Tryk 2: Butterfly");
-        System.out.println("Tryk 3: Crawl");
-        System.out.println("Tryk 4: Rygcrawl");
-        System.out.println("Tryk 9: Tilbage");
+        System.out.println("Top 5 Junior - Vælg Svømmedisciplin");
+        System.out.println("    Tryk 1: Brystsvømning");
+        System.out.println("    Tryk 2: Butterfly");
+        System.out.println("    Tryk 3: Crawl");
+        System.out.println("    Tryk 4: Rygcrawl");
+        System.out.println("    Tryk 9: Tilbage");
 
     }
 
+    //2nd Top five (senior) result screen for Trainer
     public static void trainerTopFiveScreen2Senior(){
-        System.out.println("Top 5 Senior- Vælg Svømmedisciplin \n");
-        System.out.println("Tryk 1: Brystsvømning");
-        System.out.println("Tryk 2: Butterfly");
-        System.out.println("Tryk 3: Crawl");
-        System.out.println("Tryk 4: Rygcrawl");
-        System.out.println("Tryk 9: Tilbage");
+        System.out.println("Top 5 Senior - Vælg Svømmedisciplin");
+        System.out.println("    Tryk 1: Brystsvømning");
+        System.out.println("    Tryk 2: Butterfly");
+        System.out.println("    Tryk 3: Crawl");
+        System.out.println("    Tryk 4: Rygcrawl");
+        System.out.println("    Tryk 9: Tilbage");
 
     }
 
