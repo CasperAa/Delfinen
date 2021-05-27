@@ -111,7 +111,7 @@ public class Result {
         Scanner userInput = new Scanner(System.in);
 
         //Adding date value and checking input for validity
-        System.out.println("Dato: (DD/MM/ÅÅÅÅ)");
+        System.out.println("Dato: (dd/mm/åååå)");
         boolean dateIsValid = false;
         String date = null;
         while (!dateIsValid) {
@@ -265,8 +265,8 @@ public class Result {
     }
 
     //Valid date validator
-    static boolean checkDate(String date) {
-        String pattern = "(0?[1-9]|[12][0-9]|3[01])(0?[1-9]|1[0-2])([0-9]{4})";
+    public static boolean checkDate(String date) {
+        String pattern = "(0?[1-9]|[12][0-9]|3[01])\\/(0?[1-9]|1[0-2])\\/([0-9]{4})";
         boolean flag = false;
         if (date.matches(pattern)) {
             flag = true;

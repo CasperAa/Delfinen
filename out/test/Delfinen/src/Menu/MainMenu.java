@@ -21,7 +21,7 @@ public class MainMenu {
     // Main menu screen for Admin
     public static void menuScreenAdmin (){
         System.out.println("Tryk 1: Tilføj nyt medlem");
-        System.out.println("Tryk 2: Rediger eksisterende medlemmer");
+        System.out.println("Tryk 2: Rediger eksisterende medlem");
         System.out.println("Tryk 3: Årlig indtjening");
         System.out.println("Tryk 4: Se medlemmer, der i restance");
         System.out.println("Tryk 5: Svømmeresultater");

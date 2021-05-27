@@ -2,6 +2,7 @@ package System;
 import Members.Member;
 import Members.Trainer;
 import Menu.MainMenu;
+import Results.Result;
 import Subscriptions.Revenue;
 import Subscriptions.UnpaidSubscriptions;
 import Results.TopFive;
